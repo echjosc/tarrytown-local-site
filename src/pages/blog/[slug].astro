@@ -1,0 +1,248 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(dateStr?: string) {
+	if (!dateStr) return '';
+	return new Date(dateStr).toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
+}
+---
+
+<Base
+	title={post.data.title}
+	description={post.data.excerpt}
+	ogType="article"
+	publishedTime={post.data.date}
+>
+	<article class="blog-post">
+		<!-- Hero -->
+		<header class="blog-post__hero">
+			<div class="container">
+				<a href="/blog" class="blog-post__back">&larr; Back to Blog</a>
+
+				{post.data.tags && post.data.tags.length > 0 && (
+					<div class="blog-post__tags">
+						{post.data.tags.map((tag: string) => (
+							<span class="blog-tag">{tag}</span>
+						))}
+					</div>
+				)}
+
+				<h1 class="blog-post__title">{post.data.title}</h1>
+
+				{post.data.excerpt && (
+					<p class="blog-post__excerpt">{post.data.excerpt}</p>
+				)}
+
+				<div class="blog-post__meta">
+					{post.data.author && (
+						<span class="blog-post__author">{post.data.author}</span>
+					)}
+					{post.data.date && (
+						<time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+					)}
+				</div>
+			</div>
+		</header>
+
+		{post.data.featuredImage && (
+			<div class="blog-post__image container">
+				<img src={post.data.featuredImage} alt={post.data.title} />
+			</div>
+		)}
+
+		<!-- Content -->
+		<div class="container">
+			<div class="prose">
+				<Content />
+			</div>
+		</div>
+
+		<!-- Footer nav -->
+		<footer class="blog-post__footer container">
+			<a href="/blog" class="btn btn--secondary">&larr; All Posts</a>
+		</footer>
+	</article>
+</Base>
+
+<style>
+/* ── Blog Post Hero ──────────────────────────────────────── */
+.blog-post__hero {
+	padding-block: var(--space-16) var(--space-8);
+	text-align: center;
+	background: linear-gradient(180deg, var(--color-bg-muted) 0%, var(--color-bg) 100%);
+}
+.blog-post__back {
+	display: inline-block;
+	font-size: var(--font-size-sm);
+	font-weight: 500;
+	color: var(--color-text-muted);
+	margin-bottom: var(--space-6);
+	text-decoration: none;
+}
+.blog-post__back:hover {
+	color: var(--color-primary);
+}
+.blog-post__tags {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-2);
+	margin-bottom: var(--space-4);
+}
+.blog-tag {
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--color-primary);
+	background: rgba(79, 70, 229, 0.08);
+	border: 1px solid rgba(79, 70, 229, 0.15);
+	padding: 0.2rem 0.6rem;
+	border-radius: var(--radius-full);
+}
+.blog-post__title {
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	max-width: 800px;
+	margin: 0 auto var(--space-4);
+}
+.blog-post__excerpt {
+	font-size: var(--font-size-xl);
+	color: var(--color-text-muted);
+	max-width: 640px;
+	margin: 0 auto var(--space-6);
+	line-height: 1.6;
+}
+.blog-post__meta {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-3);
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+.blog-post__author {
+	font-weight: 600;
+}
+.blog-post__meta span + time::before {
+	content: '·';
+	margin-right: var(--space-3);
+}
+
+/* ── Featured image ──────────────────────────────────────── */
+.blog-post__image {
+	margin-bottom: var(--space-12);
+}
+.blog-post__image img {
+	width: 100%;
+	max-height: 480px;
+	object-fit: cover;
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--color-border);
+}
+
+/* ── Prose enhancements ──────────────────────────────────── */
+.prose {
+	padding-bottom: var(--space-12);
+}
+.prose h2 {
+	margin-top: var(--space-12);
+	margin-bottom: var(--space-4);
+}
+.prose h3 {
+	margin-top: var(--space-8);
+	margin-bottom: var(--space-3);
+}
+.prose p {
+	line-height: 1.8;
+	margin-bottom: var(--space-4);
+}
+.prose ul,
+.prose ol {
+	margin-bottom: var(--space-4);
+	padding-left: var(--space-6);
+	color: var(--color-text-muted);
+}
+.prose li {
+	margin-bottom: var(--space-2);
+	line-height: 1.7;
+}
+.prose strong {
+	color: var(--color-text);
+	font-weight: 600;
+}
+.prose code {
+	background: var(--color-bg-muted);
+	padding: 0.15em 0.4em;
+	border-radius: var(--radius-sm);
+	font-size: 0.875em;
+}
+.prose pre {
+	background: #1e1e2e;
+	color: #cdd6f4;
+	border-radius: var(--radius-md);
+	padding: var(--space-6);
+	overflow-x: auto;
+	margin-bottom: var(--space-6);
+	font-size: var(--font-size-sm);
+	line-height: 1.7;
+	border: 1px solid var(--color-border);
+}
+.prose pre code {
+	background: none;
+	padding: 0;
+	border-radius: 0;
+	font-size: inherit;
+	color: inherit;
+}
+.prose blockquote {
+	border-left: 3px solid var(--color-primary);
+	padding-left: var(--space-6);
+	margin: var(--space-6) 0;
+	font-style: italic;
+	color: var(--color-text-muted);
+}
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: var(--space-6);
+	font-size: var(--font-size-sm);
+}
+.prose th,
+.prose td {
+	padding: var(--space-3) var(--space-4);
+	border: 1px solid var(--color-border);
+	text-align: left;
+}
+.prose th {
+	background: var(--color-bg-muted);
+	font-weight: 600;
+	color: var(--color-text);
+}
+.prose td {
+	color: var(--color-text-muted);
+}
+
+/* ── Post footer ─────────────────────────────────────────── */
+.blog-post__footer {
+	padding-block: var(--space-8) var(--space-16);
+	border-top: 1px solid var(--color-border);
+}
+</style>

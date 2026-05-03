@@ -1,0 +1,31 @@
+---
+/**
+ * Schema.astro
+ * Outputs a JSON-LD <script> tag in your <head>.
+ * Pass any valid Schema.org object — use the helpers in /lib/schema
+ * to build the objects cleanly.
+ *
+ * Usage:
+ *   import Schema from '@/components/seo/Schema.astro'
+ *   import { localBusiness } from '@/lib/schema/schemas'
+ *
+ *   <Schema item={localBusiness({ name: 'Acme', ... })} />
+ *
+ * Multiple schemas on one page:
+ *   <Schema item={localBusiness({ ... })} />
+ *   <Schema item={breadcrumb({ ... })} />
+ */
+
+interface Props {
+	item: Record<string, unknown>;
+}
+
+const { item } = Astro.props;
+
+const schema = {
+	"@context": "https://schema.org",
+	...item,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

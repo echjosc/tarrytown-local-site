@@ -1,0 +1,88 @@
+---
+/**
+ * SEO.astro
+ * Drop into your base layout's <head>. Pass page-specific props,
+ * falls back to site-wide defaults for anything not provided.
+ *
+ * Usage:
+ *   import SEO from '@/components/seo/SEO.astro'
+ *   <SEO title="About Us" description="We do xyz..." />
+ */
+
+interface Props {
+	/** Page title — will be appended with site name e.g. "About Us | Acme Co" */
+	title: string;
+	/** 150-160 chars max for best results */
+	description?: string;
+	/** Absolute URL to OG image. Recommended: 1200x630px */
+	ogImage?: string;
+	/** Override the canonical URL (defaults to current page URL) */
+	canonical?: string;
+	/** Set to true for thank-you pages, admin pages, etc. */
+	noIndex?: boolean;
+	/** 'website' for normal pages, 'article' for blog posts */
+	ogType?: "website" | "article";
+	/** For article pages: ISO date string e.g. "2025-01-15" */
+	publishedTime?: string;
+	/** For article pages: ISO date string */
+	modifiedTime?: string;
+}
+
+const {
+	title,
+	description = "",
+	ogImage,
+	canonical,
+	noIndex = false,
+	ogType = "website",
+	publishedTime,
+	modifiedTime,
+} = Astro.props;
+
+// --- Site-wide defaults (edit these per client) ---
+const SITE_NAME = "Starter Astro Emdash"; // used in <title> and OG tags
+const DEFAULT_OG_IMAGE = "/og-default.jpg"; // place in /public
+// --------------------------------------------------
+
+const canonicalURL = canonical ?? Astro.url.href;
+const baseUrl = Astro.site ?? Astro.url;
+const resolvedOgImage = ogImage
+	? new URL(ogImage, baseUrl).href
+	: new URL(DEFAULT_OG_IMAGE, baseUrl).href;
+
+const fullTitle = `${title} | ${SITE_NAME}`;
+---
+
+<!-- Primary -->
+<title>{fullTitle}</title>
+{description && <meta name="description" content={description} />}
+<link rel="canonical" href={canonicalURL} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+{description && <meta property="og:description" content={description} />}
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Article-specific OG (only renders for blog posts) -->
+{
+	ogType === "article" && publishedTime && (
+		<meta property="article:published_time" content={publishedTime} />
+	)
+}
+{
+	ogType === "article" && modifiedTime && (
+		<meta property="article:modified_time" content={modifiedTime} />
+	)
+}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+{description && <meta name="twitter:description" content={description} />}
+<meta name="twitter:image" content={resolvedOgImage} />

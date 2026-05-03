@@ -1,0 +1,57 @@
+---
+title: Design Systems That Scale
+excerpt: >-
+  A practical guide to building design systems that grow with your product —
+  from tokens and primitives to production-ready component libraries.
+date: '2025-05-01'
+author: Acme Team
+tags:
+  - Design
+  - Engineering
+  - Best Practices
+draft: false
+---
+
+Every successful digital product eventually needs a design system. But where do you start, and how do you avoid the common pitfalls that turn design systems into abandoned side projects?
+
+## Start with tokens, not components
+
+Design tokens are the atomic building blocks of your system. They capture decisions about color, spacing, typography, and motion in a format that's portable across platforms.
+
+```css
+:root {
+  --color-primary: #4f46e5;
+  --space-4: 1rem;
+  --radius-md: 12px;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+}
+```
+
+By starting with tokens, you establish a shared vocabulary between design and engineering before writing a single component.
+
+## The component maturity model
+
+Not every component needs the same level of polish. We use a simple maturity model:
+
+1. **Primitive** — Basic building block (Button, Input, Text)
+2. **Composite** — Combines primitives (SearchBar, FormField)
+3. **Pattern** — Reusable layout or interaction (PageHeader, DataTable)
+4. **Template** — Full page composition (DashboardLayout, BlogPost)
+
+### Build what you need, when you need it
+
+The biggest mistake teams make is trying to build everything upfront. Instead, extract components from real product work. If you've built the same card layout three times, it's time to abstract it.
+
+## Documentation is a feature
+
+A design system without documentation is just a component library nobody uses. Invest in:
+
+- **Interactive examples** — Let people try components in isolation
+- **Usage guidelines** — When to use (and when not to use) each component
+- **Changelog** — What changed and why, so consumers can upgrade confidently
+
+## Maintaining momentum
+
+Design systems are products, not projects. They need ongoing investment, a dedicated team (even if part-time), and clear governance for how decisions are made.
+
+The payoff is worth it: consistent user experiences, faster development cycles, and a shared language between design and engineering.

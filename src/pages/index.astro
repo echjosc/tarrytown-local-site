@@ -1,0 +1,751 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Acme Corp — Modern Solutions" description="Professional services for modern businesses. We help you accelerate growth from strategy to execution.">
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-blob hero-blob--1"></div>
+    <div class="hero-blob hero-blob--2"></div>
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <span class="hero-eyebrow" data-animate="fade-up">Trusted by 200+ Companies</span>
+        <h1 class="hero-headline" data-split>
+          We Build Digital<br />Experiences That<br /><em>Actually Work</em>
+        </h1>
+        <p class="hero-sub" data-animate="fade-up">
+          Strategy, design, and engineering — delivered end-to-end by a team that cares about outcomes, not just deliverables.
+        </p>
+        <div class="hero-actions" data-animate="fade-up">
+          <a href="/contact" class="btn btn--primary" data-magnetic>Get Started Free</a>
+          <a href="#features" class="btn btn--secondary">See Our Work</a>
+        </div>
+      </div>
+      <div class="hero-card" data-animate="slide-left">
+        <div class="hero-card__inner">
+          <div class="hero-card__header">
+            <div class="hero-card__dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="hero-card__title">Project Dashboard</span>
+          </div>
+          <div class="hero-card__stat">
+            <span class="hero-card__value">↑ 148%</span>
+            <span class="hero-card__label">Revenue Growth</span>
+          </div>
+          <div class="hero-card__bar">
+            <div class="hero-card__bar-fill"></div>
+          </div>
+          <div class="hero-card__row">
+            <div class="hero-card__tag hero-card__tag--green">Live</div>
+            <span class="hero-card__meta">Campaign Q2 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" data-animate="fade-up">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── Features ─────────────────────────────────────────── -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="section-header text-center" data-animate="fade-up">
+        <span class="eyebrow">What We Do</span>
+        <h2>Everything you need<br />to grow online</h2>
+        <p class="section-lead">We cover every layer of your digital presence — from the first pixel to production.</p>
+      </div>
+      <div class="features-grid">
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">✦</div>
+          <h3>Strategy & Consulting</h3>
+          <p>We audit your current setup, identify growth levers, and build a roadmap your team can actually ship.</p>
+        </div>
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">◈</div>
+          <h3>Design Systems</h3>
+          <p>Consistent, scalable UI built once — deployed everywhere. From tokens to production-ready components.</p>
+        </div>
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">⬡</div>
+          <h3>Web Development</h3>
+          <p>Blazing-fast Astro, Next.js, or custom stacks. We build for performance, SEO, and maintainability.</p>
+        </div>
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">◎</div>
+          <h3>Content & SEO</h3>
+          <p>Technical SEO, content strategy, and CMS setup so your team can publish without bottlenecks.</p>
+        </div>
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">⊕</div>
+          <h3>Analytics & Data</h3>
+          <p>From GA4 to custom dashboards — we instrument everything and surface the metrics that matter.</p>
+        </div>
+        <div class="card feature-card" data-animate="fade-up">
+          <div class="feature-icon">◉</div>
+          <h3>Ongoing Support</h3>
+          <p>Monthly retainers for teams that need a reliable partner to maintain, iterate, and scale over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ────────────────────────────────────────────── -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" data-animate="fade-up">
+          <span class="stat-value" data-count="200">0</span>
+          <span class="stat-suffix">+</span>
+          <span class="stat-label">Clients Served</span>
+        </div>
+        <div class="stat-item" data-animate="fade-up">
+          <span class="stat-value" data-count="98">0</span>
+          <span class="stat-suffix">%</span>
+          <span class="stat-label">Satisfaction Rate</span>
+        </div>
+        <div class="stat-item" data-animate="fade-up">
+          <span class="stat-value" data-count="12">0</span>
+          <span class="stat-suffix">M+</span>
+          <span class="stat-label">Users Reached</span>
+        </div>
+        <div class="stat-item" data-animate="fade-up">
+          <span class="stat-value" data-count="7">0</span>
+          <span class="stat-suffix">yr</span>
+          <span class="stat-label">In Business</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Marquee ───────────────────────────────────────────── -->
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-inner" id="marquee-inner">
+      <span>Strategy</span><span class="marquee-dot">·</span>
+      <span>Design</span><span class="marquee-dot">·</span>
+      <span>Engineering</span><span class="marquee-dot">·</span>
+      <span>Growth</span><span class="marquee-dot">·</span>
+      <span>Analytics</span><span class="marquee-dot">·</span>
+      <span>Content</span><span class="marquee-dot">·</span>
+      <span>Performance</span><span class="marquee-dot">·</span>
+      <span>Strategy</span><span class="marquee-dot">·</span>
+      <span>Design</span><span class="marquee-dot">·</span>
+      <span>Engineering</span><span class="marquee-dot">·</span>
+      <span>Growth</span><span class="marquee-dot">·</span>
+      <span>Analytics</span><span class="marquee-dot">·</span>
+      <span>Content</span><span class="marquee-dot">·</span>
+      <span>Performance</span><span class="marquee-dot">·</span>
+    </div>
+  </div>
+
+  <!-- ── CTA ──────────────────────────────────────────────── -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-box" data-animate="fade-up">
+        <div class="cta-blob"></div>
+        <span class="eyebrow">Ready to grow?</span>
+        <h2>Let's build something<br /><em>great together</em></h2>
+        <p>Tell us about your project — we'll get back to you within 24 hours with a tailored plan.</p>
+        <a href="/contact" class="btn btn--primary" data-magnetic>Start a Project →</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding-block: var(--space-24) var(--space-16);
+}
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.hero-blob--1 {
+  width: 600px;
+  height: 600px;
+  background: var(--color-primary);
+  top: -150px;
+  right: -150px;
+  animation: blobFloat 8s ease-in-out infinite;
+}
+.hero-blob--2 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-accent);
+  bottom: -80px;
+  left: -80px;
+  animation: blobFloat 10s ease-in-out infinite reverse;
+}
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -30px) scale(1.05); }
+  66% { transform: translate(-15px, 20px) scale(0.97); }
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  flex-direction: column;
+}
+@media (min-width: 900px) {
+  .hero-inner { flex-direction: row; }
+}
+.hero-content {
+  flex: 1;
+  max-width: 580px;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-6);
+  opacity: 0;
+}
+.hero-headline {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-6);
+}
+.hero-headline em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* word split spans are hidden initially by JS */
+.hero-headline .word {
+  display: inline-block;
+  overflow: hidden;
+}
+.hero-headline .word-inner {
+  display: inline-block;
+}
+.hero-sub {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: var(--space-8);
+  opacity: 0;
+}
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  opacity: 0;
+}
+
+/* Floating card */
+.hero-card {
+  flex-shrink: 0;
+  width: 300px;
+  opacity: 0;
+}
+.hero-card__inner {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+}
+.hero-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.hero-card__dots {
+  display: flex;
+  gap: 5px;
+}
+.hero-card__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+.hero-card__dots span:first-child { background: #f87171; }
+.hero-card__dots span:nth-child(2) { background: #fbbf24; }
+.hero-card__dots span:last-child { background: #34d399; }
+.hero-card__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.hero-card__stat {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-4);
+}
+.hero-card__value {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  color: #34d399;
+  line-height: 1;
+}
+.hero-card__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+.hero-card__bar {
+  height: 6px;
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+}
+.hero-card__bar-fill {
+  height: 100%;
+  width: 75%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-full);
+}
+.hero-card__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.hero-card__tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+.hero-card__tag--green {
+  background: rgba(52, 211, 153, 0.15);
+  color: #059669;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+.hero-card__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0;
+}
+.hero-scroll-hint span {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ── Section shared ──────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+.section-header {
+  max-width: 560px;
+  margin: 0 auto var(--space-12);
+}
+.section-header h2 {
+  margin-bottom: var(--space-4);
+}
+.section-lead {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Features ────────────────────────────────────────────── */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 640px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.feature-card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.feature-icon {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+  display: inline-block;
+}
+.feature-card h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-2);
+}
+.feature-card p {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* ── Stats ───────────────────────────────────────────────── */
+.stats-section {
+  background: var(--color-bg-muted);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8);
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.stat-item {
+  opacity: 0;
+}
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.stat-suffix {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-accent);
+}
+.stat-label {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* ── Marquee ─────────────────────────────────────────────── */
+.marquee-track {
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-4);
+  background: white;
+}
+.marquee-inner {
+  display: flex;
+  gap: var(--space-8);
+  width: max-content;
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: -0.01em;
+}
+.marquee-dot {
+  color: var(--color-primary);
+}
+
+/* ── CTA ─────────────────────────────────────────────────── */
+.cta-section {
+  background: var(--color-bg);
+}
+.cta-box {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-primary), #6d28d9);
+  border-radius: var(--radius-lg);
+  padding: var(--space-16) var(--space-12);
+  text-align: center;
+  overflow: hidden;
+  opacity: 0;
+}
+.cta-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  top: -200px;
+  right: -100px;
+  pointer-events: none;
+}
+.cta-box .eyebrow {
+  color: rgba(255,255,255,0.7);
+}
+.cta-box h2 {
+  color: white;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-4);
+}
+.cta-box h2 em {
+  font-style: normal;
+  opacity: 0.85;
+}
+.cta-box p {
+  color: rgba(255,255,255,0.75);
+  font-size: var(--font-size-lg);
+  max-width: 480px;
+  margin: 0 auto var(--space-8);
+}
+.cta-box .btn--primary {
+  background: white;
+  color: var(--color-primary);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.cta-box .btn--primary:hover {
+  background: var(--color-bg-muted);
+  color: var(--color-primary-dark);
+}
+
+/* ── Magnetic cursor helper ──────────────────────────────── */
+[data-magnetic] {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob,
+  .hero-scroll-line {
+    animation: none;
+  }
+}
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── 1. Hero headline word-split ─────────────────────── */
+  const headline = document.querySelector<HTMLElement>('.hero-headline');
+  if (headline && !prefersReduced) {
+    const html = headline.innerHTML;
+    // Replace text nodes, preserving <br> and <em>
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+
+    function splitNode(node: Node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent ?? '';
+        const words = text.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        words.forEach((w) => {
+          if (/^\s+$/.test(w)) {
+            frag.appendChild(document.createTextNode(w));
+          } else if (w.length > 0) {
+            const span = document.createElement('span');
+            span.className = 'word';
+            const inner = document.createElement('span');
+            inner.className = 'word-inner';
+            inner.textContent = w;
+            span.appendChild(inner);
+            frag.appendChild(span);
+          }
+        });
+        node.parentNode?.replaceChild(frag, node);
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        Array.from(node.childNodes).forEach(splitNode);
+      }
+    }
+
+    Array.from(wrapper.childNodes).forEach(splitNode);
+    headline.innerHTML = wrapper.innerHTML;
+
+    const wordInners = headline.querySelectorAll<HTMLElement>('.word-inner');
+    gsap.set(wordInners, { y: '110%' });
+
+    gsap.to(wordInners, {
+      y: '0%',
+      duration: 0.8,
+      ease: 'power4.out',
+      stagger: 0.06,
+      delay: 0.2,
+    });
+  }
+
+  /* ── 2. Hero eyebrow, sub, actions, card ─────────────── */
+  if (!prefersReduced) {
+    gsap.set('.hero-eyebrow', { y: 20 });
+    gsap.set('.hero-sub', { y: 20 });
+    gsap.set('.hero-actions', { y: 20 });
+
+    gsap.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.6, delay: 0.1, ease: 'power3.out' });
+    gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.9, ease: 'power3.out' });
+    gsap.to('.hero-actions', { opacity: 1, y: 0, duration: 0.6, delay: 1.1, ease: 'power3.out' });
+
+    gsap.fromTo('.hero-card',
+      { opacity: 0, x: 60 },
+      { opacity: 1, x: 0, duration: 1, delay: 0.6, ease: 'power3.out' }
+    );
+
+    gsap.to('.hero-scroll-hint', { opacity: 1, duration: 0.6, delay: 1.5, ease: 'power2.out' });
+
+    // Floating card parallax on scroll
+    ScrollTrigger.create({
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      onUpdate: (self) => {
+        gsap.set('.hero-card', { y: self.progress * -60 });
+      },
+    });
+  }
+
+  /* ── 3. Scroll-triggered fade-up elements ────────────── */
+  if (!prefersReduced) {
+    document.querySelectorAll<HTMLElement>('[data-animate="fade-up"]').forEach((el) => {
+      gsap.set(el, { opacity: 0, y: 30 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        onEnter: () => {
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+        },
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-animate="slide-left"]').forEach((el) => {
+      gsap.set(el, { opacity: 0, x: 60 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        onEnter: () => {
+          gsap.to(el, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' });
+        },
+      });
+    });
+
+    // Feature cards with stagger
+    const featureCards = document.querySelectorAll<HTMLElement>('.feature-card');
+    ScrollTrigger.create({
+      trigger: '.features-grid',
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.to(featureCards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          stagger: 0.1,
+        });
+      },
+    });
+  } else {
+    // Reduced motion: just show everything
+    document.querySelectorAll<HTMLElement>('[data-animate], .feature-card, .stat-item, .cta-box').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  }
+
+  /* ── 4. Stats counter ────────────────────────────────── */
+  if (!prefersReduced) {
+    const statItems = document.querySelectorAll<HTMLElement>('.stat-item');
+    ScrollTrigger.create({
+      trigger: '.stats-grid',
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.to(statItems, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out' });
+
+        statItems.forEach((item) => {
+          const valueEl = item.querySelector<HTMLElement>('.stat-value');
+          if (!valueEl) return;
+          const target = parseInt(valueEl.dataset.count ?? '0', 10);
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => {
+              valueEl.textContent = Math.round(obj.val).toString();
+            },
+          });
+        });
+      },
+    });
+  }
+
+  /* ── 5. Marquee ──────────────────────────────────────── */
+  const marqueeInner = document.getElementById('marquee-inner');
+  if (marqueeInner && !prefersReduced) {
+    // Duplicate content inside the single container for a seamless loop
+    marqueeInner.innerHTML += marqueeInner.innerHTML;
+    gsap.to(marqueeInner, {
+      x: '-50%',
+      duration: 30,
+      ease: 'none',
+      repeat: -1,
+    });
+  }
+
+  /* ── 6. Magnetic buttons ─────────────────────────────── */
+  if (!prefersReduced) {
+    document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) * 0.3;
+        const dy = (e.clientY - cy) * 0.3;
+        gsap.to(btn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+      });
+    });
+  }
+</script>

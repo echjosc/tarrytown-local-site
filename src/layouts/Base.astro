@@ -1,0 +1,193 @@
+---
+import Seo from '@/components/seo/Seo.astro';
+import '@/styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+	canonical?: string;
+	noIndex?: boolean;
+	ogType?: 'website' | 'article';
+	publishedTime?: string;
+	modifiedTime?: string;
+}
+
+const {
+	title,
+	description,
+	ogImage,
+	canonical,
+	noIndex,
+	ogType,
+	publishedTime,
+	modifiedTime,
+} = Astro.props;
+
+const navLinks = [
+	{ label: 'Home', url: '/' },
+	{ label: 'Blog', url: '/blog' },
+	{ label: 'About', url: '/about' },
+	{ label: 'Contact', url: '/contact' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<Seo
+			title={title}
+			description={description}
+			ogImage={ogImage}
+			canonical={canonical}
+			noIndex={noIndex}
+			ogType={ogType}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+		/>
+	</head>
+	<body>
+		<header class="glass-header">
+			<div class="container header-inner">
+				<a href="/" class="brand-logo">Acme<span style="color: var(--color-text);">Corp</span></a>
+				<nav class="nav-links" aria-label="Primary navigation">
+					{navLinks.map((item) => (
+						<a href={item.url}>{item.label}</a>
+					))}
+				</nav>
+				<a href="/contact" class="btn btn--primary btn-sm">Get Started</a>
+			</div>
+		</header>
+
+		<main class="main-content">
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="container footer-inner">
+				<div class="footer-brand">
+					<a href="/" class="brand-logo">Acme<span style="color: var(--color-text);">Corp</span></a>
+					<p class="footer-description">Professional services for modern businesses. We help you accelerate growth from strategy to execution.</p>
+				</div>
+				<nav class="footer-nav" aria-label="Footer navigation">
+					{navLinks.map((item) => (
+						<a href={item.url}>{item.label}</a>
+					))}
+				</nav>
+			</div>
+			<div class="footer-bottom container">
+				<p>&copy; {new Date().getFullYear()} Acme Corp. All rights reserved.</p>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<script>
+	import Lenis from 'lenis';
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const lenis = new Lenis({ lerp: 0.15 });
+
+	lenis.on('scroll', ScrollTrigger.update);
+
+	gsap.ticker.add((time) => {
+		lenis.raf(time * 1000);
+	});
+
+	gsap.ticker.lagSmoothing(0);
+</script>
+
+<style>
+.header-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-block: var(--space-3);
+}
+.brand-logo {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	font-size: var(--font-size-2xl);
+	color: var(--color-primary);
+	text-decoration: none;
+	letter-spacing: -0.03em;
+}
+.nav-links {
+	display: none;
+	gap: var(--space-6);
+}
+@media (min-width: 768px) {
+	.nav-links { display: flex; }
+}
+.nav-links a {
+	color: var(--color-text-muted);
+	font-weight: 500;
+	font-size: var(--font-size-sm);
+}
+.nav-links a:hover {
+	color: var(--color-primary);
+}
+.btn-sm {
+	padding: 0.6rem 1.25rem;
+	font-size: var(--font-size-sm);
+}
+
+.main-content {
+	flex: 1;
+}
+
+.site-footer {
+	background-color: var(--color-bg-muted);
+	border-top: 1px solid var(--color-border);
+	padding-top: var(--space-12);
+	padding-bottom: var(--space-6);
+	margin-top: auto;
+}
+.footer-inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	margin-bottom: var(--space-8);
+}
+@media (min-width: 768px) {
+	.footer-inner {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+}
+.footer-brand {
+	max-width: 320px;
+}
+.footer-description {
+	margin-top: var(--space-3);
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+.footer-nav {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+}
+.footer-nav a {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+.footer-nav a:hover {
+	color: var(--color-primary);
+}
+.footer-bottom {
+	text-align: center;
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+	border-top: 1px solid var(--color-border);
+	padding-top: var(--space-4);
+}
+</style>

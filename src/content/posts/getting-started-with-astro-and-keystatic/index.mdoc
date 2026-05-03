@@ -1,0 +1,55 @@
+---
+title: Getting Started with Astro and Keystatic
+excerpt: >-
+  Learn how to set up a modern content-driven website using Astro and Keystatic
+  CMS. From project scaffolding to your first published post.
+date: '2025-04-28'
+author: Acme Team
+tags:
+  - Astro
+  - Keystatic
+  - Tutorial
+draft: false
+---
+
+Building a modern website shouldn't require a complex tech stack. With **Astro** and **Keystatic**, you get the best of both worlds: blazing-fast static output and a delightful content editing experience.
+
+## Why Astro + Keystatic?
+
+Astro is a web framework designed for content-rich websites. It ships zero JavaScript by default and supports your favorite UI frameworks. Keystatic adds a git-based CMS that works locally and deploys anywhere.
+
+### Key benefits
+
+- **Zero-config content editing** — Keystatic provides a polished admin UI out of the box
+- **Type-safe content** — Define schemas once, get validation everywhere
+- **Markdoc support** — Rich content authoring with extensible components
+- **No database required** — Content lives in your repository as files
+
+## Setting up your first collection
+
+Define a collection in your `keystatic.config.ts`:
+
+```typescript
+posts: collection({
+  label: 'Posts',
+  slugField: 'title',
+  path: 'src/content/posts/*',
+  format: { contentField: 'content' },
+  schema: {
+    title: fields.slug({ name: { label: 'Title' } }),
+    content: fields.markdoc({ label: 'Content' }),
+  },
+})
+```
+
+Then create a matching Astro content collection in `src/content.config.ts` to query your posts in pages.
+
+## What's next
+
+Once your collection is wired up, you can:
+
+1. Create posts through the Keystatic admin at `/keystatic`
+2. Query them using Astro's `getCollection()` API
+3. Generate static pages with dynamic routes
+
+The combination of Astro's performance and Keystatic's editing experience makes for a powerful content platform.

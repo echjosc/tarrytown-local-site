@@ -1,0 +1,119 @@
+---
+
+
+
+---
+
+<button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+	<!-- arrow p	ointing up with a tail -->
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<line x1="12" y1="19" x2="12" y2="5" />
+		<polyline points="6 11 12 5 18 11" />
+	</svg>
+	
+</button>
+
+<style lang="scss">
+	.scroll-to-top {
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		width: 2.2rem;
+		height: 3.5rem;
+		border-radius: 20px;
+		background-color: #0f0f0f;
+		color: #fff;
+		border: 2px solid #0f0f0f;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(40px) scale(0.5);
+		transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+		z-index: 50;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+		&.is-visible {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0) scale(1);
+		}
+
+		&.is-over-footer {
+			background-color: #fff;
+			color: #0c0b0a;
+			border-color: #fff;
+		}
+
+		&:hover {
+			transform: translateY(-6px) scale(1.05);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+		}
+	}
+
+	@media (max-width: 769px) {
+		.scroll-to-top {
+			bottom: 1.5rem;
+			right: 1.5rem;
+			width: 2.2rem;
+			height: 3rem;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+		}
+	}
+</style>
+
+<script>
+	const scrollToTopBtn = document.getElementById("scroll-to-top");
+
+	if (scrollToTopBtn) {
+		// Show button closer to the bottom (e.g. at 70% of total scroll depth)
+		window.addEventListener("scroll", () => {
+			const scrollDepth = document.body.scrollHeight - window.innerHeight;
+			// If page is very short, show it after a small scroll. Otherwise at 70%.
+			const triggerPoint = scrollDepth > 500 ? scrollDepth * 0.7 : 300;
+			
+			if (window.scrollY > triggerPoint) {
+				scrollToTopBtn.classList.add("is-visible");
+			} else {
+				scrollToTopBtn.classList.remove("is-visible");
+			}
+
+			// Change color if button overlaps footer
+			const footer = document.querySelector(".footer");
+			if (footer) {
+				const footerRect = footer.getBoundingClientRect();
+				const btnRect = scrollToTopBtn.getBoundingClientRect();
+				// If the footer top is higher than the bottom edge of the button
+				if (footerRect.top <= btnRect.bottom) {
+					scrollToTopBtn.classList.add("is-over-footer");
+				} else {
+					scrollToTopBtn.classList.remove("is-over-footer");
+				}
+			}
+		});
+
+		// Scroll to top on click smoothly
+		scrollToTopBtn.addEventListener("click", () => {
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		});
+	}
+</script>
