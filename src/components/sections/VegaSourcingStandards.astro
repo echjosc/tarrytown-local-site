@@ -1,6 +1,7 @@
 ---
 import Img from '@/components/ui/Img.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import placeholderImg from '@/assets/images/placeholder.png';
 
 export type SourcingItem = {
 	title: string;
@@ -54,7 +55,7 @@ const resolvedIcon = icon ?? defaultIcon;
 					<div class="sourcing__photo-frame">
 						<div class="sourcing__photo-inner">
 							<Img
-								src={image.src || '/src/assets/images/placeholder.png'}
+								src={image.src || placeholderImg}
 								alt={image.alt}
 								width={360}
 								height={280}

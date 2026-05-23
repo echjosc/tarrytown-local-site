@@ -1,12 +1,13 @@
 ---
 import Button from "@/components/ui/Button.astro";
 import Img from "@/components/ui/Img.astro";
+import placeholderImg from "@/assets/images/placeholder.png";
 
 type Props = {
 	eyebrow?: string;
 	title: string;
 	description?: string;
-	imageSrc: string;
+	imageSrc?: string;
 	buttons?: { text: string; url: string }[];
 };
 
@@ -51,7 +52,7 @@ const titleParts = title.split(/(\{.*?\})/);
 			<div class="deco-circle deco-circle--1"></div>
 			<div class="deco-circle deco-circle--2"></div>
 			<div class="image-frame">
-				<Img src={imageSrc || '/src/assets/images/placeholder.png'} alt="Vega Main Hero Image" class="image-img" width={800} height={900} />
+				<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} />
 			</div>
 		</div>
 	</div>
