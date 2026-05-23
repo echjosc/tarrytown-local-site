@@ -1,6 +1,33 @@
 // keystatic.config.ts
 import { config, fields, collection, singleton } from '@keystatic/core';
 
+
+import {
+    inline,
+    wrapper,
+} from '@keystatic/core/content-components';
+
+// {% footnote-ref id="1" /%}
+export const FootnoteRef = inline({
+    label: 'Footnote reference',
+    schema: {
+        id: fields.text({ label: 'Footnote ID' }),
+    },
+});
+
+// {% footnote id="1" %}...{% /footnote %}
+export const Footnote = wrapper({
+    label: 'Footnote',
+    schema: {
+        id: fields.text({ label: 'Footnote ID' }),
+    },
+});
+
+// {% footnotes %}{% footnote ... %}...{% /footnote %}{% /footnotes %}
+export const Footnotes = wrapper({
+    label: 'Footnotes block',
+    schema: {},
+});
 export default config({
     storage: {
         kind: 'local',
@@ -44,7 +71,16 @@ export default config({
                     description: 'Set to draft to hide from the blog listing',
                     defaultValue: false,
                 }),
-                content: fields.markdoc({ label: 'Content' }),
+                content: fields.markdoc({
+                    label: 'Content',
+                    components: {
+                        // keys must match your Markdoc tag names
+                        'footnote-ref': FootnoteRef,
+                        footnote: Footnote,
+                        footnotes: Footnotes,
+                    },
+                }),
+
             },
         }),
     },
@@ -72,43 +108,61 @@ export default config({
             label: 'Homepage',
             path: 'src/content/homepage/',
             schema: {
+                // Hero
                 hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow' }),
                     headline: fields.text({ label: 'Headline' }),
-                    subheadline: fields.text({ label: 'Subheadline' }),
                     description: fields.text({ label: 'Description' }),
-                    buttonText: fields.text({ label: 'Button Text' }),
-                    buttonUrl: fields.text({ label: 'Button URL' }),
-                }, {
-                    label: 'Hero Section',
-                    layout: [6, 6, 12, 6, 6], // optional: grid layout for fields
-                }),
-
-                featuresSection: fields.object({
-                    features: fields.array(
+                    buttons: fields.array(
                         fields.object({
-                            title: fields.text({ label: 'Feature Title' }),
-                            description: fields.text({ label: 'Feature Description' }),
-                            iconUrl: fields.text({ label: 'Feature Icon URL' }),
+                            text: fields.text({ label: 'Button Text' }),
+                            url: fields.text({ label: 'Button URL' }),
                         }),
                         {
-                            label: 'Features',
-                            itemLabel: (props) => props.fields.title.value || 'New Feature',
+                            label: 'Buttons',
+                            itemLabel: (props) => props.fields.text.value || 'New Button',
                         }
                     ),
-                }, { label: 'Features Section' }),
+                    image: fields.image({
+                        label: 'Featured Image',
+                        directory: 'src/assets/images/homepage',
+                        publicPath: '/src/assets/images/homepage/',
+                        description: 'Hero image for the homepage',
+                    })
+                }, {
+                    label: 'Hero Section',
+                    layout: [6, 6, 12, 12, 12],
+                }),
+                // Featured Section
+                offerings: fields.object({
+                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'What We Do' }),
+                    featured: fields.object({
+                        eyebrow: fields.text({ label: 'Eyebrow', description: 'Small label above the title' }),
+                        title: fields.text({ label: 'Title' }),
+                        description: fields.text({ label: 'Description', multiline: true }),
+                        image: fields.image({
+                            label: 'Image',
+                            directory: 'src/assets/images/homepage',
+                            publicPath: '/src/assets/images/homepage/',
+                        }),
+                        imageAlt: fields.text({ label: 'Image Alt Text' }),
+                        linkText: fields.text({ label: 'Link Text' }),
+                        linkUrl: fields.text({ label: 'Link URL' }),
+                    }, { label: 'Featured Card' }),
+                    cards: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                            linkText: fields.text({ label: 'Link Text' }),
+                            linkUrl: fields.text({ label: 'Link URL' }),
+                        }),
+                        {
+                            label: 'Cards',
+                            itemLabel: (props) => props.fields.title.value || 'New Card',
+                        }
+                    ),
+                }, { label: 'Offerings Section' }),
 
-                aboutUsPreview: fields.object({
-                    title: fields.text({ label: 'About Us Title' }),
-                    description: fields.text({ label: 'About Us Description' }),
-                    imageUrl: fields.text({ label: 'About Us Image URL' }),
-                }, { label: 'About Us Preview Section' }),
-
-                cta: fields.object({
-                    headline: fields.text({ label: 'CTA Headline' }),
-                    subheadline: fields.text({ label: 'CTA Subheadline' }),
-                    buttonText: fields.text({ label: 'CTA Button Text' }),
-                    buttonUrl: fields.text({ label: 'CTA Button URL' }),
-                }, { label: 'Call to Action Section' }),
             },
         }),
     }

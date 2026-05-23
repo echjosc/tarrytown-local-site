@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '@/layouts/Base.astro';
+import VegaInteriorBanner from '@/components/sections/VegaInteriorBanner.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('posts');
@@ -21,50 +22,26 @@ function formatDate(dateStr?: string) {
 		day: 'numeric',
 	});
 }
+
+const postDate = post.data.date ? new Date(post.data.date).toISOString() : undefined;
 ---
 
 <Base
 	title={post.data.title}
 	description={post.data.excerpt}
 	ogType="article"
-	publishedTime={post.data.date}
+	publishedTime={postDate}
 >
 	<article class="blog-post">
-		<!-- Hero -->
-		<header class="blog-post__hero">
-			<div class="container">
-				<a href="/blog" class="blog-post__back">&larr; Back to Blog</a>
+		<a href="/blog" class="blog-post__back container-inline">&larr; Back to The Good Dirt</a>
 
-				{post.data.tags && post.data.tags.length > 0 && (
-					<div class="blog-post__tags">
-						{post.data.tags.map((tag: string) => (
-							<span class="blog-tag">{tag}</span>
-						))}
-					</div>
-				)}
-
-				<h1 class="blog-post__title">{post.data.title}</h1>
-
-				{post.data.excerpt && (
-					<p class="blog-post__excerpt">{post.data.excerpt}</p>
-				)}
-
-				<div class="blog-post__meta">
-					{post.data.author && (
-						<span class="blog-post__author">{post.data.author}</span>
-					)}
-					{post.data.date && (
-						<time datetime={post.data.date}>{formatDate(post.data.date)}</time>
-					)}
-				</div>
-			</div>
-		</header>
-
-		{post.data.featuredImage && (
-			<div class="blog-post__image container">
-				<img src={post.data.featuredImage} alt={post.data.title} />
-			</div>
-		)}
+		<VegaInteriorBanner
+			title={post.data.title}
+			imageSrc={post.data.featuredImage}
+			tags={post.data.tags}
+			author={post.data.author}
+			date={postDate}
+		/>
 
 		<!-- Content -->
 		<div class="container">
@@ -81,81 +58,23 @@ function formatDate(dateStr?: string) {
 </Base>
 
 <style>
-/* ── Blog Post Hero ──────────────────────────────────────── */
-.blog-post__hero {
-	padding-block: var(--space-16) var(--space-8);
-	text-align: center;
-	background: linear-gradient(180deg, var(--color-bg-muted) 0%, var(--color-bg) 100%);
-}
+/* ── Back link ───────────────────────────────────────────── */
 .blog-post__back {
 	display: inline-block;
 	font-size: var(--font-size-sm);
 	font-weight: 500;
 	color: var(--color-text-muted);
-	margin-bottom: var(--space-6);
+	padding: var(--space-4) 0;
 	text-decoration: none;
 }
 .blog-post__back:hover {
 	color: var(--color-primary);
 }
-.blog-post__tags {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: var(--space-2);
-	margin-bottom: var(--space-4);
-}
-.blog-tag {
-	font-size: 0.7rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
-	color: var(--color-primary);
-	background: rgba(79, 70, 229, 0.08);
-	border: 1px solid rgba(79, 70, 229, 0.15);
-	padding: 0.2rem 0.6rem;
-	border-radius: var(--radius-full);
-}
-.blog-post__title {
-	font-size: clamp(2rem, 5vw, 3.5rem);
-	font-weight: 800;
-	letter-spacing: -0.02em;
-	max-width: 800px;
-	margin: 0 auto var(--space-4);
-}
-.blog-post__excerpt {
-	font-size: var(--font-size-xl);
-	color: var(--color-text-muted);
-	max-width: 640px;
-	margin: 0 auto var(--space-6);
-	line-height: 1.6;
-}
-.blog-post__meta {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: var(--space-3);
-	font-size: var(--font-size-sm);
-	color: var(--color-text-muted);
-}
-.blog-post__author {
-	font-weight: 600;
-}
-.blog-post__meta span + time::before {
-	content: '·';
-	margin-right: var(--space-3);
-}
-
-/* ── Featured image ──────────────────────────────────────── */
-.blog-post__image {
-	margin-bottom: var(--space-12);
-}
-.blog-post__image img {
-	width: 100%;
-	max-height: 480px;
-	object-fit: cover;
-	border-radius: var(--radius-lg);
-	border: 1px solid var(--color-border);
+.container-inline {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+	display: block;
 }
 
 /* ── Prose enhancements ──────────────────────────────────── */
@@ -238,6 +157,44 @@ function formatDate(dateStr?: string) {
 }
 .prose td {
 	color: var(--color-text-muted);
+}
+
+/* ── Footnotes ───────────────────────────────────────────── */
+.prose .footnote-ref {
+	font-size: 0.75em;
+	font-weight: 600;
+	color: var(--color-primary);
+	text-decoration: none;
+	vertical-align: super;
+	line-height: 0;
+}
+.prose .footnote-ref:hover {
+	text-decoration: underline;
+}
+.prose .footnotes {
+	margin-top: var(--space-12);
+}
+.prose .footnotes hr {
+	border: none;
+	border-top: 1px solid var(--color-border);
+	margin-bottom: var(--space-6);
+}
+.prose .footnotes ol {
+	padding-left: var(--space-6);
+	color: var(--color-text-muted);
+	font-size: var(--font-size-sm);
+}
+.prose .footnotes li {
+	margin-bottom: var(--space-3);
+	line-height: 1.6;
+}
+.prose .footnote-back {
+	color: var(--color-primary);
+	text-decoration: none;
+	margin-left: 0.25em;
+}
+.prose .footnote-back:hover {
+	text-decoration: underline;
 }
 
 /* ── Post footer ─────────────────────────────────────────── */

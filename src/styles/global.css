@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap');
 
 /* ── Variables ─────────────────────────────────────────── */
 :root {
     /* Premium Brand Colors */
-    --color-primary: #4f46e5;       /* Indigo */
-    --color-primary-dark: #3730a3;
-    --color-primary-light: #818cf8;
-    --color-accent: #06b6d4;        /* Cyan */
-    --color-bg: #fafafa;            /* Neutral light */
+    --color-primary: #0CA5C8;       /* Indigo */
+    --color-primary-dark: #087F8B;
+    --color-primary-light: #81E6D9;
+    --color-accent: #C85B0B;        /* Cyan */
+    --color-bg: #F4EFE9;            /* Neutral light */
     --color-bg-muted: #f3f4f6;
     --color-text: #111827;          /* Slate 900 */
     --color-text-muted: #4b5563;    /* Slate 600 */
@@ -19,8 +18,10 @@
     --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 
     /* Typography */
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-heading: 'Outfit', system-ui, sans-serif;
+    --font-primary: var(--font-birdie);
+    --font-secondary: var(--font-roboto-mono);
+    --font-accent: var(--font-homemade-apple);
+    
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
     --font-size-lg: 1.125rem;
@@ -44,6 +45,8 @@
     /* Layout */
     --responsive-width: 92%;
     --max-width: 1280px;
+
+    --radius: 3px;
     --radius-sm: 6px;
     --radius-md: 12px;
     --radius-lg: 20px;
@@ -67,7 +70,7 @@
 
 /* ── Base ──────────────────────────────────────────────── */
 html {
-    font-family: var(--font-sans);
+    font-family: var(--font-secondary);
     font-size: var(--font-size-base);
     color: var(--color-text);
     background-color: var(--color-bg);
@@ -80,6 +83,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    font-family: var(--font-secondary);
 }
 
 img,
@@ -105,7 +110,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-primary);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-text);

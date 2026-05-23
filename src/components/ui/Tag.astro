@@ -1,0 +1,34 @@
+---
+type Props = {
+	label: string;
+	variant?: 'default' | 'overlay';
+};
+
+const { label, variant = 'default' } = Astro.props;
+---
+
+<span class:list={['tag', `tag--${variant}`]}>{label}</span>
+
+<style>
+	.tag {
+		display: inline-block;
+		font-size: 0.62rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		border-radius: 999px;
+		padding: 0.25rem 0.65rem;
+	}
+
+	.tag--default {
+		color: #5A6A80;
+		background: #EDF1F5;
+	}
+
+	.tag--overlay {
+		color: #fff;
+		background: rgba(0, 0, 0, 0.35);
+		backdrop-filter: blur(4px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+</style>

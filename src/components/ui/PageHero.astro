@@ -1,0 +1,109 @@
+---
+type Category = {
+	label: string;
+	icon: string;
+};
+
+type Props = {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	categories?: Category[];
+};
+
+const { eyebrow, title, subtitle, categories } = Astro.props;
+---
+
+<section class="page-hero">
+	{eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
+	<h1 class="page-hero__title">{title}</h1>
+	{subtitle && <p class="page-hero__subtitle">{subtitle}</p>}
+
+	{categories && categories.length > 0 && (
+		<nav class="page-hero__categories" aria-label="Categories">
+			{categories.map((cat) => (
+				<button class="page-hero__cat" type="button">
+					<span class="page-hero__cat-icon" set:html={cat.icon} />
+					<span class="page-hero__cat-label">{cat.label}</span>
+				</button>
+			))}
+		</nav>
+	)}
+</section>
+
+<style>
+	.page-hero {
+		text-align: center;
+		padding: 4rem 1.5rem 3rem;
+	}
+
+	.page-hero__eyebrow {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: #8A9AB0;
+		margin-bottom: 1rem;
+	}
+
+	.page-hero__title {
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: clamp(2.5rem, 6vw, 3.75rem);
+		font-weight: 700;
+		color: #2D3A5C;
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+		margin-bottom: 0.6rem;
+	}
+
+	.page-hero__subtitle {
+		font-family: Georgia, 'Times New Roman', serif;
+		font-style: italic;
+		font-size: 1.05rem;
+		color: #8A9AB0;
+		margin-bottom: 2.5rem;
+	}
+
+	.page-hero__categories {
+		display: flex;
+		justify-content: center;
+		gap: 2.5rem;
+		flex-wrap: wrap;
+	}
+
+	.page-hero__cat {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.6rem;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.page-hero__cat-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 52px;
+		height: 52px;
+		background: #EDEAE5;
+		border-radius: 14px;
+		color: #5A6A80;
+		transition: background 0.2s ease, color 0.2s ease;
+	}
+
+	.page-hero__cat:hover .page-hero__cat-icon {
+		background: #2D3A5C;
+		color: white;
+	}
+
+	.page-hero__cat-label {
+		font-size: 0.65rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #8A9AB0;
+	}
+</style>

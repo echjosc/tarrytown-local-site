@@ -1,0 +1,28 @@
+---
+const { id } = Astro.props;
+---
+<li class="markdoc-footnote" id={`fn-${id}`}>
+	<slot class="text" />
+	<a href={`#fnref-${id}`} class="markdoc-footnote-back" aria-label="Back to reference"> ↩</a>
+</li>
+
+<style lang="scss" is:global>
+	.markdoc-footnote {
+		font-size: 0.875rem;
+		line-height: 1.5;
+		margin-top: 0.5rem;
+		position: relative;
+
+
+		p {
+			margin: 0;
+			display: inline;
+			// allow for breaking long words in footnotes
+			word-break: break-word;
+		}
+
+
+	}
+	
+
+</style>

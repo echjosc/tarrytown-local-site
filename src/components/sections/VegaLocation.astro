@@ -1,0 +1,262 @@
+---
+type HoursRow = {
+	days: string;
+	hours: string;
+};
+
+type Props = {
+	title?: string;
+	addressLines?: string[];
+	hoursTitle?: string;
+	hours?: HoursRow[];
+	phone?: string;
+	directionsUrl?: string;
+	directionsText?: string;
+	mapEmbedUrl?: string;
+	mapLabel?: string;
+};
+
+const {
+	title = "Find Us",
+	addressLines = ["123 Main Street", "Tarrytown, NY 10591"],
+	hoursTitle = "Hours of Operation",
+	hours = [
+		{ days: "Monday - Friday", hours: "7:00 AM - 6:00 PM" },
+		{ days: "Saturday", hours: "8:00 AM - 7:00 PM" },
+		{ days: "Sunday", hours: "8:00 AM - 4:00 PM" },
+	],
+	phone,
+	directionsUrl = "#",
+	directionsText = "Get Directions",
+	mapEmbedUrl,
+	mapLabel = "Our location on the map",
+} = Astro.props;
+---
+
+<section class="vega-location">
+	<div class="container">
+		<!-- Map -->
+		<div class="map-frame">
+			{mapEmbedUrl ? (
+				<iframe
+					src={mapEmbedUrl}
+					title={mapLabel}
+					class="map-iframe"
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+					allowfullscreen
+				></iframe>
+			) : (
+				<div class="map-placeholder" aria-label={mapLabel}>
+					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+						<circle cx="12" cy="9" r="2.5"/>
+					</svg>
+				</div>
+			)}
+		</div>
+
+		<!-- Info -->
+		<div class="location-info">
+			<h2 class="location-title">{title}</h2>
+
+			<address class="location-address">
+				{addressLines.map((line) => (
+					<p>{line}</p>
+				))}
+				{phone && (
+					<a href={`tel:${phone.replace(/\D/g, "")}`} class="address-phone">{phone}</a>
+				)}
+			</address>
+
+			<div class="hours-block">
+				<h3 class="hours-title">{hoursTitle}</h3>
+				<div class="hours-rule"></div>
+				<dl class="hours-list">
+					{hours.map((row) => (
+						<div class="hours-row">
+							<dt class="hours-days">{row.days}</dt>
+							<dd class="hours-time">{row.hours}</dd>
+						</div>
+					))}
+				</dl>
+			</div>
+
+			{directionsUrl && (
+				<a href={directionsUrl} class="directions-link" target="_blank" rel="noopener noreferrer">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+					</svg>
+					{directionsText}
+				</a>
+			)}
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	.vega-location {
+		--loc-navy: #2D3A5C;
+		--loc-muted: #6B7A8D;
+		--loc-rule: #D8D3CC;
+		--loc-accent: #2D3A5C;
+		--loc-map-bg: #C8C4BC;
+
+		padding: 5rem 0 4rem;
+
+		.container {
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 0 1.5rem;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 4rem;
+			align-items: center;
+
+			@media (max-width: 680px) {
+				grid-template-columns: 1fr;
+				gap: 2.5rem;
+			}
+		}
+
+		// Map
+		.map-frame {
+			border-radius: 4px;
+			overflow: hidden;
+			aspect-ratio: 1 / 1;
+			background: var(--loc-map-bg);
+			box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+			border: 14px solid white;
+		}
+
+		.map-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+			display: block;
+		}
+
+		.map-placeholder {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				background: var(--loc-navy);
+				color: white;
+				padding: 10px;
+				border-radius: 10px;
+				width: 48px;
+				height: 48px;
+			}
+		}
+
+		// Info column
+		.location-info {
+			display: flex;
+			flex-direction: column;
+			gap: 0;
+		}
+
+		.location-title {
+			font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+			font-weight: 700;
+			color: var(--loc-navy);
+			margin-bottom: 0.75rem;
+		}
+
+		.location-address {
+			font-style: normal;
+			margin-bottom: 2rem;
+
+			p {
+				font-size: 1rem;
+				color: var(--loc-muted);
+				line-height: 1.8;
+				margin: 0;
+			}
+		}
+
+		.address-phone {
+			display: inline-block;
+			margin-top: 0.25rem;
+			font-size: 1rem;
+			color: var(--loc-muted);
+			text-decoration: none;
+			line-height: 1.8;
+
+			&:hover {
+				color: var(--loc-navy);
+			}
+		}
+
+		// Hours
+		.hours-block {
+			margin-bottom: 2rem;
+		}
+
+		.hours-title {
+			font-size: 1.1rem;
+			font-weight: 400;
+			// font-style: italic;
+			font-family: var(--font-accent), Georgia, serif;
+			color: var(--loc-navy);
+			margin-bottom: 0.75rem;
+		}
+
+		.hours-rule {
+			height: 1px;
+			background: var(--loc-rule);
+			margin-bottom: 1rem;
+		}
+
+		.hours-list {
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+		}
+
+		.hours-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			gap: 1rem;
+		}
+
+		.hours-days {
+			font-size: 0.9rem;
+			color: var(--loc-muted);
+		}
+
+		.hours-time {
+			font-size: 0.9rem;
+			font-weight: 700;
+			color: var(--loc-navy);
+			white-space: nowrap;
+			margin: 0;
+		}
+
+		// Directions link
+		.directions-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5em;
+			font-size: 0.9rem;
+			color: var(--loc-accent);
+			text-decoration: none;
+			transition: gap 0.2s ease, opacity 0.2s ease;
+
+			svg {
+				flex-shrink: 0;
+				opacity: 0.7;
+			}
+
+			&:hover {
+				gap: 0.75em;
+				opacity: 0.75;
+			}
+		}
+	}
+</style>

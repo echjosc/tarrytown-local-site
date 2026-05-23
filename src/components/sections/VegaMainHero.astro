@@ -1,0 +1,207 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Img from "@/components/ui/Img.astro";
+
+type Props = {
+	eyebrow?: string;
+	title: string;
+	description?: string;
+	imageSrc: string;
+	buttons?: { text: string; url: string }[];
+};
+
+const { eyebrow, title, description, imageSrc, buttons } = Astro.props;
+
+const titleParts = title.split(/(\{.*?\})/);
+---
+
+<section class="vega-main-hero">
+	<div class="container">
+		<div class="text-content">
+			{eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+			<h1 class="vega-main-hero-title">
+				{
+					titleParts.map((part) =>
+						part.startsWith("{") ? (
+							<span class="script">{part.slice(1, -1)}</span>
+						) : (
+							<Fragment>{part}</Fragment>
+						),
+					)
+				}
+			</h1>
+			{
+				description && (
+					<p class="vega-main-hero-description">{description}</p>
+				)
+			}
+			{
+				buttons && (
+					<div class="button-group">
+						{buttons.map((button, index) => (
+							<Button href={button.url} variant={index === 0 ? 'primary' : 'secondary'}>
+								{button.text}
+							</Button>
+						))}
+					</div>
+				)
+			}
+		</div>
+		<div class="image-content">
+			<div class="deco-circle deco-circle--1"></div>
+			<div class="deco-circle deco-circle--2"></div>
+			<div class="image-frame">
+				<Img src={imageSrc} alt="Vega Main Hero Image" class="image-img" width={800} height={900} />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style lang="scss">
+	.vega-main-hero {
+		--hero-navy: #2D3A5C;
+		--hero-circle: rgba(180, 185, 220, 0.35);
+
+		padding: 5rem 0 4rem;
+
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 3rem;
+			align-items: center;
+		}
+
+		.text-content {
+			flex: 1 1 0;
+			min-width: 280px;
+		}
+
+		.image-content {
+			flex: 1 1 0;
+			min-width: 280px;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+		}
+
+		.deco-circle {
+			position: absolute;
+			border-radius: 50%;
+			background: var(--hero-circle);
+			pointer-events: none;
+		}
+
+		.deco-circle--1 {
+			width: 220px;
+			height: 220px;
+			top: -10px;
+			left: 5%;
+			z-index: 0;
+		}
+
+		.deco-circle--2 {
+			width: 170px;
+			height: 170px;
+			bottom: -10px;
+			right: -2%;
+			z-index: 0;
+		}
+
+		.image-frame {
+			position: relative;
+			z-index: 1;
+			background: white;
+			padding: 14px;
+			border-radius: 4px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.14);
+			transform: rotate(-2deg);
+			max-width: 460px;
+			width: 100%;
+			box-sizing: border-box;
+
+			:global(.image-img) {
+				border-radius: 2px;
+				
+				width: 100%;
+				height: 100%;
+				aspect-ratio: 6 / 5;
+			}
+		}
+
+		.hero-eyebrow {
+			font-size: 0.72rem;
+			font-weight: 600;
+			letter-spacing: 0.14em;
+			text-transform: uppercase;
+			color: #7A8BA8;
+			margin-bottom: 1rem;
+		}
+
+		.vega-main-hero-title {
+			font-size: clamp(2.4rem, 5vw, 3.5rem);
+			font-weight: 700;
+			line-height: 1.15;
+			color: var(--hero-navy);
+			margin-bottom: 1rem;
+
+			.script {
+				font-family: var(--font-primary), sans-serif;
+				color: var(--color-primary);
+				white-space: nowrap;
+			}
+		}
+
+		.vega-main-hero-subtitle {
+			font-size: 1.15rem;
+			font-family: var(--font-accent), cursive;
+			font-style: italic;
+			color: var(--hero-navy);
+			margin-bottom: 1.25rem;
+			opacity: 0.85;
+		}
+
+		.vega-main-hero-description {
+			font-size: 1rem;
+			color: var(--color-text-muted);
+			max-width: 480px;
+			line-height: 1.7;
+			margin-bottom: 0;
+		}
+
+		.button-group {
+			display: flex;
+			gap: 1rem;
+			margin-top: 2rem;
+			flex-wrap: wrap;
+
+			:global(.ui-button) {
+				background-color: var(--hero-navy);
+				color: white;
+				font-size: 0.9rem;
+				font-weight: 600;
+				padding: 0.7em 1.6em;
+				border-radius: 999px;
+				border: 2px solid var(--hero-navy);
+				transition: background-color 0.25s ease, color 0.25s ease;
+
+				&:hover {
+					background-color: #1e2a45;
+					color: white;
+				}
+			}
+
+			:global(.ui-button--secondary) {
+				background-color: transparent;
+				color: var(--hero-navy);
+				border: 2px solid var(--hero-navy);
+
+				&:hover {
+					background-color: var(--hero-navy);
+					color: white;
+				}
+			}
+		}
+	}
+</style>

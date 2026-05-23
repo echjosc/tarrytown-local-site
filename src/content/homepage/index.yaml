@@ -1,0 +1,32 @@
+hero:
+  eyebrow: Coming Spring 2025!
+  headline: Your neighborhood spot for {damn good} food.
+  description: >-
+    A chef-led café, mill & bakery, and neighborhood grocer. Stocked with the
+    best local, sustainable, and healthful ingredients we can get our hands on.
+  buttons:
+    - text: Peek The Menu
+      url: /menu
+    - text: Our Story
+      url: /about
+  image: /src/assets/images/homepage/hero/image.jpg
+offerings:
+  sectionTitle: What We Do!
+  featured:
+    title: Dine-in Cafe
+    description: >-
+      A cozy spot to enjoy our seasonal menu and fresh baked goods. Perfect for
+      breakfast, lunch, or a casual catch-up.
+    image: /src/assets/images/homepage/offerings/featured/image.jpg
+    linkText: Explore The Menu
+    linkUrl: '#'
+  cards:
+    - title: Mill & Bakery
+      description: >-
+        We mill our own flour daily to ensure the highest nutrient density and
+        flavor in every loaf. Our pastries are the perfect accompaniment to your
+        morning coffee.
+    - title: Grab & Go
+      description: >-
+        Perfectly packed pastries and artisanal sandwiches for your Tarrytown
+        adventures.

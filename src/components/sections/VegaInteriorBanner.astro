@@ -1,0 +1,178 @@
+---
+import Tag from '@/components/ui/Tag.astro';
+
+type Props = {
+	title: string;
+	imageSrc?: string;
+	imageAlt?: string;
+	eyebrow?: string;
+	tags?: string[];
+	author?: string;
+	date?: string;
+	meta?: string;
+};
+
+const { title, imageSrc, imageAlt = title, eyebrow, tags, author, date, meta } = Astro.props;
+
+const hasImage = !!imageSrc && imageSrc.trim() !== '';
+
+function formatDate(dateStr?: string) {
+	if (!dateStr) return '';
+	return new Date(dateStr).toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
+}
+
+const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date) : null]
+	.filter(Boolean)
+	.join(' · ');
+---
+
+<div class:list={['interior-banner', hasImage ? 'interior-banner--image' : 'interior-banner--plain']}>
+	{hasImage && (
+		<>
+			<img class="interior-banner__img" src={imageSrc} alt={imageAlt} />
+			<div class="interior-banner__overlay" />
+		</>
+	)}
+
+	<div class="interior-banner__content">
+		{eyebrow && <p class="interior-banner__eyebrow">{eyebrow}</p>}
+
+		{tags && tags.length > 0 && (
+			<div class="interior-banner__tags">
+				{tags.map((tag) => <Tag label={tag} variant={hasImage ? 'overlay' : 'default'} />)}
+			</div>
+		)}
+
+		<h1 class="interior-banner__title">{title}</h1>
+
+		{metaLine && <p class="interior-banner__meta">{metaLine}</p>}
+	</div>
+</div>
+
+<style>
+	/* ── Shared ──────────────────────────────────────────────── */
+	.interior-banner {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.interior-banner__content {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		max-width: 860px;
+	}
+
+	.interior-banner__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.interior-banner__title {
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: clamp(1.75rem, 4vw, 3rem);
+		font-weight: 700;
+		line-height: 1.15;
+		margin-bottom: 0.75rem;
+		color: #2D3A5C; /* overridden to white by --image modifier */
+	}
+
+	/* ── With image ──────────────────────────────────────────── */
+	.interior-banner--image {
+		aspect-ratio: 16 / 7;
+		min-height: 320px;
+	}
+
+	.interior-banner__img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.interior-banner__overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.05) 0%,
+			rgba(0, 0, 0, 0.55) 70%,
+			rgba(0, 0, 0, 0.72) 100%
+		);
+	}
+
+	.interior-banner--image .interior-banner__content {
+		height: 100%;
+		justify-content: flex-end;
+		padding: 2.5rem 3rem;
+	}
+
+	.interior-banner--image .interior-banner__eyebrow {
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	.interior-banner--image .interior-banner__title {
+		color: #fff;
+		text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+	}
+
+	.interior-banner--image .interior-banner__meta {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	/* ── Without image ───────────────────────────────────────── */
+	.interior-banner--plain {
+		background: #F7F4F0;
+		border-bottom: 1px solid #E5E0D8;
+	}
+
+	.interior-banner--plain .interior-banner__content {
+		padding: 3.5rem 3rem 3rem;
+	}
+
+	.interior-banner--plain .interior-banner__eyebrow {
+		color: #8A9AB0;
+	}
+
+	.interior-banner--plain .interior-banner__title {
+		color: #2D3A5C;
+	}
+
+	.interior-banner--plain .interior-banner__meta {
+		color: #8A9AB0;
+	}
+
+	/* ── Shared meta ─────────────────────────────────────────── */
+	.interior-banner__eyebrow {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		margin-bottom: 0.75rem;
+		color: #8A9AB0; /* overridden to white by --image modifier */
+	}
+
+	.interior-banner__meta {
+		font-size: 0.85rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #8A9AB0; /* overridden to white by --image modifier */
+	}
+
+	@media (max-width: 640px) {
+		.interior-banner--image .interior-banner__content,
+		.interior-banner--plain .interior-banner__content {
+			padding: 1.5rem;
+		}
+	}
+</style>

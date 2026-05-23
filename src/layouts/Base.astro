@@ -1,6 +1,9 @@
 ---
+import VegaFooter from '@/components/sections/VegaFooter.astro';
+import VegaNav from '@/components/sections/VegaNav.astro';
 import Seo from '@/components/seo/Seo.astro';
 import '@/styles/global.css';
+import { Font } from 'astro:assets';
 
 interface Props {
 	title: string;
@@ -39,6 +42,10 @@ const navLinks = [
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<Font cssVariable='--font-roboto-mono' preload />
+		<Font cssVariable='--font-homemade-apple' preload />
+		<Font cssVariable='--font-birdie' preload />
+		<Font cssVariable='--font-nunito' preload />
 		<Seo
 			title={title}
 			description={description}
@@ -51,38 +58,46 @@ const navLinks = [
 		/>
 	</head>
 	<body>
-		<header class="glass-header">
-			<div class="container header-inner">
-				<a href="/" class="brand-logo">Acme<span style="color: var(--color-text);">Corp</span></a>
-				<nav class="nav-links" aria-label="Primary navigation">
-					{navLinks.map((item) => (
-						<a href={item.url}>{item.label}</a>
-					))}
-				</nav>
-				<a href="/contact" class="btn btn--primary btn-sm">Get Started</a>
-			</div>
-		</header>
+		<VegaNav
+			logoSrc="/logo.svg"
+			logoAlt="Tarrytown Local Logo"
+			links={navLinks}
+			cta={{ label: 'Subscribe', url: '/subscribe' }}
+		/>
 
 		<main class="main-content">
 			<slot />
 		</main>
 
-		<footer class="site-footer">
-			<div class="container footer-inner">
-				<div class="footer-brand">
-					<a href="/" class="brand-logo">Acme<span style="color: var(--color-text);">Corp</span></a>
-					<p class="footer-description">Professional services for modern businesses. We help you accelerate growth from strategy to execution.</p>
-				</div>
-				<nav class="footer-nav" aria-label="Footer navigation">
-					{navLinks.map((item) => (
-						<a href={item.url}>{item.label}</a>
-					))}
-				</nav>
-			</div>
-			<div class="footer-bottom container">
-				<p>&copy; {new Date().getFullYear()} Acme Corp. All rights reserved.</p>
-			</div>
-		</footer>
+		<VegaFooter
+			logoSrc="/logo.svg"
+			logoAlt="Tarrytown Local Logo"
+			tagline="Your guide to the best of Tarrytown, NY."
+			socials={[
+				{ platform: 'twitter', url: 'https://twitter.com/tarrytownlocal' },
+				{ platform: 'facebook', url: 'https://facebook.com/tarrytownlocal' },
+				{ platform: 'instagram', url: 'https://instagram.com/tarrytownlocal' },
+			]}
+			columns={[
+				{
+					heading: 'Explore',
+					links: [
+						{ label: 'Home', url: '/' },
+						{ label: 'Blog', url: '/blog' },
+						{ label: 'About', url: '/about' },
+						{ label: 'Contact', url: '/contact' },
+					],
+				},
+				{
+					heading: 'Resources',
+					links: [
+						{ label: 'Privacy Policy', url: '/privacy' },
+						{ label: 'Terms of Service', url: '/terms' },
+						{ label: 'Support Us', url: '/support' },
+					],
+				},
+			]}
+			/>
 	</body>
 </html>
 
@@ -93,7 +108,7 @@ const navLinks = [
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const lenis = new Lenis({ lerp: 0.15 });
+	const lenis = new Lenis({ lerp: 0.25 });
 
 	lenis.on('scroll', ScrollTrigger.update);
 
@@ -112,7 +127,7 @@ const navLinks = [
 	padding-block: var(--space-3);
 }
 .brand-logo {
-	font-family: var(--font-heading);
+	font-family: var(--font-primary);
 	font-weight: 800;
 	font-size: var(--font-size-2xl);
 	color: var(--color-primary);

@@ -1,0 +1,128 @@
+---
+type Props = {
+	title?: string;
+	description?: string;
+	placeholder?: string;
+	buttonText?: string;
+	formAction?: string;
+};
+
+const {
+	title = "Join the Journal",
+	description = "Receive seasonal recipes, event invitations, and morning thoughts from our kitchen to your inbox.",
+	placeholder = "Your email address",
+	buttonText = "Subscribe",
+	formAction = "#",
+} = Astro.props;
+---
+
+<section class="vega-newsletter">
+	<div class="container">
+		<h2 class="newsletter-title">{title}</h2>
+		<p class="newsletter-description">{description}</p>
+		<form class="newsletter-form" action={formAction} method="post">
+			<input
+				type="email"
+				name="email"
+				class="newsletter-input"
+				placeholder={placeholder}
+				required
+				autocomplete="email"
+			/>
+			<button type="submit" class="newsletter-button">{buttonText}</button>
+		</form>
+	</div>
+</section>
+
+<style lang="scss">
+	.vega-newsletter {
+		--nl-bg: #4E5D74;
+		--nl-text: rgba(255, 255, 255, 0.92);
+		--nl-muted: rgba(255, 255, 255, 0.6);
+		--nl-input-bg: rgba(255, 255, 255, 0.12);
+		--nl-input-border: rgba(255, 255, 255, 0.25);
+		--nl-button-bg: #F5F0E8;
+		--nl-button-text: #2D3A5C;
+
+		background-color: var(--nl-bg);
+		padding: 5rem 1.5rem;
+
+		.container {
+			margin: 0 auto;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			max-width: 800px;
+		}
+
+		.newsletter-title {
+			font-size: clamp(1.75rem, 4vw, 2.25rem);
+			font-weight: 400;
+			// font-style: italic;
+			font-family: var(--font-accent), Georgia, serif;
+			color: var(--nl-text);
+			margin-bottom: 1rem;
+			line-height: 1.2;
+		}
+
+		.newsletter-description {
+			font-size: 0.95rem;
+			color: var(--nl-muted);
+			line-height: 1.7;
+			margin-bottom: 2rem;
+		}
+
+		.newsletter-form {
+			width: 100%;
+			max-width: 380px;
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.newsletter-input {
+			width: 100%;
+			padding: 0.85em 1.25em;
+			background: var(--nl-input-bg);
+			border: 1px solid var(--nl-input-border);
+			border-radius: 8px;
+			color: var(--nl-text);
+			font-size: 0.95rem;
+			outline: none;
+			transition: border-color 0.2s ease, background 0.2s ease;
+			box-sizing: border-box;
+
+			&::placeholder {
+				color: var(--nl-muted);
+			}
+
+			&:focus {
+				border-color: rgba(255, 255, 255, 0.5);
+				background: rgba(255, 255, 255, 0.18);
+			}
+		}
+
+		.newsletter-button {
+			width: 100%;
+			padding: 0.85em 1.25em;
+			background: var(--nl-button-bg);
+			color: var(--nl-button-text);
+			font-size: 0.95rem;
+			font-weight: 500;
+			border: none;
+			border-radius: 999px;
+			cursor: pointer;
+			transition: background 0.2s ease, transform 0.15s ease;
+
+			&:hover {
+				background: #EDE6D8;
+				transform: translateY(-1px);
+			}
+
+			&:active {
+				transform: translateY(0);
+			}
+		}
+	}
+</style>
