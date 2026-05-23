@@ -1,0 +1,316 @@
+---
+import Base from "@/layouts/Base.astro";
+import VegaContactForm from "@/components/sections/VegaContactForm.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+
+const homeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+
+const clockIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+
+const floralIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 9 5 9 8a3 3 0 0 0 6 0c0-3-3-6-3-6z"/><path d="M12 22c0 0-3-3-3-6a3 3 0 0 1 6 0c0 3-3 6-3 6z"/><path d="M2 12c0 0 3-3 6-3a3 3 0 0 1 0 6c-3 0-6-3-6-3z"/><path d="M22 12c0 0-3-3-6-3a3 3 0 0 0 0 6c3 0 6-3 6-3z"/><path d="M5.64 5.64c0 0 .93 4.07 3.54 5.29"/><path d="M14.82 13.07c2.61 1.22 3.54 5.29 3.54 5.29"/><path d="M18.36 5.64c0 0-3.14 2.86-3.54 5.29"/><path d="M9.18 13.07C8.78 15.5 5.64 18.36 5.64 18.36"/><circle cx="12" cy="12" r="2"/></svg>`;
+---
+
+<Base
+	title="Contact | Tarrytown Local"
+	description="Reach out to Tarrytown Local for inquiries about private events, catering, press, or just to say hello."
+>
+	<!-- ── Hero ──────────────────────────────────────────────── -->
+	<PageHero
+		title="Get in Touch"
+		subtitle="Whether you have questions about our menu, want to book a private event, or just want to say hello, we'd love to hear from you."
+	/>
+
+	
+
+	<!-- ── Contact body ──────────────────────────────────────── -->
+	<section class="contact-body">
+		<div class="container">
+			<div class="contact-grid">
+
+				<!-- Left: Info cards -->
+				<aside class="contact-aside">
+
+					<!-- Visit Us card -->
+					<div class="info-card">
+						<div class="info-card__head">
+							<span class="info-card__icon" set:html={homeIcon} />
+							<h2 class="info-card__title">Visit Us</h2>
+						</div>
+						<dl class="info-detail">
+							<div class="info-detail__row">
+								<dt class="info-detail__term">Location</dt>
+								<dd class="info-detail__desc">Main Street, Tarrytown, NY 10591</dd>
+							</div>
+							<div class="info-detail__row">
+								<dt class="info-detail__term">Inquiries</dt>
+								<dd class="info-detail__desc">
+									<a href="mailto:info@tarrytownlocal.com">info@tarrytownlocal.com</a>
+								</dd>
+							</div>
+						</dl>
+					</div>
+
+					<!-- Our Hours card -->
+					<div class="info-card">
+						<div class="info-card__head">
+							<span class="info-card__icon" set:html={clockIcon} />
+							<h2 class="info-card__title">Our Hours</h2>
+						</div>
+						<dl class="info-hours">
+							<div class="hours-row">
+								<dt>Mon – Fri</dt>
+								<dd>8:00 AM – 8:00 PM</dd>
+							</div>
+							<div class="hours-row">
+								<dt>Sat – Sun</dt>
+								<dd>9:00 AM – 9:00 PM</dd>
+							</div>
+						</dl>
+						<div class="info-card__deco" set:html={floralIcon} />
+					</div>
+
+				</aside>
+
+				<!-- Right: Contact form -->
+				<div class="contact-form-col">
+					<VegaContactForm />
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+    <!-- ── Location card ─────────────────────────────────────── -->
+	<section class="contact-location">
+		<div class="container">
+			<div class="location-card">
+				<div class="location-grid">
+					<!-- Storefront photo — drop image at /public/assets/images/contact/storefront.jpg -->
+					<div class="location-photo-wrap">
+						<img
+							class="location-photo"
+							src="/assets/images/contact/storefront.jpg"
+							alt="Tarrytown Local storefront on Main Street"
+							loading="lazy"
+						/>
+					</div>
+					<!-- Map embed -->
+					<div class="location-map-wrap">
+						<iframe
+							class="location-map"
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.574834761402!2d-73.86047308751539!3d41.07828537122141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2ebebc5d22b43%3A0x5851844f3a0668aa!2sTarrytown%20Local!5e0!3m2!1sen!2sus!4v1779547235287!5m2!1sen!2sus"
+							title="Tarrytown Local on Google Maps"
+							loading="lazy"
+							referrerpolicy="no-referrer-when-downgrade"
+						></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Base>
+
+<style>
+	/* ── Shared container ────────────────────────────────────── */
+	.container {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	/* ── Location card ───────────────────────────────────────── */
+	.contact-location {
+		background: #F7F4F0;
+		padding: 1rem 0 3rem;
+	}
+
+	.location-card {
+		background: #E8E2D9;
+		border-radius: 16px;
+		padding: 1rem;
+	}
+
+	.location-grid {
+		display: grid;
+		grid-template-columns: 2fr 3fr;
+		gap: 1rem;
+		height: 440px;
+	}
+
+	.location-photo-wrap,
+	.location-map-wrap {
+		border-radius: 10px;
+		overflow: hidden;
+		height: 100%;
+	}
+
+	.location-photo {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		display: block;
+	}
+
+	.location-map {
+		width: 100%;
+		height: 100%;
+		border: none;
+		display: block;
+	}
+
+	@media (max-width: 768px) {
+		.location-grid {
+			grid-template-columns: 1fr;
+			height: auto;
+		}
+
+		.location-photo-wrap {
+			aspect-ratio: 4 / 3;
+			height: auto;
+		}
+
+		.location-map-wrap {
+			aspect-ratio: 4 / 3;
+			height: auto;
+		}
+	}
+
+	/* ── Contact body ────────────────────────────────────────── */
+	.contact-body {
+		background: #F7F4F0;
+		padding: 3rem 0 5rem;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: 2fr 3fr;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	@media (max-width: 768px) {
+		.contact-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* ── Info cards ──────────────────────────────────────────── */
+	.contact-aside {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.info-card {
+		background: #fff;
+		padding: 1.75rem;
+		border-radius: 3px;
+	}
+
+	.info-card__head {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.info-card__icon {
+		display: flex;
+		align-items: center;
+		color: #C9A882;
+	}
+
+	.info-card__icon :global(svg) {
+		width: 18px;
+		height: 18px;
+	}
+
+	.info-card__title {
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: #2D3A5C;
+		letter-spacing: -0.01em;
+	}
+
+	.info-detail {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.info-detail__row {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.info-detail__term {
+		font-size: 0.64rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #A0ADB8;
+	}
+
+	.info-detail__desc {
+		font-size: 0.92rem;
+		color: #2D3A5C;
+		line-height: 1.5;
+	}
+
+	.info-detail__desc a {
+		color: #2D3A5C;
+		text-decoration: none;
+		border-bottom: 1px solid #D4CCBF;
+		transition: border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.info-detail__desc a:hover {
+		color: #C9A882;
+		border-bottom-color: #C9A882;
+	}
+
+	.info-hours {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.hours-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid #EDE7DE;
+	}
+
+	.hours-row:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.hours-row dt {
+		font-size: 0.88rem;
+		color: #6B7A8D;
+	}
+
+	.hours-row dd {
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: #2D3A5C;
+	}
+
+	.info-card__deco {
+		display: flex;
+		justify-content: center;
+		margin-top: 1.5rem;
+		color: #D4CCBF;
+	}
+
+	.info-card__deco :global(svg) {
+		width: 28px;
+		height: 28px;
+	}
+</style>

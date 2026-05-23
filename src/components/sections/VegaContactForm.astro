@@ -1,0 +1,186 @@
+---
+// To enable Netlify Forms, pass netlify={true} and deploy to Netlify.
+// Netlify will detect the data-netlify attribute during build.
+
+type Props = {
+	netlify?: boolean;
+	successPath?: string;
+};
+
+const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
+---
+
+<div class="form-wrap">
+	<form
+		class="form"
+		name="contact"
+		method="POST"
+		{...(netlify ? { 'data-netlify': 'true', action: successPath } : {})}
+	>
+		{netlify && <input type="hidden" name="form-name" value="contact" />}
+
+		<div class="form-row">
+			<div class="form-field">
+				<label class="form-label" for="name">Your Name</label>
+				<input
+					class="form-input"
+					type="text"
+					id="name"
+					name="name"
+					placeholder="Jean-Luc Picard"
+					required
+				/>
+			</div>
+
+			<div class="form-field">
+				<label class="form-label" for="email">Email Address</label>
+				<input
+					class="form-input"
+					type="email"
+					id="email"
+					name="email"
+					placeholder="hello@bakery.com"
+					required
+				/>
+			</div>
+		</div>
+
+		<div class="form-field">
+			<label class="form-label" for="subject">Subject</label>
+			<input
+				class="form-input"
+				type="text"
+				id="subject"
+				name="subject"
+				placeholder="Reservation, Catering, Press..."
+			/>
+		</div>
+
+		<div class="form-field">
+			<label class="form-label" for="message">Your Message</label>
+			<textarea
+				class="form-input form-textarea"
+				id="message"
+				name="message"
+				placeholder="Tell us how we can help..."
+				rows="7"
+				required
+			></textarea>
+		</div>
+
+		<button class="form-submit" type="submit">Send Message</button>
+	</form>
+</div>
+
+<style>
+	.form-wrap {
+		position: relative;
+		background: #fff;
+		padding: 2.75rem 3rem;
+		overflow: hidden;
+		height: 100%;
+		box-sizing: border-box;
+	}
+
+	.form-watermark {
+		position: absolute;
+		top: -3.5rem;
+		right: -1rem;
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: 20rem;
+		font-weight: 800;
+		line-height: 1;
+		color: rgba(45, 58, 92, 0.035);
+		pointer-events: none;
+		user-select: none;
+		z-index: 0;
+	}
+
+	.form {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		position: relative;
+		z-index: 1;
+	}
+
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+	}
+
+	@media (max-width: 580px) {
+		.form-wrap {
+			padding: 2rem 1.5rem;
+		}
+
+		.form-row {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	.form-field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		
+	}
+
+	.form-label {
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #2D3A5C;
+	}
+
+	.form-input {
+		width: 100%;
+		border: none;
+		border-bottom: 1.5px solid #D4CCBF;
+		background: transparent;
+		padding: 0.6rem 0 0.4rem;
+		font-family: inherit;
+		font-size: 0.95rem;
+		color: #2D3A5C;
+		outline: none;
+		transition: border-color 0.2s ease;
+		box-sizing: border-box;
+	}
+
+	.form-input::placeholder {
+		color: #A0ADB8;
+	}
+
+	.form-input:focus {
+		border-bottom-color: #C9A882;
+	}
+
+	.form-textarea {
+		resize: vertical;
+		min-height: 140px;
+		line-height: 1.65;
+		resize: none;
+	}
+
+	.form-submit {
+		align-self: flex-start;
+		background: #2D3A5C;
+		color: #fff;
+		border: none;
+		padding: 0.9rem 2.25rem;
+		font-family: inherit;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition: background 0.2s ease;
+	}
+
+	.form-submit:hover {
+		background: #3D4F80;
+	}
+</style>
