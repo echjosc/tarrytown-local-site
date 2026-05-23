@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import netlify from '@astrojs/netlify';
 import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
@@ -7,6 +8,7 @@ import markdoc from '@astrojs/markdoc';
 // https://astro.build/config
 export default defineConfig({
 	output: 'static',
+	adapter: netlify(),
 	integrations: [react(), markdoc(), keystatic()],
 	vite: {
 		resolve: {
