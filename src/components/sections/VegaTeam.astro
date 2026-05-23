@@ -1,0 +1,324 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
+export type SocialLink = {
+	platform: 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'youtube' | 'website';
+	url: string;
+	label?: string;
+};
+
+export type TeamMember = {
+	name: string;
+	role: string;
+	bio: string[];
+	image?: string;
+	imageAlt?: string;
+	socials?: SocialLink[];
+};
+
+type Props = {
+	sectionTitle?: string;
+	subtitle?: string;
+	members: TeamMember[];
+};
+
+const {
+	sectionTitle = 'Meet the Team',
+	subtitle,
+	members,
+} = Astro.props;
+
+const headerIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+
+const socialIcons: Record<string, string> = {
+	instagram: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+	tiktok:    `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.73a4.85 4.85 0 0 1-1.01-.04z"/></svg>`,
+	twitter:   `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+	linkedin:  `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+	facebook:  `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+	youtube:   `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>`,
+	website:   `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+};
+
+const platformLabels: Record<string, string> = {
+	instagram: 'Instagram',
+	tiktok:    'TikTok',
+	twitter:   'Twitter / X',
+	linkedin:  'LinkedIn',
+	facebook:  'Facebook',
+	youtube:   'YouTube',
+	website:   'Website',
+};
+---
+
+<section class="team">
+	<div class="container">
+		<SectionHeader
+			title={sectionTitle}
+			subtitle={subtitle}
+			icon={headerIcon}
+		/>
+
+		<div class="team-list">
+			{members.map((member, i) => {
+				const isReverse = i % 2 === 1;
+				const initial = member.name.charAt(0).toUpperCase();
+				return (
+					<div class:list={['team-member', isReverse && 'team-member--reverse']}>
+
+						{/* Photo */}
+						<div class="member-photo-wrap">
+							<span class="member-watermark" aria-hidden="true">{initial}</span>
+							{member.image ? (
+								<img
+									class="member-photo"
+									src={member.image}
+									alt={member.imageAlt ?? member.name}
+									loading="lazy"
+								/>
+							) : (
+								<div class="member-photo member-photo--placeholder" />
+							)}
+						</div>
+
+						{/* Content */}
+						<div class="member-content">
+							<div class="member-name-wrap">
+								<h3 class="member-name">{member.name}</h3>
+								<p class="member-role">{member.role}</p>
+							</div>
+
+							<div class="member-bio">
+								{member.bio.map((para) => (
+									<p>{para}</p>
+								))}
+							</div>
+
+
+							{member.socials && member.socials.length > 0 && (
+								<div class="member-socials">
+									{member.socials.map((social) => (
+										<a
+											href={social.url}
+											class="social-link"
+											target="_blank"
+											rel="noopener noreferrer"
+											aria-label={social.label ?? platformLabels[social.platform] ?? social.platform}
+											title={social.label ?? platformLabels[social.platform] ?? social.platform}
+											set:html={socialIcons[social.platform] ?? socialIcons.website}
+										/>
+									))}
+								</div>
+							)}
+						</div>
+
+					</div>
+				);
+			})}
+		</div>
+	</div>
+</section>
+
+<style>
+	.team {
+		background: #F7F4F0;
+		padding: 5rem 0 5rem;
+	}
+
+	.container {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	/* ── Member list ─────────────────────────────────────────── */
+	.team-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5rem;
+	}
+
+	/* ── Single member row ───────────────────────────────────── */
+	.team-member {
+		display: flex;
+		gap: 4rem;
+		align-items: flex-start;
+	}
+
+	.team-member--reverse {
+		flex-direction: row-reverse;
+		text-align: right;
+	}
+
+	/* ── Photo column ────────────────────────────────────────── */
+	.member-photo-wrap {
+		position: relative;
+		flex-shrink: 0;
+		width: 300px;
+	}
+
+	.member-watermark {
+		position: absolute;
+		top: -0.5rem;
+		left: -0.75rem;
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: 10rem;
+		font-weight: 800;
+		line-height: 1;
+		color: rgba(45, 58, 92, 0.06);
+		pointer-events: none;
+		user-select: none;
+		z-index: 0;
+	}
+
+	.team-member--reverse .member-watermark {
+		left: auto;
+		right: -0.75rem;
+	}
+
+	.member-photo {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		aspect-ratio: 3 / 4;
+		object-fit: cover;
+		object-position: top center;
+		display: block;
+	}
+
+	.member-photo--placeholder {
+		background: #E5DDD5;
+	}
+
+	/* ── Content column ──────────────────────────────────────── */
+	.member-content {
+		flex: 1;
+		padding-top: 0.5rem;
+	}
+
+	/* Name + role block with accent border */
+	.member-name-wrap {
+		border-left: 3px solid #C9A882;
+		padding-left: 1.25rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.team-member--reverse .member-name-wrap {
+		border-left: none;
+		border-right: 3px solid #C9A882;
+		padding-left: 0;
+		padding-right: 1.25rem;
+		text-align: right;
+	}
+
+	.member-name {
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+		font-weight: 700;
+		color: #2D3A5C;
+		line-height: 1.1;
+		margin-bottom: 0.4rem;
+	}
+
+	.member-role {
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #8A9AB0;
+	}
+
+	/* Bio paragraphs */
+	.member-bio {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.member-bio p {
+		font-size: 0.95rem;
+		line-height: 1.75;
+		color: #6B7A8D;
+		margin: 0;
+	}
+
+	/* Small decorative icon */
+	.member-icon {
+		display: block;
+		margin-top: 1.5rem;
+		color: #A0ADB8;
+	}
+
+	.member-icon :global(svg) {
+		width: 20px;
+		height: 20px;
+	}
+
+	/* ── Social links ────────────────────────────────────────── */
+	.member-socials {
+		display: flex;
+		gap: 0.5rem;
+		margin-top: 1.25rem;
+		flex-wrap: wrap;
+	}
+
+	.social-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		color: #6B7A8D;
+		background: rgba(45, 58, 92, 0.07);
+		text-decoration: none;
+		transition: color 0.2s ease, background 0.2s ease;
+	}
+
+	.social-link:hover {
+		color: #2D3A5C;
+		background: rgba(45, 58, 92, 0.14);
+	}
+
+	.social-link :global(svg) {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+	}
+
+	.team-member--reverse .member-socials {
+		justify-content: flex-end;
+	}
+
+	/* ── Mobile ──────────────────────────────────────────────── */
+	@media (max-width: 768px) {
+		.team-member,
+		.team-member--reverse {
+			flex-direction: column;
+			gap: 2rem;
+			text-align: left;
+		}
+
+		.member-photo-wrap {
+			width: 100%;
+			max-width: 260px;
+		}
+
+		.team-member--reverse .member-name-wrap {
+			border-left: 3px solid #C9A882;
+			border-right: none;
+			padding-left: 1.25rem;
+			padding-right: 0;
+			text-align: left;
+		}
+
+		.team-member--reverse .member-watermark {
+			left: -0.75rem;
+			right: auto;
+		}
+
+		.team-member--reverse .member-socials {
+			justify-content: flex-start;
+		}
+	}
+</style>

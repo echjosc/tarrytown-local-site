@@ -2,11 +2,13 @@
 import VegaMainHero from "@/components/sections/VegaMainHero.astro";
 import Base from "@/layouts/Base.astro";
 import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
 import VegaOfferings from "@/components/sections/VegaOfferings.astro";
 import VegaNewsletterSignup from "@/components/sections/VegaNewsletterSignup.astro";
 import VegaLocation from "@/components/sections/VegaLocation.astro";
+import VegaCommitments from "@/components/sections/VegaCommitments.astro";
+import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
 
+import keystaticConfig from '../../keystatic.config';
 const reader = createReader(process.cwd(), keystaticConfig);
 const homepage = await reader.singletons.homepage.read();
 

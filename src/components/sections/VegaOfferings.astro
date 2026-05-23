@@ -1,5 +1,6 @@
 ---
 import Img from "@/components/ui/Img.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
 
 type OfferingCard = {
 	eyebrow?: string;
@@ -23,12 +24,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 
 <section class="vega-offerings">
 	<div class="container">
-		{sectionTitle && (
-			<div class="section-header">
-				<h2 class="section-title">{sectionTitle}</h2>
-				<div class="section-rule"></div>
-			</div>
-		)}
+		{sectionTitle && <SectionHeader title={sectionTitle} />}
 
 		<div class="offerings-grid">
 			<!-- Featured card (left, large) -->
@@ -96,27 +92,6 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 			max-width: 1100px;
 			margin: 0 auto;
 			padding: 0 1.5rem;
-		}
-
-		// Section header
-		.section-header {
-			text-align: center;
-			margin-bottom: 3.5rem;
-		}
-
-		.section-title {
-			font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-			font-weight: 700;
-			color: var(--offerings-navy);
-			margin-bottom: 1rem;
-		}
-
-		.section-rule {
-			width: 56px;
-			height: 3px;
-			background: var(--offerings-rule);
-			margin: 0 auto;
-			border-radius: 2px;
 		}
 
 		// Grid layout

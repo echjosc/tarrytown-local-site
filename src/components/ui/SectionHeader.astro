@@ -1,0 +1,97 @@
+---
+type Props = {
+	title: string;
+	subtitle?: string;
+	icon?: string;  // optional SVG string centered in the divider
+	align?: 'center' | 'left';
+};
+
+const { title, subtitle, icon, align = 'center' } = Astro.props;
+---
+
+<div class:list={['section-header', `section-header--${align}`]}>
+	<h2 class="section-header__title">{title}</h2>
+
+	<div class="section-header__divider" aria-hidden="true">
+		<span class="section-header__rule" />
+		{icon && (
+			<>
+				<span class="section-header__icon" set:html={icon} />
+				<span class="section-header__rule" />
+			</>
+		)}
+	</div>
+
+	{subtitle && <p class="section-header__subtitle">{subtitle}</p>}
+</div>
+
+<style>
+	.section-header {
+		margin-bottom: 3rem;
+	}
+
+	.section-header--center {
+		text-align: center;
+	}
+
+	.section-header--left {
+		text-align: left;
+	}
+
+	.section-header__title {
+		font-family: var(--font-primary), Georgia, serif;
+		font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+		font-weight: 700;
+		color: #2D3A5C;
+		letter-spacing: -0.02em;
+		margin-bottom: 1rem;
+	}
+
+	/* ── Divider ─────────────────────────────────────────────── */
+	.section-header__divider {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-header--center .section-header__divider {
+		justify-content: center;
+	}
+
+	.section-header__rule {
+		display: block;
+		height: 2px;
+		width: 40px;
+		background: #C9A882;
+		border-radius: 2px;
+		flex-shrink: 0;
+	}
+
+	.section-header__icon {
+		display: flex;
+		align-items: center;
+		color: #6B8F80;
+		flex-shrink: 0;
+	}
+
+	.section-header__icon :global(svg) {
+		width: 18px;
+		height: 18px;
+	}
+
+	/* ── Subtitle ────────────────────────────────────────────── */
+	.section-header__subtitle {
+		font-family: Georgia, 'Times New Roman', serif;
+		font-style: italic;
+		font-size: 1rem;
+		color: #6B7A8D;
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.section-header--center .section-header__subtitle {
+		max-width: 560px;
+		margin-inline: auto;
+	}
+</style>

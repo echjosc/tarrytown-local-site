@@ -29,8 +29,8 @@ const {
 
 const navLinks = [
 	{ label: 'Home', url: '/' },
-	{ label: 'Blog', url: '/blog' },
 	{ label: 'About', url: '/about' },
+	{ label: 'Blog', url: '/blog' },
 	{ label: 'Contact', url: '/contact' },
 ];
 ---
@@ -62,7 +62,7 @@ const navLinks = [
 			logoSrc="/logo.svg"
 			logoAlt="Tarrytown Local Logo"
 			links={navLinks}
-			cta={{ label: 'Subscribe', url: '/subscribe' }}
+			cta={{ label: 'Call Us!', url: 'tel:+1234567890' }}
 		/>
 
 		<main class="main-content">
@@ -81,19 +81,14 @@ const navLinks = [
 			columns={[
 				{
 					heading: 'Explore',
-					links: [
-						{ label: 'Home', url: '/' },
-						{ label: 'Blog', url: '/blog' },
-						{ label: 'About', url: '/about' },
-						{ label: 'Contact', url: '/contact' },
-					],
+					links: navLinks,
 				},
 				{
 					heading: 'Resources',
 					links: [
+						{ label: 'FAQs', url: '/faqs' },
 						{ label: 'Privacy Policy', url: '/privacy' },
 						{ label: 'Terms of Service', url: '/terms' },
-						{ label: 'Support Us', url: '/support' },
 					],
 				},
 			]}
