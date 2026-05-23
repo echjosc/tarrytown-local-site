@@ -30,7 +30,11 @@ export const Footnotes = wrapper({
 });
 export default config({
     storage: {
-        kind: 'local',
+        kind: 'github',
+        repo: {
+            name: 'tarrytown-local-site',
+            owner: 'echjosc',
+        },
     },
     collections: {
         posts: collection({
