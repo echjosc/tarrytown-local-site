@@ -54,7 +54,7 @@ const resolvedIcon = icon ?? defaultIcon;
 					<div class="sourcing__photo-frame">
 						<div class="sourcing__photo-inner">
 							<Img
-								src={image.src}
+								src={image.src || '/src/assets/images/placeholder.png'}
 								alt={image.alt}
 								width={360}
 								height={280}
