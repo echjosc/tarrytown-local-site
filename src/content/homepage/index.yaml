@@ -1,8 +1,8 @@
 hero:
   buttons: []
-  image: /src/assets/images/homepage/hero/image.png
+  image: /images/homepage/hero/image.png
 offerings:
   sectionTitle: What We Do
   featured:
-    image: /src/assets/images/homepage/offerings/featured/image.png
+    image: /images/homepage/offerings/featured/image.png
   cards: []

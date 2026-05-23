@@ -129,8 +129,8 @@ export default config({
                     ),
                     image: fields.image({
                         label: 'Featured Image',
-                        directory: 'src/assets/images/homepage',
-                        publicPath: '/src/assets/images/homepage/',
+                        directory: 'public/images/homepage/hero',
+                        publicPath: '/images/homepage/hero/',
                         description: 'Hero image for the homepage',
                     })
                 }, {
@@ -146,8 +146,8 @@ export default config({
                         description: fields.text({ label: 'Description', multiline: true }),
                         image: fields.image({
                             label: 'Image',
-                            directory: 'src/assets/images/homepage',
-                            publicPath: '/src/assets/images/homepage/',
+                            directory: 'public/images/homepage/offerings/featured',
+                            publicPath: '/images/homepage/offerings/featured/',
                         }),
                         imageAlt: fields.text({ label: 'Image Alt Text' }),
                         linkText: fields.text({ label: 'Link Text' }),
