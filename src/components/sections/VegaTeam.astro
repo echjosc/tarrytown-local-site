@@ -68,7 +68,6 @@ const platformLabels: Record<string, string> = {
 
 						{/* Photo */}
 						<div class="member-photo-wrap">
-							<span class="member-watermark" aria-hidden="true">{initial}</span>
 							{member.image ? (
 								<img
 									class="member-photo"
@@ -184,6 +183,7 @@ const platformLabels: Record<string, string> = {
 		object-fit: cover;
 		object-position: top center;
 		display: block;
+		border-radius: 4px;
 	}
 
 	.member-photo--placeholder {
