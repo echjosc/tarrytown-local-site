@@ -335,14 +335,11 @@ export default config({
                         fields.object({
                             name: fields.text({ label: 'Name' }),
                             role: fields.text({ label: 'Role / Title' }),
-                            bio: fields.array(
-                                fields.text({ label: 'Paragraph', multiline: true }),
-                                {
-                                    label: 'Bio',
-                                    description: 'Each entry is a separate paragraph',
-                                    itemLabel: (props) => props.value ? props.value.substring(0, 50) : 'New Paragraph',
-                                }
-                            ),
+                            bio: fields.text({
+                                label: 'Bio',
+                                multiline: true,
+                                description: 'Separate paragraphs with a blank line',
+                            }),
                             image: fields.image({
                                 label: 'Photo',
                                 directory: 'public/images/about/team',

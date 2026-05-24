@@ -67,7 +67,7 @@ const aboutpage = await reader.singletons.aboutpage.read();
 		members={(aboutpage?.team?.members ?? []).map((member) => ({
 			name: member.name,
 			role: member.role,
-			bio: member.bio,
+			bio: (member.bio || '').split('\n\n').filter(Boolean),
 			image: member.image || undefined,
 			imageAlt: member.imageAlt || undefined,
 			socials: member.socials?.length
