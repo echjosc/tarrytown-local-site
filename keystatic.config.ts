@@ -38,7 +38,7 @@ export default config({
     },
     ui: {
         navigation: {
-            'Pages': ['homepage', 'aboutpage', 'farmersPage'],
+            'Pages': ['homepage', 'aboutpage', 'farmersPage', 'contactPage'],
             'Global': ['businessInfo', 'team'],
             'Blog': ['posts'],
         },
@@ -120,6 +120,24 @@ export default config({
                         itemLabel: (props) => props.fields.days.value || 'New Hours Row',
                     }
                 ),
+                mapEmbedUrl: fields.text({ label: 'Google Maps Embed URL', description: 'Paste the full embed URL from Google Maps → Share → Embed a map' }),
+            },
+        }),
+        contactPage: singleton({
+            label: 'Contact Page',
+            path: 'src/content/contactpage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                heroTitle: fields.text({ label: 'Hero Title' }),
+                heroSubtitle: fields.text({ label: 'Hero Subtitle', multiline: true }),
+                storefrontImage: fields.image({
+                    label: 'Storefront Photo',
+                    directory: 'public/images/contact',
+                    publicPath: '/images/contact/',
+                    description: 'Photo shown next to the map at the bottom of the page',
+                }),
+                storefrontImageAlt: fields.text({ label: 'Storefront Photo Alt Text' }),
             },
         }),
         farmersPage: singleton({
@@ -275,13 +293,12 @@ export default config({
                     buttonText: fields.text({ label: 'Button Text', defaultValue: 'Subscribe' }),
                 }, { label: 'Newsletter Section' }),
 
-                // Location Section (address, phone & hours come from Business Info)
+                // Location Section (address, phone, hours & map come from Business Info)
                 location: fields.object({
                     title: fields.text({ label: 'Section Title', defaultValue: 'Find Us' }),
                     hoursTitle: fields.text({ label: 'Hours Heading', defaultValue: 'Hours of Operation' }),
                     directionsUrl: fields.text({ label: 'Directions URL', description: 'Link for the "Get Directions" button' }),
                     directionsText: fields.text({ label: 'Directions Link Text', defaultValue: 'Get Directions' }),
-                    mapEmbedUrl: fields.text({ label: 'Google Maps Embed URL', description: 'Paste the full embed URL from Google Maps → Share → Embed a map' }),
                     mapLabel: fields.text({ label: 'Map Accessibility Label', defaultValue: 'Our location on the map' }),
                 }, { label: 'Location Section' }),
 
