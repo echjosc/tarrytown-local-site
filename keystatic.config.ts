@@ -94,18 +94,25 @@ export default config({
             path: 'src/content/business-info/',
             schema: {
                 name: fields.text({ label: 'Business Name' }),
-                address: fields.text({ label: 'Business Address' }),
-                phone: fields.text({ label: 'Business Phone' }),
-                email: fields.text({ label: 'Business Email' }),
-                hours: fields.object({
-                    monday: fields.text({ label: 'Monday Hours' }),
-                    tuesday: fields.text({ label: 'Tuesday Hours' }),
-                    wednesday: fields.text({ label: 'Wednesday Hours' }),
-                    thursday: fields.text({ label: 'Thursday Hours' }),
-                    friday: fields.text({ label: 'Friday Hours' }),
-                    saturday: fields.text({ label: 'Saturday Hours' }),
-                    sunday: fields.text({ label: 'Sunday Hours' }),
-                }, { label: 'Business Hours' })
+                addressLines: fields.array(
+                    fields.text({ label: 'Address Line' }),
+                    {
+                        label: 'Address',
+                        itemLabel: (props) => props.value || 'New Line',
+                    }
+                ),
+                phone: fields.text({ label: 'Phone Number' }),
+                email: fields.text({ label: 'Email Address' }),
+                hours: fields.array(
+                    fields.object({
+                        days: fields.text({ label: 'Days' }),
+                        hours: fields.text({ label: 'Hours' }),
+                    }),
+                    {
+                        label: 'Hours',
+                        itemLabel: (props) => props.fields.days.value || 'New Hours Row',
+                    }
+                ),
             },
         }),
         homepage: singleton({
@@ -166,6 +173,76 @@ export default config({
                         }
                     ),
                 }, { label: 'Offerings Section' }),
+
+                // Newsletter Section
+                newsletter: fields.object({
+                    title: fields.text({ label: 'Title', defaultValue: 'Stay in the Loop' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    placeholder: fields.text({ label: 'Input Placeholder', defaultValue: 'Enter your email address' }),
+                    buttonText: fields.text({ label: 'Button Text', defaultValue: 'Subscribe' }),
+                }, { label: 'Newsletter Section' }),
+
+                // Location Section (address, phone & hours come from Business Info)
+                location: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Find Us' }),
+                    hoursTitle: fields.text({ label: 'Hours Heading', defaultValue: 'Hours of Operation' }),
+                    directionsUrl: fields.text({ label: 'Directions URL', description: 'Link for the "Get Directions" button' }),
+                    directionsText: fields.text({ label: 'Directions Link Text', defaultValue: 'Get Directions' }),
+                    mapEmbedUrl: fields.text({ label: 'Google Maps Embed URL', description: 'Paste the full embed URL from Google Maps → Share → Embed a map' }),
+                    mapLabel: fields.text({ label: 'Map Accessibility Label', defaultValue: 'Our location on the map' }),
+                }, { label: 'Location Section' }),
+
+                // Commitments Section
+                commitments: fields.object({
+                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Our Commitments' }),
+                    sectionSubtitle: fields.text({ label: 'Section Subtitle', multiline: true }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                            tagline: fields.text({ label: 'Tagline', description: 'Optional italic accent line shown at the bottom of the card' }),
+                            variant: fields.select({
+                                label: 'Card Style',
+                                options: [
+                                    { label: 'Light', value: 'light' },
+                                    { label: 'Dark', value: 'dark' },
+                                ],
+                                defaultValue: 'light',
+                            }),
+                        }),
+                        {
+                            label: 'Commitment Items',
+                            description: 'First 2 items appear in a larger 2-column row; remaining items fill a 3-column row',
+                            itemLabel: (props) => props.fields.title.value || 'New Item',
+                        }
+                    ),
+                }, { label: 'Commitments Section' }),
+
+                // Sourcing Standards Section
+                sourcingStandards: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Our sourcing standards' }),
+                    watermarkText: fields.text({ label: 'Watermark Text', description: 'Large decorative text displayed behind the heading' }),
+                    body: fields.text({ label: 'Body Text', multiline: true }),
+                    image: fields.object({
+                        src: fields.image({
+                            label: 'Photo',
+                            directory: 'public/images/homepage/sourcing',
+                            publicPath: '/images/homepage/sourcing/',
+                        }),
+                        alt: fields.text({ label: 'Image Alt Text' }),
+                        caption: fields.text({ label: 'Caption', description: 'Optional caption shown below the photo' }),
+                    }, { label: 'Photo' }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Standard Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                        }),
+                        {
+                            label: 'Standards',
+                            itemLabel: (props) => props.fields.title.value || 'New Standard',
+                        }
+                    ),
+                }, { label: 'Sourcing Standards Section' }),
 
             },
         }),

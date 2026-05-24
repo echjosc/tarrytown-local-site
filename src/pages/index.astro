@@ -11,6 +11,7 @@ import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.a
 import keystaticConfig from '../../keystatic.config';
 const reader = createReader(process.cwd(), keystaticConfig);
 const homepage = await reader.singletons.homepage.read();
+const businessInfo = await reader.singletons.businessInfo.read();
 
 ---
 
@@ -76,40 +77,60 @@ const homepage = await reader.singletons.homepage.read();
 
 	<!-- Newsletter Signup -->
 	<VegaNewsletterSignup
-		title="Stay in the Loop"
-		description="Sign up for our newsletter to get the latest updates on our opening, menu launches, and special events. We promise to only send you the good stuff."
-		placeholder="Enter your email address"
-		buttonText="Subscribe"
+		title={homepage?.newsletter?.title || "Stay in the Loop"}
+		description={homepage?.newsletter?.description || "Sign up for our newsletter to get the latest updates on our opening, menu launches, and special events. We promise to only send you the good stuff."}
+		placeholder={homepage?.newsletter?.placeholder || "Enter your email address"}
+		buttonText={homepage?.newsletter?.buttonText || "Subscribe"}
 	/>
 
-	<!-- Location Section -->
-	 <!-- const {
-	title = "Find Us",
-	addressLines = ["123 Main Street", "Tarrytown, NY 10591"],
-	hoursTitle = "Hours of Operation",
-	hours = [
-		{ days: "Monday - Friday", hours: "7:00 AM - 6:00 PM" },
-		{ days: "Saturday", hours: "8:00 AM - 7:00 PM" },
-		{ days: "Sunday", hours: "8:00 AM - 4:00 PM" },
-	],
-	directionsUrl = "#",
-	directionsText = "Get Directions",
-	mapEmbedUrl,
-	mapLabel = "Our location on the map",
-} = Astro.props; -->
+	<!-- Location Section (address, phone & hours sourced from Business Info singleton) -->
 	<VegaLocation
-		addressLines={[
-			"123 Main Street",
-			"Tarrytown, NY 10591"
-		]}
-		hours={[
+		title={homepage?.location?.title || "Find Us"}
+		addressLines={businessInfo?.addressLines?.length ? [...businessInfo.addressLines] : ["123 Main Street", "Tarrytown, NY 10591"]}
+		hoursTitle={homepage?.location?.hoursTitle || "Hours of Operation"}
+		hours={businessInfo?.hours?.length ? businessInfo.hours.map((row) => ({ ...row })) : [
 			{ days: "Monday - Friday", hours: "7am - 7pm" },
 			{ days: "Saturday", hours: "8am - 8pm" },
 			{ days: "Sunday", hours: "8am - 6pm" },
 		]}
-		mapEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.574834761402!2d-73.86047308751539!3d41.07828537122141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2ebebc5d22b43%3A0x5851844f3a0668aa!2sTarrytown%20Local!5e0!3m2!1sen!2sus!4v1779547235287!5m2!1sen!2sus"
-		mapLabel="Tarrytown Local Location"
+		phone={businessInfo?.phone || undefined}
+		directionsUrl={homepage?.location?.directionsUrl || "#"}
+		directionsText={homepage?.location?.directionsText || "Get Directions"}
+		mapEmbedUrl={homepage?.location?.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.574834761402!2d-73.86047308751539!3d41.07828537122141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2ebebc5d22b43%3A0x5851844f3a0668aa!2sTarrytown%20Local!5e0!3m2!1sen!2sus!4v1779547235287!5m2!1sen!2sus"}
+		mapLabel={homepage?.location?.mapLabel || "Tarrytown Local Location"}
 	/>
+
+	<!-- Commitments Section (rendered when items are populated) -->
+	{homepage?.commitments?.items?.length ? (
+		<VegaCommitments
+			sectionTitle={homepage.commitments.sectionTitle || "Our Commitments"}
+			sectionSubtitle={homepage.commitments.sectionSubtitle || undefined}
+			items={homepage.commitments.items.map((item) => ({
+				title: item.title,
+				description: item.description,
+				tagline: item.tagline || undefined,
+				variant: (item.variant as 'light' | 'dark') || 'light',
+			}))}
+		/>
+	) : null}
+
+	<!-- Sourcing Standards Section (rendered when items are populated) -->
+	{homepage?.sourcingStandards?.items?.length ? (
+		<VegaSourcingStandards
+			title={homepage.sourcingStandards.title || "Our sourcing standards"}
+			watermarkText={homepage.sourcingStandards.watermarkText || undefined}
+			body={homepage.sourcingStandards.body || undefined}
+			image={homepage.sourcingStandards.image?.src ? {
+				src: homepage.sourcingStandards.image.src,
+				alt: homepage.sourcingStandards.image.alt || '',
+				caption: homepage.sourcingStandards.image.caption || undefined,
+			} : undefined}
+			items={homepage.sourcingStandards.items.map((item) => ({
+				title: item.title,
+				description: item.description,
+			}))}
+		/>
+	) : null}
 </Base>
 
 <style>

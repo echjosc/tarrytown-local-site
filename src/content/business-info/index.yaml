@@ -1,4 +1,13 @@
 name: Tarrytown Local
-address: 57 N Broadway
+addressLines:
+  - 57 N Broadway
+  - Tarrytown, NY 10591
+phone: ''
 email: info@tarrytownlocal.com
-hours: {}
+hours:
+  - days: Monday - Friday
+    hours: 7am - 7pm
+  - days: Saturday
+    hours: 8am - 8pm
+  - days: Sunday
+    hours: 8am - 6pm
