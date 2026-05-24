@@ -1,0 +1,128 @@
+seoTitle: Tarrytown Local | About
+seoDescription: >-
+  Tarrytown Local is a restaurant in Tarrytown, NY. We serve seasonal,
+  locally-sourced dishes that celebrate the bounty of our region.
+hero:
+  eyebrow: ''
+  headline: "Rooted In {real food}. Built for {our community}."
+  description: >-
+    Tarrytown Local is dedicated to cultivating personal, planetary, and
+    community health through great ingredients. Our menu changes daily based on
+    what our farmers have for us and what's most delicious and nutritious right
+    now in the Hudson Valley. We use the same ingredients in the kitchen that we
+    sell on the shelves.
+  buttons: []
+commitments:
+  sectionTitle: Our Commitments
+  sectionSubtitle: >-
+    We strive to be a steward of our community and are committed to improving
+    our local food system.
+  items:
+    - title: 'Delicious, Always'
+      description: >-
+        If it doesn't taste seriously good, the values behind it don't matter.
+        Flavor is the ultimate measure of our integrity.
+      variant: light
+    - title: Nutritional Integrity
+      description: >-
+        Whole ingredients, no or minimal processing. Focus on agricultural
+        methods that focus on nutritional density.
+      variant: dark
+    - title: Accessibility
+      description: >-
+        Making it as easy as possible for you to eat well. Grocery shopping can
+        be overwhelming, and cooking is hard!
+      variant: light
+    - title: Transparency
+      description: >-
+        Communicating with our customers about everything. We tell you where
+        your food came from. You deserve to know.
+      tagline: Honesty in every harvest.
+      variant: light
+    - title: Low Waste
+      description: >-
+        Composting, scrap utilization, and reusables… we practice what we
+        preach in every single corner of our kitchen.
+      variant: light
+sourcingStandards:
+  title: Our sourcing standards
+  watermarkText: Source
+  body: >-
+    We're picky with purpose, and would rather sell you a few beautiful foods
+    than a variety of mediocrity. Everything we bring into the shop has to earn
+    its place.
+  image:
+    src: /images/homepage/hero/image.png
+    alt: A long outdoor dining table lit by string lights in an orchard
+    caption: Gatherings
+  items:
+    - title: Local First
+      description: >-
+        Hudson Valley and regional producers almost exclusively. If it travels
+        far, there is a good reason for it. We believe the shorter the distance,
+        the better the flavor.
+    - title: Ethical Practices
+      description: >-
+        Vetting all producers to ensure regenerative agriculture, soil health,
+        humane animal husbandry, fair labor. We only partner with those who
+        respect the earth and its workers.
+    - title: Market Awareness
+      description: >-
+        Working to create better markets for our local farmers. We purchase
+        directly from producers in a way that is mutually beneficial and
+        responds to their seasonal needs.
+team:
+  sectionTitle: Meet the Team
+  subtitle: >-
+    Tarrytown Local is run by humans who are (maybe) a little too obsessed with
+    food systems, sourcing, and flavor.
+  members:
+    - name: Fox Schanzer
+      role: Chef & Culinary Director
+      bio:
+        - >-
+          Chef Fox spent over a decade cooking in farm-to-table restaurants and
+          fine dining kitchens, then stepped back to build a career around
+          better food systems. His approach combines technical precision with a
+          deep respect for the seasonal cycles of the Hudson Valley.
+        - >-
+          At Tarrytown Local, he crafts menus that are as informative as they
+          are delicious, ensuring that every plate tells the story of the farmer
+          who grew the ingredients.
+      image: /assets/images/team/fox.jpg
+      socials: []
+    - name: Steve Wazny
+      role: Owner & Operator
+      bio:
+        - >-
+          Steve left corporate litigation to line cook in NYC, and has become
+          fixated on reconnecting American food to regenerative agriculture. At
+          Tarrytown Local, he focuses on building the infrastructure that allows
+          small-scale regional farmers to thrive while providing the community
+          with unparalleled access to quality.
+        - >-
+          His vision for a circular local economy drives everything from our
+          sourcing decisions to our community outreach programs.
+      image: /assets/images/team/steve.jpg
+      socials: []
+    - name: Katrina Poulin
+      role: Miller & Baker
+      bio:
+        - >-
+          Katrina mills our locally-sourced grains fresh every morning, keeps
+          the starter alive, and bakes the breads that give Tarrytown Local its
+          heartbeat. Her dedication to ancient grains and slow fermentation
+          ensures every loaf is a nutrient-dense testament to craftsmanship.
+        - >-
+          By sourcing whole berries directly from regional farms and milling
+          in-house, she preserves the volatile oils and nutrients lost in
+          commercial flour production.
+      image: /assets/images/team/katrina.jpg
+      socials: []
+newsletter:
+  title: Stay in the Loop
+  description: >-
+    Sign up for our newsletter to get the latest updates on our opening, menu
+    launches, and special events. We promise to only send you the good stuff.
+  placeholder: Enter your email address
+  buttonText: Subscribe
