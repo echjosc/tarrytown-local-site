@@ -1,0 +1,116 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base
+	title="86'd"
+	description="This page has been 86'd. Not on the menu."
+>
+	<section class="not-found">
+		<div class="not-found__inner">
+
+			<p class="not-found__eyebrow">This page has been</p>
+
+			<div class="not-found__number" aria-hidden="true">86'd</div>
+
+			<p class="not-found__handwritten">not on the site.</p>
+
+			<p class="not-found__body">
+				Whatever you were looking for got cut from the kitchen.
+				Happens to the best dishes. Head back and we'll find you something good.
+			</p>
+
+			<div class="not-found__actions">
+				<a href="/" class="btn btn--primary">Back to Home</a>
+				<a href="/menu" class="btn btn--outline">See the Menu</a>
+			</div>
+
+			<div class="not-found__decoration" aria-hidden="true">
+				<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<circle cx="60" cy="60" r="56" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" />
+					<path d="M60 28C60 28 50 38 50 46a10 10 0 0 0 20 0c0-8-10-18-10-18z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M60 56v36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+					<path d="M48 70c4-4 8-4 12 0s8 4 12 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+				</svg>
+			</div>
+
+		</div>
+	</section>
+</Base>
+
+<style>
+	.not-found {
+		min-height: calc(100svh - 80px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #F7F4F0;
+		padding: 4rem 1.5rem;
+		text-align: center;
+	}
+
+	.not-found__inner {
+		position: relative;
+		max-width: 520px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0;
+	}
+
+	.not-found__eyebrow {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		margin: 0 0 1.5rem;
+	}
+
+	.not-found__number {
+		font-size: clamp(7rem, 22vw, 12rem);
+		font-weight: 800;
+		line-height: 1;
+		color: var(--color-primary);
+		letter-spacing: -0.04em;
+		margin: 0;
+		opacity: 0.15;
+		user-select: none;
+	}
+
+	.not-found__handwritten {
+		font-family: var(--font-accent), cursive;
+		font-size: clamp(2rem, 6vw, 3rem);
+		color: #2D3A5C;
+		margin: -1.5rem 0 1.75rem;
+		line-height: 1.2;
+	}
+
+	.not-found__body {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--color-text-muted);
+		max-width: 36ch;
+		margin: 0 0 2.25rem;
+	}
+
+	.not-found__actions {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.not-found__decoration {
+		margin-top: 3.5rem;
+		color: #2D3A5C;
+		opacity: 0.1;
+		width: 80px;
+		height: 80px;
+	}
+
+	.not-found__decoration svg {
+		width: 100%;
+		height: 100%;
+	}
+</style>
