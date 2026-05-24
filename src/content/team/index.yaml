@@ -5,7 +5,6 @@ members:
       Chef Fox spent over a decade cooking in farm-to-table restaurants and fine dining kitchens, then stepped back to build a career around better food systems. His approach combines technical precision with a deep respect for the seasonal cycles of the Hudson Valley.
 
       At Tarrytown Local, he crafts menus that are as informative as they are delicious, ensuring that every plate tells the story of the farmer who grew the ingredients.
-    image: /assets/images/team/fox.jpg
     socials: []
   - name: Steve Wazny
     role: Owner & Operator
@@ -13,7 +12,6 @@ members:
       Steve left corporate litigation to line cook in NYC, and has become fixated on reconnecting American food to regenerative agriculture. At Tarrytown Local, he focuses on building the infrastructure that allows small-scale regional farmers to thrive while providing the community with unparalleled access to quality.
 
       His vision for a circular local economy drives everything from our sourcing decisions to our community outreach programs.
-    image: /assets/images/team/steve.jpg
     socials: []
   - name: Katrina Poulin
     role: Miller & Baker
@@ -21,5 +19,4 @@ members:
       Katrina mills our locally-sourced grains fresh every morning, keeps the starter alive, and bakes the breads that give Tarrytown Local its heartbeat. Her dedication to ancient grains and slow fermentation ensures every loaf is a nutrient-dense testament to craftsmanship.
 
       By sourcing whole berries directly from regional farms and milling in-house, she preserves the volatile oils and nutrients lost in commercial flour production.
-    image: /assets/images/team/katrina.jpg
     socials: []

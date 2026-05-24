@@ -52,9 +52,8 @@ sourcingStandards:
     than a variety of mediocrity. Everything we bring into the shop has to earn
     its place.
   image:
-    src: /images/homepage/hero/image.png
-    alt: A long outdoor dining table lit by string lights in an orchard
-    caption: Gatherings
+    alt: ''
+    caption: ''
   items:
     - title: Local First
       description: >-
