@@ -36,6 +36,13 @@ export default config({
             owner: 'echjosc',
         },
     },
+    ui: {
+        navigation: {
+            'Pages': ['homepage', 'aboutpage', 'farmersPage'],
+            'Global': ['businessInfo', 'team'],
+            'Blog': ['posts'],
+        },
+    },
     collections: {
         posts: collection({
             label: 'Posts',
@@ -111,6 +118,92 @@ export default config({
                     {
                         label: 'Hours',
                         itemLabel: (props) => props.fields.days.value || 'New Hours Row',
+                    }
+                ),
+            },
+        }),
+        farmersPage: singleton({
+            label: 'Farmers Page',
+            path: 'src/content/farmerspage/',
+            schema: {
+                heroTitle: fields.text({ label: 'Hero Title' }),
+                heroSubtitle: fields.text({ label: 'Hero Subtitle', multiline: true }),
+                locations: fields.array(
+                    fields.object({
+                        lat: fields.number({ label: 'Latitude', description: 'Decimal latitude (e.g. 41.0785)' }),
+                        lng: fields.number({ label: 'Longitude', description: 'Decimal longitude (e.g. -73.8579)' }),
+                        title: fields.text({ label: 'Name' }),
+                        description: fields.text({ label: 'Description', multiline: true }),
+                        type: fields.select({
+                            label: 'Type',
+                            options: [
+                                { label: 'Home Base', value: 'home' },
+                                { label: 'Produce', value: 'produce' },
+                                { label: 'Meat', value: 'meat' },
+                                { label: 'Farm', value: 'farm' },
+                            ],
+                            defaultValue: 'farm',
+                        }),
+                        url: fields.text({ label: 'Website URL' }),
+                        image: fields.image({
+                            label: 'Photo',
+                            directory: 'public/images/farmers/locations',
+                            publicPath: '/images/farmers/locations/',
+                        }),
+                    }),
+                    {
+                        label: 'Map Locations',
+                        itemLabel: (props) => props.fields.title.value || 'New Location',
+                    }
+                ),
+            },
+        }),
+        team: singleton({
+            label: 'Team',
+            path: 'src/content/team/',
+            schema: {
+                members: fields.array(
+                    fields.object({
+                        name: fields.text({ label: 'Name' }),
+                        role: fields.text({ label: 'Role / Title' }),
+                        bio: fields.text({
+                            label: 'Bio',
+                            multiline: true,
+                            description: 'Separate paragraphs with a blank line',
+                        }),
+                        image: fields.image({
+                            label: 'Photo',
+                            directory: 'public/images/team',
+                            publicPath: '/images/team/',
+                        }),
+                        imageAlt: fields.text({ label: 'Image Alt Text' }),
+                        socials: fields.array(
+                            fields.object({
+                                platform: fields.select({
+                                    label: 'Platform',
+                                    options: [
+                                        { label: 'Instagram', value: 'instagram' },
+                                        { label: 'TikTok', value: 'tiktok' },
+                                        { label: 'Twitter / X', value: 'twitter' },
+                                        { label: 'LinkedIn', value: 'linkedin' },
+                                        { label: 'Facebook', value: 'facebook' },
+                                        { label: 'YouTube', value: 'youtube' },
+                                        { label: 'Website', value: 'website' },
+                                    ],
+                                    defaultValue: 'instagram',
+                                }),
+                                url: fields.text({ label: 'URL' }),
+                                label: fields.text({ label: 'Custom Label', description: 'Optional — overrides the default platform name' }),
+                            }),
+                            {
+                                label: 'Social Links',
+                                itemLabel: (props) => props.fields.platform.value || 'New Link',
+                            }
+                        ),
+                    }),
+                    {
+                        label: 'Team Members',
+                        itemLabel: (props) => props.fields.name.value || 'New Member',
                     }
                 ),
             },
@@ -342,55 +435,6 @@ export default config({
                 }, { label: 'Newsletter Section' }),
             },
         }),
-        team: singleton({
-            label: 'Team',
-            path: 'src/content/team/',
-            schema: {
-                members: fields.array(
-                    fields.object({
-                        name: fields.text({ label: 'Name' }),
-                        role: fields.text({ label: 'Role / Title' }),
-                        bio: fields.text({
-                            label: 'Bio',
-                            multiline: true,
-                            description: 'Separate paragraphs with a blank line',
-                        }),
-                        image: fields.image({
-                            label: 'Photo',
-                            directory: 'public/images/team',
-                            publicPath: '/images/team/',
-                        }),
-                        imageAlt: fields.text({ label: 'Image Alt Text' }),
-                        socials: fields.array(
-                            fields.object({
-                                platform: fields.select({
-                                    label: 'Platform',
-                                    options: [
-                                        { label: 'Instagram', value: 'instagram' },
-                                        { label: 'TikTok', value: 'tiktok' },
-                                        { label: 'Twitter / X', value: 'twitter' },
-                                        { label: 'LinkedIn', value: 'linkedin' },
-                                        { label: 'Facebook', value: 'facebook' },
-                                        { label: 'YouTube', value: 'youtube' },
-                                        { label: 'Website', value: 'website' },
-                                    ],
-                                    defaultValue: 'instagram',
-                                }),
-                                url: fields.text({ label: 'URL' }),
-                                label: fields.text({ label: 'Custom Label', description: 'Optional — overrides the default platform name' }),
-                            }),
-                            {
-                                label: 'Social Links',
-                                itemLabel: (props) => props.fields.platform.value || 'New Link',
-                            }
-                        ),
-                    }),
-                    {
-                        label: 'Team Members',
-                        itemLabel: (props) => props.fields.name.value || 'New Member',
-                    }
-                ),
-            },
-        }),
+        
     }
 });

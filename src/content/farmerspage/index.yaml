@@ -1,0 +1,24 @@
+heroTitle: The Hands That Feed Us
+heroSubtitle: >-
+  Meet the farmers and producers who grow the food we serve, and learn about
+  our commitment to supporting local agriculture and sustainable practices.
+locations:
+  - lat: 41.0785
+    lng: -73.8579
+    title: Tarrytown Local
+    description: Your one-stop shop for local produce and goods in Tarrytown, NY
+    type: home
+  - lat: 41.5182
+    lng: -73.8231
+    title: Fishkill Farms
+    description: >-
+      A family-owned farm in the Hudson Valley offering a wide variety of
+      fruits, vegetables, and flowers.
+    type: produce
+  - lat: 41.6653
+    lng: -74.5609
+    title: Majestic Farm
+    description: >-
+      A sustainable farm in the Hudson Valley specializing in organic produce
+      and pasture-raised meats.
+    type: farm
