@@ -10,6 +10,7 @@ import VegaTeam from "@/components/sections/VegaTeam.astro";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const aboutpage = await reader.singletons.aboutpage.read();
+const team = await reader.singletons.team.read();
 ---
 
 <Base
@@ -64,7 +65,7 @@ const aboutpage = await reader.singletons.aboutpage.read();
 	<VegaTeam
 		sectionTitle={aboutpage?.team?.sectionTitle || "Meet the Team"}
 		subtitle={aboutpage?.team?.subtitle || undefined}
-		members={(aboutpage?.team?.members ?? []).map((member) => ({
+		members={(team?.members ?? []).map((member) => ({
 			name: member.name,
 			role: member.role,
 			bio: (member.bio || '').split('\n\n').filter(Boolean),
