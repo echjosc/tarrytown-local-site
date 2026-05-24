@@ -3,14 +3,14 @@ seoDescription: >-
   Tarrytown Local is a restaurant in Tarrytown, NY. We serve seasonal,
   locally-sourced dishes that celebrate the bounty of our region.
 hero:
-  eyebrow: ''
-  headline: "Rooted In {real food}. Built for {our community}."
+  headline: Rooted In {real food}. Built for {our community}.
   description: >-
     Tarrytown Local is dedicated to cultivating personal, planetary, and
     community health through great ingredients. Our menu changes daily based on
     what our farmers have for us and what's most delicious and nutritious right
     now in the Hudson Valley. We use the same ingredients in the kitchen that we
     sell on the shelves.
+  image: /images/about/hero/hero/image.png
   buttons: []
 commitments:
   sectionTitle: Our Commitments
@@ -18,7 +18,7 @@ commitments:
     We strive to be a steward of our community and are committed to improving
     our local food system.
   items:
-    - title: 'Delicious, Always'
+    - title: Delicious, Always
       description: >-
         If it doesn't taste seriously good, the values behind it don't matter.
         Flavor is the ultimate measure of our integrity.
@@ -41,8 +41,8 @@ commitments:
       variant: light
     - title: Low Waste
       description: >-
-        Composting, scrap utilization, and reusables… we practice what we
-        preach in every single corner of our kitchen.
+        Composting, scrap utilization, and reusables… we practice what we preach
+        in every single corner of our kitchen.
       variant: light
 sourcingStandards:
   title: Our sourcing standards
@@ -51,9 +51,7 @@ sourcingStandards:
     We're picky with purpose, and would rather sell you a few beautiful foods
     than a variety of mediocrity. Everything we bring into the shop has to earn
     its place.
-  image:
-    alt: ''
-    caption: ''
+  image: {}
   items:
     - title: Local First
       description: >-
