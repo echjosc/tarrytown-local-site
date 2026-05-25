@@ -4,6 +4,8 @@ import VegaContactForm from "@/components/sections/VegaContactForm.astro";
 import PageHero from "@/components/ui/PageHero.astro";
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
+import { Image } from 'astro:assets';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const [contactPage, businessInfo] = await Promise.all([
@@ -105,14 +107,12 @@ const hours = businessInfo?.hours?.length ? businessInfo.hours : [
 			<div class="location-card">
 				<div class="location-grid">
 					<div class="location-photo-wrap">
-						{contactPage?.storefrontImage ? (
-							<img
-								class="location-photo"
-								src={contactPage.storefrontImage}
-								alt={contactPage.storefrontImageAlt || "Tarrytown Local storefront"}
-								loading="lazy"
-							/>
-						) : (
+						{contactPage?.storefrontImage ? (() => {
+							const img = resolveImage(contactPage.storefrontImage);
+							return img
+								? <Image class="location-photo" src={img} alt={contactPage.storefrontImageAlt || "Tarrytown Local storefront"} />
+								: <img class="location-photo" src={contactPage.storefrontImage} alt={contactPage.storefrontImageAlt || "Tarrytown Local storefront"} loading="lazy" />;
+						})() : (
 							<div class="location-photo-placeholder" />
 						)}
 					</div>

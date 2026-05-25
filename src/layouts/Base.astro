@@ -6,6 +6,7 @@ import '@/styles/global.css';
 import { Font } from 'astro:assets';
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
 
 interface Props {
 	title: string;
@@ -32,7 +33,7 @@ const {
 const reader = createReader(process.cwd(), keystaticConfig);
 const businessInfo = await reader.singletons.businessInfo.read();
 
-const logoSrc = businessInfo?.logo || '/logo.svg';
+const logoSrc = resolveImage(businessInfo?.logo);
 const logoAlt = businessInfo?.name || 'Tarrytown Local';
 
 const navLinks = [

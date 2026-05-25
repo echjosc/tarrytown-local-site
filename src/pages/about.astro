@@ -7,6 +7,7 @@ import VegaCommitments from "@/components/sections/VegaCommitments.astro";
 import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
 import VegaNewsletterSignup from "@/components/sections/VegaNewsletterSignup.astro";
 import VegaTeam from "@/components/sections/VegaTeam.astro";
+import { resolveImage } from '@/utils/resolveImage';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const aboutpage = await reader.singletons.aboutpage.read();
@@ -22,7 +23,7 @@ const team = await reader.singletons.team.read();
 		eyebrow={aboutpage?.hero?.eyebrow || ''}
 		title={aboutpage?.hero?.headline || 'Rooted In {real food}. Built for {our community}.'}
 		description={aboutpage?.hero?.description || ''}
-		imageSrc={aboutpage?.hero?.image || "/assets/vega-hero-image.jpg"}
+		imageSrc={resolveImage(aboutpage?.hero?.image)}
 		buttons={
 			aboutpage?.hero?.buttons?.length
 				? aboutpage.hero.buttons.map((btn) => ({ text: btn.text, url: btn.url }))
@@ -51,7 +52,7 @@ const team = await reader.singletons.team.read();
 		watermarkText={aboutpage?.sourcingStandards?.watermarkText || undefined}
 		body={aboutpage?.sourcingStandards?.body || undefined}
 		image={aboutpage?.sourcingStandards?.image?.src ? {
-			src: aboutpage.sourcingStandards.image.src,
+			src: resolveImage(aboutpage.sourcingStandards.image.src) ?? aboutpage.sourcingStandards.image.src,
 			alt: aboutpage.sourcingStandards.image.alt || '',
 			caption: aboutpage.sourcingStandards.image.caption || undefined,
 		} : undefined}
@@ -69,7 +70,7 @@ const team = await reader.singletons.team.read();
 			name: member.name,
 			role: member.role,
 			bio: (member.bio || '').split('\n\n').filter(Boolean),
-			image: member.image || undefined,
+			image: resolveImage(member.image) ?? member.image ?? undefined,
 			imageAlt: member.imageAlt || undefined,
 			socials: member.socials?.length
 				? member.socials.map((s) => ({

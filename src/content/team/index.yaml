@@ -11,7 +11,7 @@ members:
       At Tarrytown Local, he crafts menus that are as informative as they are
       delicious, ensuring that every plate tells the story of the farmer who
       grew the ingredients.
-    image: /images/team/members/0/image.jpeg
+    image: '@assets/images/team/members/0/image.jpeg'
     socials: []
   - name: Steve Wazny
     role: Owner & Operator
@@ -25,7 +25,7 @@ members:
 
       His vision for a circular local economy drives everything from our
       sourcing decisions to our community outreach programs.
-    image: /images/team/members/1/image.jpg
+    image: '@assets/images/team/members/1/image.jpg'
     socials: []
   - name: Katrina Poulin
     role: Miller & Baker
@@ -39,5 +39,5 @@ members:
       By sourcing whole berries directly from regional farms and milling
       in-house, she preserves the volatile oils and nutrients lost in commercial
       flour production.
-    image: /images/team/members/2/image.jpg
+    image: '@assets/images/team/members/2/image.jpg'
     socials: []

@@ -10,6 +10,7 @@ import VegaPhilosophyBanner from "@/components/sections/VegaPhilosophyBanner.ast
 import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
 
 import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
 const reader = createReader(process.cwd(), keystaticConfig);
 const homepage = await reader.singletons.homepage.read();
 const businessInfo = await reader.singletons.businessInfo.read();
@@ -25,7 +26,7 @@ const businessInfo = await reader.singletons.businessInfo.read();
 		eyebrow={homepage?.hero.eyebrow || 'Coming Spring 2025'}
 		title={homepage?.hero.headline || 'Welcome to Tarrytown Local'}
 		description={homepage?.hero.description || 'Experience the best of our region with every bite. Join us for a meal that celebrates local flavors and community.'}
-		imageSrc={homepage?.hero.image || "/assets/vega-hero-image.jpg"}
+		imageSrc={resolveImage(homepage?.hero.image)}
 		buttons={
 			homepage?.hero.buttons
 				? homepage.hero.buttons.map((btn) => ({
@@ -46,7 +47,7 @@ const businessInfo = await reader.singletons.businessInfo.read();
 			eyebrow: homepage?.offerings?.featured?.eyebrow || undefined,
 			title: homepage?.offerings?.featured?.title || "Dine-in Cafe",
 			description: homepage?.offerings?.featured?.description || "A cozy spot to enjoy our seasonal menu, and fresh baked goods. Perfect for breakfast, lunch, or a casual catch-up.",
-			imageSrc: homepage?.offerings?.featured?.image || "/images/homepage/hero/image.png",
+			imageSrc: resolveImage(homepage?.offerings?.featured?.image),
 			imageAlt: homepage?.offerings?.featured?.imageAlt || undefined,
 			linkText: homepage?.offerings?.featured?.linkText || "Explore Our Menu",
 			linkUrl: homepage?.offerings?.featured?.linkUrl || "/menu",

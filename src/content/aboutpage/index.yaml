@@ -10,7 +10,7 @@ hero:
     what our farmers have for us and what's most delicious and nutritious right
     now in the Hudson Valley. We use the same ingredients in the kitchen that we
     sell on the shelves.
-  image: /images/about/hero/hero/image.png
+  image: '@assets/images/about/hero/hero/image.png'
   buttons: []
 commitments:
   sectionTitle: Our Commitments

@@ -1,5 +1,7 @@
 ---
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 export type SocialLink = {
 	platform: 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'youtube' | 'website';
@@ -11,7 +13,7 @@ export type TeamMember = {
 	name: string;
 	role: string;
 	bio: string[];
-	image?: string;
+	image?: ImageMetadata | string;
 	imageAlt?: string;
 	socials?: SocialLink[];
 };
@@ -68,10 +70,16 @@ const platformLabels: Record<string, string> = {
 
 						{/* Photo */}
 						<div class="member-photo-wrap">
-							{member.image ? (
-								<img
+							{member.image && typeof member.image === 'object' ? (
+								<Image
 									class="member-photo"
 									src={member.image}
+									alt={member.imageAlt ?? member.name}
+								/>
+							) : member.image ? (
+								<img
+									class="member-photo"
+									src={member.image as string}
 									alt={member.imageAlt ?? member.name}
 									loading="lazy"
 								/>

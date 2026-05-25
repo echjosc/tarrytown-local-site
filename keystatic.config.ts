@@ -66,8 +66,8 @@ export default config({
                 }),
                 featuredImage: fields.image({
                     label: 'Featured Image',
-                    directory: 'public/images/posts',
-                    publicPath: '/images/posts/',
+                    directory: 'src/assets/images/posts',
+                    publicPath: '@assets/images/posts/',
                     description: 'Hero image for the blog post',
                 }),
                 tags: fields.array(
@@ -104,8 +104,8 @@ export default config({
                 logo: fields.image({
                     label: 'Logo',
                     description: 'Ideally use a transparent PNG. Recommended dimensions: 600x400px',
-                    directory: 'public/images/business',
-                    publicPath: '/images/business/',
+                    directory: 'src/assets/images/business',
+                    publicPath: '@assets/images/business/',
                 }),
                 addressLines: fields.array(
                     fields.text({ label: 'Address Line' }),
@@ -159,8 +159,8 @@ export default config({
                 heroSubtitle: fields.text({ label: 'Hero Subtitle', multiline: true }),
                 storefrontImage: fields.image({
                     label: 'Storefront Photo',
-                    directory: 'public/images/contact',
-                    publicPath: '/images/contact/',
+                    directory: 'src/assets/images/contact',
+                    publicPath: '@assets/images/contact/',
                     description: 'Photo shown next to the map at the bottom of the page',
                 }),
                 storefrontImageAlt: fields.text({ label: 'Storefront Photo Alt Text' }),
@@ -191,8 +191,8 @@ export default config({
                         url: fields.text({ label: 'Website URL' }),
                         image: fields.image({
                             label: 'Photo',
-                            directory: 'public/images/farmers/locations',
-                            publicPath: '/images/farmers/locations/',
+                            directory: 'src/assets/images/farmers/locations',
+                            publicPath: '@assets/images/farmers/locations/',
                         }),
                     }),
                     {
@@ -217,8 +217,8 @@ export default config({
                         }),
                         image: fields.image({
                             label: 'Photo',
-                            directory: 'public/images/team',
-                            publicPath: '/images/team/',
+                            directory: 'src/assets/images/team',
+                            publicPath: '@assets/images/team/',
                         }),
                         imageAlt: fields.text({ label: 'Image Alt Text' }),
                         socials: fields.array(
@@ -273,8 +273,8 @@ export default config({
                     ),
                     image: fields.image({
                         label: 'Featured Image',
-                        directory: 'public/images/homepage/hero',
-                        publicPath: '/images/homepage/hero/',
+                        directory: 'src/assets/images/homepage/hero',
+                        publicPath: '@assets/images/homepage/hero/',
                         description: 'Hero image for the homepage',
                     })
                 }, {
@@ -290,8 +290,8 @@ export default config({
                         description: fields.text({ label: 'Description', multiline: true }),
                         image: fields.image({
                             label: 'Image',
-                            directory: 'public/images/homepage/offerings/featured',
-                            publicPath: '/images/homepage/offerings/featured/',
+                            directory: 'src/assets/images/homepage/offerings/featured',
+                            publicPath: '@assets/images/homepage/offerings/featured/',
                         }),
                         imageAlt: fields.text({ label: 'Image Alt Text' }),
                         linkText: fields.text({ label: 'Link Text' }),
@@ -365,8 +365,8 @@ export default config({
                     image: fields.object({
                         src: fields.image({
                             label: 'Photo',
-                            directory: 'public/images/homepage/sourcing',
-                            publicPath: '/images/homepage/sourcing/',
+                            directory: 'src/assets/images/homepage/sourcing',
+                            publicPath: '@assets/images/homepage/sourcing/',
                         }),
                         alt: fields.text({ label: 'Image Alt Text' }),
                         caption: fields.text({ label: 'Caption', description: 'Optional caption shown below the photo' }),
@@ -399,8 +399,8 @@ export default config({
                     description: fields.text({ label: 'Description', multiline: true }),
                     image: fields.image({
                         label: 'Hero Image',
-                        directory: 'public/images/about/hero',
-                        publicPath: '/images/about/hero/',
+                        directory: 'src/assets/images/about/hero',
+                        publicPath: '@assets/images/about/hero/',
                     }),
                     buttons: fields.array(
                         fields.object({
@@ -448,8 +448,8 @@ export default config({
                     image: fields.object({
                         src: fields.image({
                             label: 'Photo',
-                            directory: 'public/images/about/sourcing',
-                            publicPath: '/images/about/sourcing/',
+                            directory: 'src/assets/images/about/sourcing',
+                            publicPath: '@assets/images/about/sourcing/',
                         }),
                         alt: fields.text({ label: 'Image Alt Text' }),
                         caption: fields.text({ label: 'Caption', description: 'Optional caption shown below the photo' }),

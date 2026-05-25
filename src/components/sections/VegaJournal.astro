@@ -1,6 +1,8 @@
 ---
 import PageHero from '@/components/ui/PageHero.astro';
 import Tag from '@/components/ui/Tag.astro';
+import { Image } from 'astro:assets';
+import { resolveImage } from '@/utils/resolveImage';
 
 type Post = {
 	id: string;
@@ -72,15 +74,17 @@ const categories = [
 			<div class="journal-grid">
 				{posts.map((post) => (
 					<a href={`/blog/${post.id}`} class="post-card">
-						{post.data.featuredImage && (
-							<div class="post-card__image">
-								<img
-									src={post.data.featuredImage}
-									alt={post.data.title}
-									loading="lazy"
-								/>
-							</div>
-						)}
+						{post.data.featuredImage && (() => {
+							const img = resolveImage(post.data.featuredImage);
+							return (
+								<div class="post-card__image">
+									{img
+										? <Image src={img} alt={post.data.title} />
+										: <img src={post.data.featuredImage} alt={post.data.title} loading="lazy" />
+									}
+								</div>
+							);
+						})()}
 						<div class="post-card__body">
 							{post.data.tags && post.data.tags.length > 0 && (
 								<div class="post-card__tags">

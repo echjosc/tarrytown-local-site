@@ -1,10 +1,10 @@
 hero:
   buttons: []
-  image: /images/homepage/hero/image.png
+  image: '@assets/images/homepage/hero/image.png'
 offerings:
   sectionTitle: What We Do
   featured:
-    image: /images/homepage/offerings/featured/image.png
+    image: '@assets/images/homepage/offerings/featured/image.png'
   cards: []
 newsletter:
   title: Stay in the Loop

@@ -1,9 +1,11 @@
 ---
 import Tag from '@/components/ui/Tag.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 type Props = {
 	title: string;
-	imageSrc?: string;
+	imageSrc?: ImageMetadata | string;
 	imageAlt?: string;
 	eyebrow?: string;
 	tags?: string[];
@@ -14,7 +16,7 @@ type Props = {
 
 const { title, imageSrc, imageAlt = title, eyebrow, tags, author, date, meta } = Astro.props;
 
-const hasImage = !!imageSrc && imageSrc.trim() !== '';
+const hasImage = !!imageSrc && (typeof imageSrc === 'object' || (typeof imageSrc === 'string' && imageSrc.trim() !== ''));
 
 function formatDate(dateStr?: string) {
 	if (!dateStr) return '';
@@ -33,7 +35,10 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 <div class:list={['interior-banner', hasImage ? 'interior-banner--image' : 'interior-banner--plain']}>
 	{hasImage && (
 		<>
-			<img class="interior-banner__img" src={imageSrc} alt={imageAlt} />
+			{typeof imageSrc === 'object'
+				? <Image class="interior-banner__img" src={imageSrc!} alt={imageAlt} />
+				: <img class="interior-banner__img" src={imageSrc as string} alt={imageAlt} />
+			}
 			<div class="interior-banner__overlay" />
 		</>
 	)}

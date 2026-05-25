@@ -1,10 +1,13 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 type NavLink = { label: string; url: string };
 type NavColumn = { heading: string; links: NavLink[] };
 type Social = { platform: "instagram" | "pinterest" | "facebook" | "tiktok" | "twitter"; url: string };
 
 type Props = {
-	logoSrc?: string;
+	logoSrc?: ImageMetadata | string;
 	logoAlt?: string;
 	tagline?: string;
 	columns?: NavColumn[];
@@ -35,7 +38,10 @@ const socialIcons: Record<string, string> = {
 			<div class="brand-col">
 				{logoSrc && (
 					<a href="/" class="footer-logo">
-						<img src={logoSrc} alt={logoAlt} />
+						{typeof logoSrc === 'object'
+							? <Image src={logoSrc} alt={logoAlt} height={64} style="width:auto" />
+							: <img src={logoSrc as string} alt={logoAlt} />
+						}
 					</a>
 				)}
 				{tagline && <p class="footer-tagline">{tagline}</p>}

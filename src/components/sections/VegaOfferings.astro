@@ -1,12 +1,13 @@
 ---
 import Img from "@/components/ui/Img.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
+import type { ImageMetadata } from 'astro';
 
 type OfferingCard = {
 	eyebrow?: string;
 	title: string;
 	description: string;
-	imageSrc?: string;
+	imageSrc?: ImageMetadata | string;
 	imageAlt?: string;
 	icon?: string;
 	linkText?: string;
@@ -37,6 +38,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 							width={740}
 							height={460}
 							class="card-img"
+							loading="eager"
 						/>
 					</div>
 				)}

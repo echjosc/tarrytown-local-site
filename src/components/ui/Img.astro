@@ -8,16 +8,17 @@ type Props = {
     width?: number;
     height?: number;
     class?: string;
+    loading?: 'lazy' | 'eager';
 };
 
-const { src, alt, width = 800, height = 600, class: className } = Astro.props;
+const { src, alt, width = 800, height = 600, class: className, loading = 'lazy' } = Astro.props;
 ---
 
 <div class:list={["ui-image-container", className].filter(Boolean)}>
     {typeof src === 'object' && src !== null ? (
-        <Image src={src} alt={alt} width={width} height={height} class:list={["ui-image"]} />
+        <Image src={src} alt={alt} width={width} height={height} class:list={["ui-image"]} loading={loading} />
     ) : (
-        <img src={src} alt={alt} width={width} height={height} class={"ui-image"} loading="lazy" />
+        <img src={src} alt={alt} width={width} height={height} class={"ui-image"} loading={loading} />
     )}
 </div>
 

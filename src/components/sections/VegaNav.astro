@@ -1,9 +1,12 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 type NavLink = { label: string; url: string };
 
 type Props = {
 	siteName?: string;
-	logoSrc?: string;
+	logoSrc?: ImageMetadata | string;
 	logoAlt?: string;
 	links?: NavLink[];
 	cta?: { label: string; url: string };
@@ -24,9 +27,11 @@ const {
 	<div class="container">
 		<!-- Wordmark / Logo -->
 		<a href="/" class="nav-brand">
-			{logoSrc
-				? <img src={logoSrc} alt={logoAlt} height="50" />
-				: <span class="nav-wordmark">{siteName}</span>
+			{logoSrc && typeof logoSrc === 'object'
+				? <Image src={logoSrc} alt={logoAlt} height={50} style="width:auto" loading="eager" />
+				: logoSrc
+					? <img src={logoSrc} alt={logoAlt} height="50" style="width:auto" loading="eager" />
+					: <span class="nav-wordmark">{siteName}</span>
 			}
 		</a>
 

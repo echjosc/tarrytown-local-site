@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import VegaInteriorBanner from '@/components/sections/VegaInteriorBanner.astro';
+import { resolveImage } from '@/utils/resolveImage';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('posts');
@@ -37,7 +38,7 @@ const postDate = post.data.date ? new Date(post.data.date).toISOString() : undef
 
 		<VegaInteriorBanner
 			title={post.data.title}
-			imageSrc={post.data.featuredImage}
+			imageSrc={resolveImage(post.data.featuredImage) ?? post.data.featuredImage}
 			tags={post.data.tags}
 			author={post.data.author}
 			date={postDate}
