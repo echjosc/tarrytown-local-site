@@ -30,13 +30,13 @@ const secondary = items.slice(2);
 	<div class="container">
 
 		<!-- Header -->
-		<SectionHeader title={sectionTitle} subtitle={sectionSubtitle} />
+		<SectionHeader title={sectionTitle} subtitle={sectionSubtitle} data-animate="fade-up" />
 
 		<!-- Featured row (2-col) -->
 		{featured.length > 0 && (
 			<div class="commitments__featured">
 				{featured.map((item) => (
-					<div class:list={['card', item.variant === 'dark' ? 'card--dark' : 'card--light']}>
+					<div class:list={['card', item.variant === 'dark' ? 'card--dark' : 'card--light']} data-animate="fade-up" data-animate-stagger="0.08">
 						{item.icon && (
 							<span class="card__icon" set:html={item.icon} />
 						)}
@@ -54,7 +54,7 @@ const secondary = items.slice(2);
 		{secondary.length > 0 && (
 			<div class="commitments__secondary">
 				{secondary.map((item) => (
-					<div class:list={['card', item.variant === 'dark' ? 'card--dark' : 'card--light']}>
+					<div class:list={['card', item.variant === 'dark' ? 'card--dark' : 'card--light']} data-animate="fade-up-sm" data-animate-stagger="0.06">
 						{item.icon && (
 							<span class="card__icon" set:html={item.icon} />
 						)}
@@ -70,6 +70,7 @@ const secondary = items.slice(2);
 
 	</div>
 </section>
+
 
 <style>
 	.commitments {
@@ -198,4 +199,5 @@ const secondary = items.slice(2);
 	.card--dark .card__tagline {
 		color: rgba(255, 255, 255, 0.5);
 	}
+
 </style>

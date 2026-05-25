@@ -25,7 +25,7 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 	<div class="container">
 
 		{quote && (
-			<div class="philosophy__header">
+			<div class="philosophy__header" data-animate="fade-up">
 				<span class="philosophy__icon" set:html={leafIcon} />
 				<blockquote class="philosophy__quote">"{quote}"</blockquote>
 			</div>
@@ -34,7 +34,7 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 		{items.length > 0 && (
 			<div class="philosophy__grid" style={`--item-count: ${items.length}`}>
 				{items.map((item) => (
-					<div class="philosophy__item">
+					<div class="philosophy__item" data-animate="fade-up-sm" data-animate-stagger="0.1">
 						<h3 class="philosophy__item-title">{item.title}</h3>
 						<p class="philosophy__item-desc">{item.description}</p>
 					</div>
@@ -43,13 +43,14 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 		)}
 
 		{ctaText && (
-			<div class="philosophy__cta">
+			<div class="philosophy__cta" data-animate="fade-up-sm">
 				<a href={ctaUrl} class="philosophy__btn">{ctaText}</a>
 			</div>
 		)}
 
 	</div>
 </section>
+
 
 <style>
 	.philosophy {
@@ -159,4 +160,5 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 			gap: 2rem;
 		}
 	}
+
 </style>

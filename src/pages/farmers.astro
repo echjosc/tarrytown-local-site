@@ -20,23 +20,23 @@ const farmersPage = await reader.singletons.farmersPage.read();
 		subtitle={farmersPage?.heroSubtitle || undefined}
 	/>
 
-	<InteractiveMap
-		client:only="react"
-		coordinates={farmersPage?.locations?.length
-			? farmersPage.locations.map((loc) => ({
-					lat: loc.lat ?? 0,
-					lng: loc.lng ?? 0,
-					title: loc.title || undefined,
-					description: loc.description || undefined,
-					type: (loc.type as 'home' | 'produce' | 'meat' | 'farm') || 'farm',
-					url: loc.url || undefined,
-					image: loc.image || undefined,
-				}))
-			: undefined
-		}
-	/>
-
-	
+	<div data-animate="fade-up">
+		<InteractiveMap
+			client:only="react"
+			coordinates={farmersPage?.locations?.length
+				? farmersPage.locations.map((loc) => ({
+						lat: loc.lat ?? 0,
+						lng: loc.lng ?? 0,
+						title: loc.title || undefined,
+						description: loc.description || undefined,
+						type: (loc.type as 'home' | 'produce' | 'meat' | 'farm') || 'farm',
+						url: loc.url || undefined,
+						image: loc.image || undefined,
+					}))
+				: undefined
+			}
+		/>
+	</div>
 </Base>
 
 <style lang="scss">

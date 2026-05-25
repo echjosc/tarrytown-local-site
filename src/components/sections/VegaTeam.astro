@@ -60,6 +60,7 @@ const platformLabels: Record<string, string> = {
 			title={sectionTitle}
 			subtitle={subtitle}
 			icon={headerIcon}
+			data-animate="fade-up"
 		/>
 
 		<div class="team-list">
@@ -67,7 +68,7 @@ const platformLabels: Record<string, string> = {
 				const isReverse = i % 2 === 1;
 				const initial = member.name.charAt(0).toUpperCase();
 				return (
-					<div class:list={['team-member', isReverse && 'team-member--reverse']}>
+					<div class:list={['team-member', isReverse && 'team-member--reverse']} data-animate="fade-up-lg">
 
 						{/* Photo */}
 						{/* <div class="member-photo-wrap"> */}
@@ -127,6 +128,7 @@ const platformLabels: Record<string, string> = {
 		</div>
 	</div>
 </section>
+
 
 <style lang="scss">
 	$navy:        #2D3A5C;
@@ -332,4 +334,5 @@ const platformLabels: Record<string, string> = {
 			flex-shrink: 0;
 		}
 	}
+
 </style>

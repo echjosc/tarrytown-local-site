@@ -16,14 +16,14 @@ const { eyebrow, title, subtitle, categories } = Astro.props;
 
 <section class="page-hero">
 	<div class="container">
-		{eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
-		<h1 class="page-hero__title">{title}</h1>
-		{subtitle && <p class="page-hero__subtitle">{subtitle}</p>}
+		{eyebrow && <p class="page-hero__eyebrow" data-animate="fade-up">{eyebrow}</p>}
+		<h1 class="page-hero__title" data-animate="fade-up">{title}</h1>
+		{subtitle && <p class="page-hero__subtitle" data-animate="fade-up">{subtitle}</p>}
 
 		{categories && categories.length > 0 && (
 			<nav class="page-hero__categories" aria-label="Categories">
 				{categories.map((cat) => (
-					<button class="page-hero__cat" type="button">
+					<button class="page-hero__cat" type="button" data-animate="fade-up" data-animate-stagger="0.07">
 						<span class="page-hero__cat-icon" set:html={cat.icon} />
 						<span class="page-hero__cat-label">{cat.label}</span>
 					</button>

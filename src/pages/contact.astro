@@ -46,7 +46,7 @@ const hours = businessInfo?.hours?.length ? businessInfo.hours : [
 				<aside class="contact-aside">
 
 					<!-- Visit Us card -->
-					<div class="info-card">
+					<div class="info-card" data-animate="fade-up" data-animate-stagger="0.1">
 						<div class="info-card__head">
 							<span class="info-card__icon" set:html={homeIcon} />
 							<h2 class="info-card__title">Visit Us</h2>
@@ -74,7 +74,7 @@ const hours = businessInfo?.hours?.length ? businessInfo.hours : [
 					</div>
 
 					<!-- Our Hours card -->
-					<div class="info-card">
+					<div class="info-card" data-animate="fade-up" data-animate-stagger="0.1">
 						<div class="info-card__head">
 							<span class="info-card__icon" set:html={clockIcon} />
 							<h2 class="info-card__title">Our Hours</h2>
@@ -93,7 +93,7 @@ const hours = businessInfo?.hours?.length ? businessInfo.hours : [
 				</aside>
 
 				<!-- Right: Contact form -->
-				<div class="contact-form-col">
+				<div class="contact-form-col" data-animate="fade-up">
 					<VegaContactForm />
 				</div>
 
@@ -104,7 +104,7 @@ const hours = businessInfo?.hours?.length ? businessInfo.hours : [
 	<!-- ── Location card ─────────────────────────────────────── -->
 	<section class="contact-location">
 		<div class="container">
-			<div class="location-card">
+			<div class="location-card" data-animate="fade-up">
 				<div class="location-grid">
 					<div class="location-photo-wrap">
 						{contactPage?.storefrontImage ? (() => {

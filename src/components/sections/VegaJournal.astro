@@ -73,7 +73,7 @@ const categories = [
 		) : (
 			<div class="journal-grid">
 				{posts.map((post) => (
-					<a href={`/blog/${post.id}`} class="post-card">
+					<a href={`/blog/${post.id}`} class="post-card" data-animate="fade-up" data-animate-stagger="0.09">
 						{post.data.featuredImage && (() => {
 							const img = resolveImage(post.data.featuredImage);
 							return (

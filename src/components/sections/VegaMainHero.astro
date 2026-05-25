@@ -59,6 +59,33 @@ const titleParts = title.split(/(\{.*?\})/);
 	</div>
 </section>
 
+<script>
+	import gsap from "gsap";
+	import { prefersReducedMotion } from "@/lib/utils/animations";
+
+	if (!prefersReducedMotion()) {
+		const hero = document.querySelector(".vega-main-hero");
+		if (hero) {
+			const eyebrow = hero.querySelector(".hero-eyebrow");
+			const title = hero.querySelector(".vega-main-hero-title");
+			const desc = hero.querySelector(".vega-main-hero-description");
+			const buttons = hero.querySelector(".button-group");
+			const image = hero.querySelector(".image-content");
+
+			const from = { opacity: 0, y: 24 };
+			const fromImg = { opacity: 0, y: 32 };
+			const ease = "power3.out";
+
+			const tl = gsap.timeline();
+			if (eyebrow) tl.fromTo(eyebrow, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.1);
+			tl.fromTo(title, from, { opacity: 1, y: 0, duration: 0.65, ease }, 0.25)
+				.fromTo(image, fromImg, { opacity: 1, y: 0, duration: 0.75, ease }, 0.35);
+			if (desc) tl.fromTo(desc, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.45);
+			if (buttons) tl.fromTo(buttons, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.6);
+		}
+	}
+</script>
+
 <style lang="scss">
 	.vega-main-hero {
 		--hero-navy: #2D3A5C;
@@ -205,5 +232,19 @@ const titleParts = title.split(/(\{.*?\})/);
 				}
 			}
 		}
+	}
+
+	// Pre-animation states — scoped to .js so no-JS visitors see content
+	:global(.js) .hero-eyebrow,
+	:global(.js) .vega-main-hero-title,
+	:global(.js) .vega-main-hero-description,
+	:global(.js) .button-group {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+
+	:global(.js) .image-content {
+		opacity: 0;
+		transform: translateY(32px);
 	}
 </style>

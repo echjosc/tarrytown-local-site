@@ -18,9 +18,9 @@ const {
 
 <section class="vega-newsletter">
 	<div class="container">
-		<h2 class="newsletter-title">{title}</h2>
-		<p class="newsletter-description">{description}</p>
-		<form class="newsletter-form" action={formAction} method="post">
+		<h2 class="newsletter-title" data-animate="fade-up">{title}</h2>
+		<p class="newsletter-description" data-animate="fade-up-sm">{description}</p>
+		<form class="newsletter-form" data-animate="fade-up-sm" action={formAction} method="post">
 			<input
 				type="email"
 				name="email"
@@ -33,6 +33,7 @@ const {
 		</form>
 	</div>
 </section>
+
 
 <style lang="scss">
 	.vega-newsletter {
@@ -124,5 +125,6 @@ const {
 				transform: translateY(0);
 			}
 		}
+
 	}
 </style>

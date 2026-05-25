@@ -46,7 +46,7 @@ const navLinks = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,6 +66,7 @@ const navLinks = [
 			publishedTime={publishedTime}
 			modifiedTime={modifiedTime}
 		/>
+	<script is:inline>document.documentElement.classList.replace('no-js', 'js')</script>
 	</head>
 	<body>
 		<VegaNav
@@ -123,6 +124,9 @@ const navLinks = [
 	lenis.on('scroll', () => ScrollTrigger.update());
 
 	gsap.ticker.lagSmoothing(0);
+
+	import { registerScrollAnimations } from '@/lib/utils/animations';
+	registerScrollAnimations();
 </script>
 
 <style>

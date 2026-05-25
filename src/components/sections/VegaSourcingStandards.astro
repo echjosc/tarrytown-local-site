@@ -41,7 +41,7 @@ const resolvedIcon = icon ?? defaultIcon;
 		<div class="sourcing__grid">
 
 			<!-- Left column -->
-			<div class="sourcing__left">
+			<div class="sourcing__left" data-animate="fade-left">
 				{watermarkText && (
 					<span class="sourcing__watermark" aria-hidden="true">{watermarkText}</span>
 				)}
@@ -74,7 +74,7 @@ const resolvedIcon = icon ?? defaultIcon;
 			<div class="sourcing__right">
 				<ol class="sourcing__list">
 					{items.map((item, i) => (
-						<li class="sourcing__item">
+						<li class="sourcing__item" data-animate="fade-up-sm" data-animate-stagger="0.1">
 							<span class="sourcing__num">
 								{String(i + 1).padStart(2, '0')}.
 							</span>
@@ -90,6 +90,7 @@ const resolvedIcon = icon ?? defaultIcon;
 		</div>
 	</div>
 </section>
+
 
 <style>
 	.sourcing {
@@ -250,4 +251,5 @@ const resolvedIcon = icon ?? defaultIcon;
 		color: #6B7A8D;
 		margin: 0;
 	}
+
 </style>

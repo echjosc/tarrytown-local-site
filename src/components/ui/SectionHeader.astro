@@ -1,15 +1,17 @@
 ---
-type Props = {
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'div'> & {
 	title: string;
 	subtitle?: string;
-	icon?: string;  // optional SVG string centered in the divider
+	icon?: string;
 	align?: 'center' | 'left';
 };
 
-const { title, subtitle, icon, align = 'center' } = Astro.props;
+const { title, subtitle, icon, align = 'center', class: className, ...attrs } = Astro.props;
 ---
 
-<div class:list={['section-header', `section-header--${align}`]}>
+<div class:list={['section-header', `section-header--${align}`, className]} {...attrs}>
 	<h2 class="section-header__title">{title}</h2>
 
 	<div class="section-header__divider" aria-hidden="true">

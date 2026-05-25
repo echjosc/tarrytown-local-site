@@ -36,7 +36,7 @@ const {
 <section class="vega-location">
 	<div class="container">
 		<!-- Map -->
-		<div class="map-frame">
+		<div class="map-frame" data-animate="fade-left">
 			{mapEmbedUrl ? (
 				<iframe
 					src={mapEmbedUrl}
@@ -57,7 +57,7 @@ const {
 		</div>
 
 		<!-- Info -->
-		<div class="location-info">
+		<div class="location-info" data-animate="fade-right">
 			<h2 class="location-title">{title}</h2>
 
 			<address class="location-address">
@@ -93,6 +93,7 @@ const {
 		</div>
 	</div>
 </section>
+
 
 <style lang="scss">
 	.vega-location {
@@ -259,4 +260,5 @@ const {
 			}
 		}
 	}
+
 </style>

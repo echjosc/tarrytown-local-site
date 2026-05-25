@@ -25,11 +25,11 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 
 <section class="vega-offerings">
 	<div class="container">
-		{sectionTitle && <SectionHeader title={sectionTitle} />}
+		{sectionTitle && <SectionHeader title={sectionTitle} data-animate="fade-up" />}
 
 		<div class="offerings-grid">
 			<!-- Featured card (left, large) -->
-			<div class="offering-card offering-card--featured">
+			<div class="offering-card offering-card--featured" data-animate="fade-up">
 				{featured.imageSrc && (
 					<div class="card-image">
 						<Img
@@ -60,7 +60,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 			<!-- Two stacked cards (right) -->
 			<div class="offerings-stack">
 				{cards.map((card) => (
-					<div class="offering-card offering-card--compact">
+					<div class="offering-card offering-card--compact" data-animate="fade-up-sm" data-animate-stagger="0.12">
 						{card.icon && (
 							<div class="card-icon" set:html={card.icon} />
 						)}
@@ -78,6 +78,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 		</div>
 	</div>
 </section>
+
 
 <style lang="scss">
 	.vega-offerings {
@@ -217,4 +218,5 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 			font-size: 1.1em;
 		}
 	}
+
 </style>
