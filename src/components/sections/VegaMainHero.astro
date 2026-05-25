@@ -53,7 +53,7 @@ const titleParts = title.split(/(\{.*?\})/);
 			<div class="deco-circle deco-circle--1"></div>
 			<div class="deco-circle deco-circle--2"></div>
 			<div class="image-frame">
-				<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} loading="eager" />
+				<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} loading="eager" fetchpriority="high" />
 			</div>
 		</div>
 	</div>

@@ -112,13 +112,15 @@ const navLinks = [
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const lenis = new Lenis({ lerp: 0.25 });
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	lenis.on('scroll', ScrollTrigger.update);
+	const lenis = new Lenis({ lerp: 0.25 });
 
 	gsap.ticker.add((time) => {
 		lenis.raf(time * 1000);
 	});
+
+	lenis.on('scroll', () => ScrollTrigger.update());
 
 	gsap.ticker.lagSmoothing(0);
 </script>
