@@ -127,6 +127,26 @@ export default config({
                     }
                 ),
                 mapEmbedUrl: fields.text({ label: 'Google Maps Embed URL', description: 'Paste the full embed URL from Google Maps → Share → Embed a map' }),
+                socials: fields.array(
+                    fields.object({
+                        platform: fields.select({
+                            label: 'Platform',
+                            options: [
+                                { label: 'Instagram', value: 'instagram' },
+                                { label: 'Facebook', value: 'facebook' },
+                                { label: 'TikTok', value: 'tiktok' },
+                                { label: 'Twitter / X', value: 'twitter' },
+                                { label: 'Pinterest', value: 'pinterest' },
+                            ],
+                            defaultValue: 'instagram',
+                        }),
+                        url: fields.text({ label: 'Profile URL' }),
+                    }),
+                    {
+                        label: 'Social Media Links',
+                        itemLabel: (props) => props.fields.platform.value || 'New Link',
+                    }
+                ),
             },
         }),
         contactPage: singleton({

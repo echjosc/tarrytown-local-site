@@ -82,11 +82,10 @@ const navLinks = [
 			logoSrc={logoSrc}
 			logoAlt={logoAlt}
 			tagline="Your guide to the best of Tarrytown, NY."
-			socials={[
-				{ platform: 'twitter', url: 'https://twitter.com/tarrytownlocal' },
-				{ platform: 'facebook', url: 'https://facebook.com/tarrytownlocal' },
-				{ platform: 'instagram', url: 'https://instagram.com/tarrytownlocal' },
-			]}
+			socials={businessInfo?.socials?.map((s) => ({
+				platform: s.platform as 'instagram' | 'pinterest' | 'facebook' | 'tiktok' | 'twitter',
+				url: s.url,
+			})) ?? []}
 			columns={[
 				{
 					heading: 'Explore',
