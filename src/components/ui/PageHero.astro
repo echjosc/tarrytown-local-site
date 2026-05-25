@@ -15,20 +15,22 @@ const { eyebrow, title, subtitle, categories } = Astro.props;
 ---
 
 <section class="page-hero">
-	{eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
-	<h1 class="page-hero__title">{title}</h1>
-	{subtitle && <p class="page-hero__subtitle">{subtitle}</p>}
+	<div class="container">
+		{eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
+		<h1 class="page-hero__title">{title}</h1>
+		{subtitle && <p class="page-hero__subtitle">{subtitle}</p>}
 
-	{categories && categories.length > 0 && (
-		<nav class="page-hero__categories" aria-label="Categories">
-			{categories.map((cat) => (
-				<button class="page-hero__cat" type="button">
-					<span class="page-hero__cat-icon" set:html={cat.icon} />
-					<span class="page-hero__cat-label">{cat.label}</span>
-				</button>
-			))}
-		</nav>
-	)}
+		{categories && categories.length > 0 && (
+			<nav class="page-hero__categories" aria-label="Categories">
+				{categories.map((cat) => (
+					<button class="page-hero__cat" type="button">
+						<span class="page-hero__cat-icon" set:html={cat.icon} />
+						<span class="page-hero__cat-label">{cat.label}</span>
+					</button>
+				))}
+			</nav>
+		)}
+	</div>
 </section>
 
 <style>
@@ -57,9 +59,9 @@ const { eyebrow, title, subtitle, categories } = Astro.props;
 	}
 
 	.page-hero__subtitle {
-		font-family: Georgia, 'Times New Roman', serif;
-		font-style: italic;
-		font-size: 1.05rem;
+		font-family: var(--font-secondary), Arial, sans-serif;
+		/* font-style: italic; */
+		font-size: 0.95rem;
 		color: #8A9AB0;
 		margin-bottom: 2.5rem;
 	}
