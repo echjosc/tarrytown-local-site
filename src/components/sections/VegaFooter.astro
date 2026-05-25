@@ -35,7 +35,7 @@ const socialIcons: Record<string, string> = {
 			<div class="brand-col">
 				{logoSrc && (
 					<a href="/" class="footer-logo">
-						<img src={logoSrc} alt={logoAlt} width="80" height="80" />
+						<img src={logoSrc} alt={logoAlt} />
 					</a>
 				)}
 				{tagline && <p class="footer-tagline">{tagline}</p>}
@@ -129,6 +129,10 @@ const socialIcons: Record<string, string> = {
 
 			img {
 				display: block;
+
+				width: 100%;
+				max-width: 180px;
+				object-fit: contain;
 				border-radius: 6px;
 			}
 		}

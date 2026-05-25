@@ -4,6 +4,8 @@ import VegaNav from '@/components/sections/VegaNav.astro';
 import Seo from '@/components/seo/Seo.astro';
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 
 interface Props {
 	title: string;
@@ -26,6 +28,12 @@ const {
 	publishedTime,
 	modifiedTime,
 } = Astro.props;
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const businessInfo = await reader.singletons.businessInfo.read();
+
+const logoSrc = businessInfo?.logo || '/logo.svg';
+const logoAlt = businessInfo?.name || 'Tarrytown Local';
 
 const navLinks = [
 	{ label: 'Home', url: '/' },
@@ -60,8 +68,8 @@ const navLinks = [
 	</head>
 	<body>
 		<VegaNav
-			logoSrc="/logo.svg"
-			logoAlt="Tarrytown Local Logo"
+			logoSrc={logoSrc}
+			logoAlt={logoAlt}
 			links={navLinks}
 			cta={{ label: 'Call Us!', url: 'tel:+1234567890' }}
 		/>
@@ -71,8 +79,8 @@ const navLinks = [
 		</main>
 
 		<VegaFooter
-			logoSrc="/logo.svg"
-			logoAlt="Tarrytown Local Logo"
+			logoSrc={logoSrc}
+			logoAlt={logoAlt}
 			tagline="Your guide to the best of Tarrytown, NY."
 			socials={[
 				{ platform: 'twitter', url: 'https://twitter.com/tarrytownlocal' },

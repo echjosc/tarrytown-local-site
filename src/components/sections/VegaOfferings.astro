@@ -109,7 +109,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 		// Shared card base
 		.offering-card {
 			background: var(--offerings-bg-card);
-			border-radius: 4px;
+			border-radius: var(--radius);
 			overflow: hidden;
 		}
 
@@ -121,7 +121,7 @@ const { sectionTitle = "Our Offerings", featured, cards } = Astro.props;
 			.card-image {
 				width: 100%;
 				overflow: hidden;
-				border-radius: 4px 4px 0 0;
+				border-radius: var(--radius) 4px 0 0;
 				flex-shrink: 0;
 
 				:global(.ui-image-container) {

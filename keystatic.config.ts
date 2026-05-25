@@ -101,6 +101,12 @@ export default config({
             path: 'src/content/business-info/',
             schema: {
                 name: fields.text({ label: 'Business Name' }),
+                logo: fields.image({
+                    label: 'Logo',
+                    description: 'Ideally use a transparent PNG. Recommended dimensions: 600x400px',
+                    directory: 'public/images/business',
+                    publicPath: '/images/business/',
+                }),
                 addressLines: fields.array(
                     fields.text({ label: 'Address Line' }),
                     {
@@ -306,6 +312,9 @@ export default config({
                 commitments: fields.object({
                     sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Our Commitments' }),
                     sectionSubtitle: fields.text({ label: 'Section Subtitle', multiline: true }),
+                    quote: fields.text({ label: 'Quote', multiline: true, description: 'Large italic quote displayed at the top of the section' }),
+                    ctaText: fields.text({ label: 'CTA Button Text', defaultValue: 'Explore Our Commitments' }),
+                    ctaUrl: fields.text({ label: 'CTA Button URL', defaultValue: '/about' }),
                     items: fields.array(
                         fields.object({
                             title: fields.text({ label: 'Title' }),

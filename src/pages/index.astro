@@ -6,6 +6,7 @@ import VegaOfferings from "@/components/sections/VegaOfferings.astro";
 import VegaNewsletterSignup from "@/components/sections/VegaNewsletterSignup.astro";
 import VegaLocation from "@/components/sections/VegaLocation.astro";
 import VegaCommitments from "@/components/sections/VegaCommitments.astro";
+import VegaPhilosophyBanner from "@/components/sections/VegaPhilosophyBanner.astro";
 import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
 
 import keystaticConfig from '../../keystatic.config';
@@ -75,13 +76,18 @@ const businessInfo = await reader.singletons.businessInfo.read();
 		}
 	/>
 
-	<!-- Newsletter Signup -->
-	<VegaNewsletterSignup
-		title={homepage?.newsletter?.title || "Stay in the Loop"}
-		description={homepage?.newsletter?.description || "Sign up for our newsletter to get the latest updates on our opening, menu launches, and special events. We promise to only send you the good stuff."}
-		placeholder={homepage?.newsletter?.placeholder || "Enter your email address"}
-		buttonText={homepage?.newsletter?.buttonText || "Subscribe"}
-	/>
+	<!-- Philosophy / Commitments Banner -->
+	{(homepage?.commitments?.quote || homepage?.commitments?.items?.length) ? (
+		<VegaPhilosophyBanner
+			quote={homepage.commitments.quote || undefined}
+			ctaText={homepage.commitments.ctaText || 'Explore Our Commitments'}
+			ctaUrl={homepage.commitments.ctaUrl || '/about'}
+			items={homepage.commitments.items?.map((item) => ({
+				title: item.title,
+				description: item.description,
+			})) ?? []}
+		/>
+	) : null}
 
 	<!-- Location Section (address, phone & hours sourced from Business Info singleton) -->
 	<VegaLocation
@@ -100,37 +106,15 @@ const businessInfo = await reader.singletons.businessInfo.read();
 		mapLabel={homepage?.location?.mapLabel || "Tarrytown Local Location"}
 	/>
 
-	<!-- Commitments Section (rendered when items are populated) -->
-	{homepage?.commitments?.items?.length ? (
-		<VegaCommitments
-			sectionTitle={homepage.commitments.sectionTitle || "Our Commitments"}
-			sectionSubtitle={homepage.commitments.sectionSubtitle || undefined}
-			items={homepage.commitments.items.map((item) => ({
-				title: item.title,
-				description: item.description,
-				tagline: item.tagline || undefined,
-				variant: (item.variant as 'light' | 'dark') || 'light',
-			}))}
-		/>
-	) : null}
+	<!-- Newsletter Signup -->
+	<VegaNewsletterSignup
+		title={homepage?.newsletter?.title || "Stay in the Loop"}
+		description={homepage?.newsletter?.description || "Sign up for our newsletter to get the latest updates on our opening, menu launches, and special events. We promise to only send you the good stuff."}
+		placeholder={homepage?.newsletter?.placeholder || "Enter your email address"}
+		buttonText={homepage?.newsletter?.buttonText || "Subscribe"}
+	/>
 
-	<!-- Sourcing Standards Section (rendered when items are populated) -->
-	{homepage?.sourcingStandards?.items?.length ? (
-		<VegaSourcingStandards
-			title={homepage.sourcingStandards.title || "Our sourcing standards"}
-			watermarkText={homepage.sourcingStandards.watermarkText || undefined}
-			body={homepage.sourcingStandards.body || undefined}
-			image={homepage.sourcingStandards.image?.src ? {
-				src: homepage.sourcingStandards.image.src,
-				alt: homepage.sourcingStandards.image.alt || '',
-				caption: homepage.sourcingStandards.image.caption || undefined,
-			} : undefined}
-			items={homepage.sourcingStandards.items.map((item) => ({
-				title: item.title,
-				description: item.description,
-			}))}
-		/>
-	) : null}
+	
 </Base>
 
 <style>

@@ -21,7 +21,24 @@ location:
   mapLabel: Tarrytown Local Location
 commitments:
   sectionTitle: Our Commitments
-  items: []
+  quote: >-
+    We believe in food that honors the earth, nourishes the spirit, and binds
+    the community.
+  ctaText: Explore Our Commitments
+  ctaUrl: /about
+  items:
+    - title: Radically Local
+      description: >-
+        We source 90% of our ingredients from farmers within a 50-mile radius of
+        Tarrytown, ensuring peak freshness.
+    - title: Truly Seasonal
+      description: >-
+        Our menu shifts with the rhythm of the Hudson Valley, celebrating the
+        unique flavors each month provides.
+    - title: Community Rooted
+      description: >-
+        We are more than a bakery; we are a gathering place dedicated to
+        fostering connection through shared tables.
 sourcingStandards:
   title: Our sourcing standards
   items: []
