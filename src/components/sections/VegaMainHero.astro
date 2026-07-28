@@ -12,8 +12,8 @@ type Props = {
 	buttons?: { text: string; url: string }[];
 	/** Renders each word of the title separated by a ◆, e.g. "EAT ◆ GOOD ◆ FOOD" */
 	diamondTitle?: boolean;
-	/** 'split' (default): text + framed image side-by-side. 'background': full-width background image with overlay. */
-	variant?: 'split' | 'background';
+	/** 'split' (default): text + framed image side-by-side. 'background': full-width background image with overlay. 'none': text-only, centered, no image. */
+	variant?: 'split' | 'background' | 'none';
 	/** Only affects the 'background' variant. 'full' (default): tall homepage-style hero. 'compact': shorter banner for interior pages. */
 	size?: 'full' | 'compact';
 };
@@ -97,8 +97,8 @@ const titleWords = title.split(' ');
 
 			const tl = gsap.timeline();
 			if (eyebrow) tl.fromTo(eyebrow, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.1);
-			tl.fromTo(title, from, { opacity: 1, y: 0, duration: 0.65, ease }, 0.25)
-				.fromTo(image, fromImg, { opacity: 1, y: 0, duration: 0.75, ease }, 0.35);
+			tl.fromTo(title, from, { opacity: 1, y: 0, duration: 0.65, ease }, 0.25);
+			if (image) tl.fromTo(image, fromImg, { opacity: 1, y: 0, duration: 0.75, ease }, 0.35);
 			if (desc) tl.fromTo(desc, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.45);
 			if (buttons) tl.fromTo(buttons, from, { opacity: 1, y: 0, duration: 0.55, ease }, 0.6);
 		}
@@ -346,6 +346,27 @@ const titleWords = title.split(' ');
 				@media (max-width: 640px) {
 					min-height: 340px;
 				}
+			}
+		}
+
+		// ── None variant: text-only, centered, no image ──
+		&.vega-main-hero--none {
+			.container {
+				display: block;
+				text-align: center;
+			}
+
+			.text-content {
+				max-width: 640px;
+				margin-inline: auto;
+			}
+
+			.button-group {
+				justify-content: center;
+			}
+
+			.vega-main-hero-description {
+				margin-inline: auto;
 			}
 		}
 	}

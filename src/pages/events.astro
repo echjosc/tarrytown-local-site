@@ -17,6 +17,8 @@ const eventsPage = await reader.singletons.eventsPage.read();
 >
 	<!-- Hero -->
 	<VegaMainHero
+		variant={eventsPage?.hero?.style || 'split'}
+		size="compact"
 		eyebrow={eventsPage?.hero?.eyebrow || 'Events & Catering'}
 		title={eventsPage?.hero?.headline || 'We want to feed you and your friends.'}
 		description={eventsPage?.hero?.description || undefined}

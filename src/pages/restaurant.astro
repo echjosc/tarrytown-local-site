@@ -21,6 +21,8 @@ const introParagraphs = (restaurantPage?.intro || '').split('\n\n').filter(Boole
 >
 	<!-- Hero -->
 	<VegaMainHero
+		variant={restaurantPage?.hero?.style || 'split'}
+		size="compact"
 		eyebrow={restaurantPage?.hero?.eyebrow || 'Restaurant'}
 		title={restaurantPage?.hero?.headline || 'Dine-in, or take something good to go.'}
 		description={restaurantPage?.hero?.description || undefined}

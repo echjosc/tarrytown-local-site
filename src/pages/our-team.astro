@@ -17,7 +17,7 @@ const team = await reader.singletons.team.read();
 >
 	<!-- Hero -->
 	<VegaMainHero
-		variant="background"
+		variant={staffPage?.hero?.style || 'background'}
 		size="compact"
 		eyebrow={staffPage?.hero?.eyebrow || 'Our Team'}
 		title={staffPage?.hero?.headline || 'The People Behind {Every Plate}.'}

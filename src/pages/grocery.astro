@@ -20,6 +20,8 @@ const groceryPage = await reader.singletons.groceryPage.read();
 >
 	<!-- Hero -->
 	<VegaMainHero
+		variant={groceryPage?.hero?.style || 'split'}
+		size="compact"
 		eyebrow={groceryPage?.hero?.eyebrow || 'Grocery'}
 		title={groceryPage?.hero?.headline || 'A small grocery, chosen with intention.'}
 		description={groceryPage?.hero?.description || undefined}

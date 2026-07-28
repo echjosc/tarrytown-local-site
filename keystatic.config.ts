@@ -28,6 +28,19 @@ export const Footnotes = wrapper({
     label: 'Footnotes block',
     schema: {},
 });
+
+// Lets editors pick how a page's hero renders — shared across the interior pages below.
+const heroStyleField = (defaultValue: 'background' | 'split' | 'none') => fields.select({
+    label: 'Hero Style',
+    description: 'Background Image: full-width photo behind the headline. Image on Right: text with a framed photo beside it. No Image: text-only, centered.',
+    options: [
+        { label: 'Background Image', value: 'background' },
+        { label: 'Image on Right', value: 'split' },
+        { label: 'No Image', value: 'none' },
+    ],
+    defaultValue,
+});
+
 export default config({
     storage: {
         kind: 'github',
@@ -181,6 +194,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Restaurant' }),
                     headline: fields.text({ label: 'Headline' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('split'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/restaurant/hero',
@@ -243,6 +257,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Bakery' }),
                     headline: fields.text({ label: 'Headline' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('split'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/bakery/hero',
@@ -300,6 +315,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Grocery' }),
                     headline: fields.text({ label: 'Headline' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('split'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/grocery/hero',
@@ -372,6 +388,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Events & Catering' }),
                     headline: fields.text({ label: 'Headline' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('split'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/events/hero',
@@ -576,6 +593,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow' }),
                     headline: fields.text({ label: 'Headline', description: 'Wrap a word in {curly braces} to render it in the accent serif style' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('background'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/our-team/hero',
@@ -602,6 +620,7 @@ export default config({
                     eyebrow: fields.text({ label: 'Eyebrow' }),
                     headline: fields.text({ label: 'Headline', description: 'Wrap a word in {curly braces} to render it in the accent serif style' }),
                     description: fields.text({ label: 'Description', multiline: true }),
+                    style: heroStyleField('background'),
                     image: fields.image({
                         label: 'Hero Image',
                         directory: 'src/assets/images/our-story/hero',

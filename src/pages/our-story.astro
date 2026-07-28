@@ -20,7 +20,7 @@ const commitmentsPage = await reader.singletons.commitmentsPage.read();
 >
 	<!-- Hero -->
 	<VegaMainHero
-		variant="background"
+		variant={commitmentsPage?.hero?.style || 'background'}
 		size="compact"
 		eyebrow={commitmentsPage?.hero?.eyebrow || 'Our Story'}
 		title={commitmentsPage?.hero?.headline || 'Rooted in {real food}. Built for {our community}.'}

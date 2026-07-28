@@ -20,6 +20,8 @@ const grainParagraphs = (bakeryPage?.workingWithGrain?.body || '').split('\n\n')
 >
 	<!-- Hero -->
 	<VegaMainHero
+		variant={bakeryPage?.hero?.style || 'split'}
+		size="compact"
 		eyebrow={bakeryPage?.hero?.eyebrow || 'Bakery'}
 		title={bakeryPage?.hero?.headline || 'Most bakeries buy flour. We start with grain.'}
 		description={bakeryPage?.hero?.description || undefined}
