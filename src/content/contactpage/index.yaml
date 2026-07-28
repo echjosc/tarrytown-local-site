@@ -1,10 +1,16 @@
-seoTitle: Contact | Tarrytown Local
+seoTitle: Contact Us | Tarrytown Local
 seoDescription: >-
-  Reach out to Tarrytown Local for inquiries about private events, catering,
-  press, or just to say hello.
-heroTitle: Get in Touch
+  Have any questions, comments, or just want to say hi? Fill out some info
+  and we will be in touch shortly. We can't wait to hear from you!
+heroTitle: Contact Us
 heroSubtitle: >-
-  Whether you have questions about our menu, want to book a private event, or
-  just want to say hello, we'd love to hear from you.
+  Have any questions, comments, or just want to say hi? Fill out some info
+  and we will be in touch shortly. We can't wait to hear from you!
+comeVisit:
+  title: Come visit
+  body: >-
+    Stop by and see what we're up to — or plan your trip for when we open
+    in the spring!
+  closing: See you soon!
 storefrontImage: '@assets/images/contact/storefrontImage.png'
 storefrontImageAlt: Tarrytown Local storefront on Main Street

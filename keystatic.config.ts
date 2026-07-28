@@ -38,7 +38,7 @@ export default config({
     },
     ui: {
         navigation: {
-            'Pages': ['homepage', 'aboutpage', 'farmersPage', 'contactPage'],
+            'Pages': ['homepage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
             'Global': ['businessInfo', 'team'],
             'Blog': ['posts'],
         },
@@ -157,6 +157,11 @@ export default config({
                 seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
                 heroTitle: fields.text({ label: 'Hero Title' }),
                 heroSubtitle: fields.text({ label: 'Hero Subtitle', multiline: true }),
+                comeVisit: fields.object({
+                    title: fields.text({ label: 'Title', defaultValue: 'Come visit' }),
+                    body: fields.text({ label: 'Body', multiline: true }),
+                    closing: fields.text({ label: 'Closing line', defaultValue: 'See you soon!' }),
+                }, { label: 'Come Visit Section' }),
                 storefrontImage: fields.image({
                     label: 'Storefront Photo',
                     directory: 'src/assets/images/contact',
@@ -164,6 +169,227 @@ export default config({
                     description: 'Photo shown next to the map at the bottom of the page',
                 }),
                 storefrontImageAlt: fields.text({ label: 'Storefront Photo Alt Text' }),
+            },
+        }),
+        restaurantPage: singleton({
+            label: 'Restaurant Page',
+            path: 'src/content/restaurantpage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Restaurant' }),
+                    headline: fields.text({ label: 'Headline' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    image: fields.image({
+                        label: 'Hero Image',
+                        directory: 'src/assets/images/restaurant/hero',
+                        publicPath: '@assets/images/restaurant/hero/',
+                    }),
+                }, { label: 'Hero Section' }),
+                intro: fields.text({
+                    label: 'Intro',
+                    multiline: true,
+                    description: 'Separate paragraphs with a blank line',
+                }),
+                hours: fields.array(
+                    fields.object({
+                        days: fields.text({ label: 'Days' }),
+                        hours: fields.text({ label: 'Hours' }),
+                    }),
+                    {
+                        label: 'Hours',
+                        itemLabel: (props) => props.fields.days.value || 'New Hours Row',
+                    }
+                ),
+                reservationUrl: fields.text({ label: 'Reservation URL', defaultValue: '#' }),
+                reservationText: fields.text({ label: 'Reservation Link Text', defaultValue: 'Make a Reservation' }),
+                dinnerNote: fields.text({ label: 'Dinner Note', multiline: true }),
+                sampleMenu: fields.object({
+                    heading: fields.text({ label: 'Heading' }),
+                    categories: fields.array(
+                        fields.object({
+                            name: fields.text({ label: 'Category Name' }),
+                            items: fields.array(
+                                fields.object({
+                                    name: fields.text({ label: 'Dish Name' }),
+                                    description: fields.text({ label: 'Description', multiline: true }),
+                                }),
+                                {
+                                    label: 'Items',
+                                    itemLabel: (props) => props.fields.name.value || 'New Item',
+                                }
+                            ),
+                        }),
+                        {
+                            label: 'Menu Categories',
+                            itemLabel: (props) => props.fields.name.value || 'New Category',
+                        }
+                    ),
+                }, { label: 'Sample Menu Section' }),
+                suggestion: fields.object({
+                    heading: fields.text({ label: 'Heading', defaultValue: 'Tell Us What You Want To Eat' }),
+                    body: fields.text({ label: 'Body', multiline: true }),
+                }, { label: 'Menu Suggestion Section' }),
+            },
+        }),
+        bakeryPage: singleton({
+            label: 'Bakery Page',
+            path: 'src/content/bakerypage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Bakery' }),
+                    headline: fields.text({ label: 'Headline' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    image: fields.image({
+                        label: 'Hero Image',
+                        directory: 'src/assets/images/bakery/hero',
+                        publicPath: '@assets/images/bakery/hero/',
+                    }),
+                }, { label: 'Hero Section' }),
+                philosophy: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Our Philosophy' }),
+                    watermarkText: fields.text({ label: 'Watermark Text' }),
+                    body: fields.text({ label: 'Body Text', multiline: true }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Point Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                        }),
+                        {
+                            label: 'Philosophy Points',
+                            itemLabel: (props) => props.fields.title.value || 'New Point',
+                        }
+                    ),
+                }, { label: 'Philosophy Section' }),
+                workingWithGrain: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'Working with the grain, not against it' }),
+                    body: fields.text({ label: 'Body Text', multiline: true }),
+                }, { label: 'Working With The Grain Section' }),
+                grains: fields.array(
+                    fields.object({
+                        category: fields.text({ label: 'Grain Category', description: 'e.g. Hard Red Wheat' }),
+                        varieties: fields.array(
+                            fields.object({
+                                name: fields.text({ label: 'Variety Name' }),
+                                farm: fields.text({ label: 'Farm' }),
+                                location: fields.text({ label: 'Location' }),
+                            }),
+                            {
+                                label: 'Varieties',
+                                itemLabel: (props) => props.fields.name.value || 'New Variety',
+                            }
+                        ),
+                    }),
+                    {
+                        label: 'Grains on Rotation',
+                        itemLabel: (props) => props.fields.category.value || 'New Grain',
+                    }
+                ),
+            },
+        }),
+        groceryPage: singleton({
+            label: 'Grocery Page',
+            path: 'src/content/grocerypage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Grocery' }),
+                    headline: fields.text({ label: 'Headline' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    image: fields.image({
+                        label: 'Hero Image',
+                        directory: 'src/assets/images/grocery/hero',
+                        publicPath: '@assets/images/grocery/hero/',
+                    }),
+                }, { label: 'Hero Section' }),
+                intro: fields.text({
+                    label: 'Intro',
+                    multiline: true,
+                    description: 'Separate paragraphs with a blank line',
+                }),
+                categories: fields.array(
+                    fields.object({
+                        icon: fields.select({
+                            label: 'Icon',
+                            options: [
+                                { label: 'Pantry', value: 'pantry' },
+                                { label: 'Produce', value: 'produce' },
+                                { label: 'Mill', value: 'mill' },
+                                { label: 'Grab & Go', value: 'grab-and-go' },
+                            ],
+                            defaultValue: 'pantry',
+                        }),
+                        title: fields.text({ label: 'Title' }),
+                        description: fields.text({ label: 'Description', multiline: true }),
+                    }),
+                    {
+                        label: 'Categories',
+                        itemLabel: (props) => props.fields.title.value || 'New Category',
+                    }
+                ),
+                sourcingPhilosophy: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'How We Source' }),
+                    body: fields.text({ label: 'Body Text', multiline: true }),
+                    items: fields.array(
+                        fields.object({
+                            title: fields.text({ label: 'Title' }),
+                            description: fields.text({ label: 'Description', multiline: true }),
+                        }),
+                        {
+                            label: 'Standards',
+                            itemLabel: (props) => props.fields.title.value || 'New Standard',
+                        }
+                    ),
+                }, { label: 'Sourcing Philosophy Section' }),
+                askUs: fields.object({
+                    title: fields.text({ label: 'Section Title', defaultValue: 'We Think A Grocery Store Should Help You Cook' }),
+                    body: fields.text({ label: 'Body Text', multiline: true }),
+                    prompts: fields.array(
+                        fields.text({ label: 'Prompt' }),
+                        {
+                            label: 'Ask Us Prompts',
+                            itemLabel: (props) => props.value || 'New Prompt',
+                        }
+                    ),
+                }, { label: 'Ask Us Section' }),
+                suggestion: fields.object({
+                    heading: fields.text({ label: 'Heading', defaultValue: 'Have A Product You Want Us To Carry?' }),
+                    body: fields.text({ label: 'Body', multiline: true }),
+                }, { label: 'Product Suggestion Section' }),
+            },
+        }),
+        eventsPage: singleton({
+            label: 'Events & Catering Page',
+            path: 'src/content/eventspage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'Events & Catering' }),
+                    headline: fields.text({ label: 'Headline' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    image: fields.image({
+                        label: 'Hero Image',
+                        directory: 'src/assets/images/events/hero',
+                        publicPath: '@assets/images/events/hero/',
+                    }),
+                }, { label: 'Hero Section' }),
+                examples: fields.array(
+                    fields.text({ label: 'Example' }),
+                    {
+                        label: 'Examples',
+                        description: 'Short scenarios of events/catering you can do, e.g. "A private fundraiser dinner"',
+                        itemLabel: (props) => props.value || 'New Example',
+                    }
+                ),
+                inquiry: fields.object({
+                    heading: fields.text({ label: 'Heading', defaultValue: 'Planning Something? Tell Us About It!' }),
+                    body: fields.text({ label: 'Body', multiline: true }),
+                }, { label: 'Event Inquiry Section' }),
             },
         }),
         farmersPage: singleton({
@@ -281,43 +507,44 @@ export default config({
                     label: 'Hero Section',
                     layout: [6, 6, 12, 12, 12],
                 }),
-                // Featured Section
-                offerings: fields.object({
-                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'What We Do' }),
-                    featured: fields.object({
-                        eyebrow: fields.text({ label: 'Eyebrow', description: 'Small label above the title' }),
+
+                // Tagline (italic line shown above the pillars grid)
+                tagline: fields.text({
+                    label: 'Tagline',
+                    description: 'Italic line shown above the four category cards',
+                    multiline: true,
+                }),
+
+                // Pillars Section — the four homepage categories
+                pillars: fields.array(
+                    fields.object({
+                        icon: fields.select({
+                            label: 'Icon',
+                            options: [
+                                { label: 'Pantry', value: 'pantry' },
+                                { label: 'Produce', value: 'produce' },
+                                { label: 'Mill', value: 'mill' },
+                                { label: 'Grab & Go', value: 'grab-and-go' },
+                            ],
+                            defaultValue: 'pantry',
+                        }),
                         title: fields.text({ label: 'Title' }),
                         description: fields.text({ label: 'Description', multiline: true }),
-                        image: fields.image({
-                            label: 'Image',
-                            directory: 'src/assets/images/homepage/offerings/featured',
-                            publicPath: '@assets/images/homepage/offerings/featured/',
-                        }),
-                        imageAlt: fields.text({ label: 'Image Alt Text' }),
-                        linkText: fields.text({ label: 'Link Text' }),
-                        linkUrl: fields.text({ label: 'Link URL' }),
-                    }, { label: 'Featured Card' }),
-                    cards: fields.array(
-                        fields.object({
-                            title: fields.text({ label: 'Title' }),
-                            description: fields.text({ label: 'Description', multiline: true }),
-                            linkText: fields.text({ label: 'Link Text' }),
-                            linkUrl: fields.text({ label: 'Link URL' }),
-                        }),
-                        {
-                            label: 'Cards',
-                            itemLabel: (props) => props.fields.title.value || 'New Card',
-                        }
-                    ),
-                }, { label: 'Offerings Section' }),
+                        linkUrl: fields.text({ label: 'Link URL', description: 'Optional — where this card links to' }),
+                    }),
+                    {
+                        label: 'Pillars',
+                        description: 'The four category cards shown below the hero (Pantry Staples, Seasonal Produce, Mill and Bakery, Grab n’ Go or Dine In)',
+                        itemLabel: (props) => props.fields.title.value || 'New Pillar',
+                    }
+                ),
 
-                // Newsletter Section
-                newsletter: fields.object({
-                    title: fields.text({ label: 'Title', defaultValue: 'Stay in the Loop' }),
-                    description: fields.text({ label: 'Description', multiline: true }),
-                    placeholder: fields.text({ label: 'Input Placeholder', defaultValue: 'Enter your email address' }),
-                    buttonText: fields.text({ label: 'Button Text', defaultValue: 'Subscribe' }),
-                }, { label: 'Newsletter Section' }),
+                // Statement banner ("We stock our shelves, coolers, and kitchen...")
+                statement: fields.object({
+                    quote: fields.text({ label: 'Quote', multiline: true }),
+                    ctaText: fields.text({ label: 'CTA Button Text' }),
+                    ctaUrl: fields.text({ label: 'CTA Button URL', defaultValue: '/grocery' }),
+                }, { label: 'Statement Banner' }),
 
                 // Location Section (address, phone, hours & map come from Business Info)
                 location: fields.object({
@@ -328,66 +555,18 @@ export default config({
                     mapLabel: fields.text({ label: 'Map Accessibility Label', defaultValue: 'Our location on the map' }),
                 }, { label: 'Location Section' }),
 
-                // Commitments Section
-                commitments: fields.object({
-                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Our Commitments' }),
-                    sectionSubtitle: fields.text({ label: 'Section Subtitle', multiline: true }),
-                    quote: fields.text({ label: 'Quote', multiline: true, description: 'Large italic quote displayed at the top of the section' }),
-                    ctaText: fields.text({ label: 'CTA Button Text', defaultValue: 'Explore Our Commitments' }),
-                    ctaUrl: fields.text({ label: 'CTA Button URL', defaultValue: '/about' }),
-                    items: fields.array(
-                        fields.object({
-                            title: fields.text({ label: 'Title' }),
-                            description: fields.text({ label: 'Description', multiline: true }),
-                            tagline: fields.text({ label: 'Tagline', description: 'Optional italic accent line shown at the bottom of the card' }),
-                            variant: fields.select({
-                                label: 'Card Style',
-                                options: [
-                                    { label: 'Light', value: 'light' },
-                                    { label: 'Dark', value: 'dark' },
-                                ],
-                                defaultValue: 'light',
-                            }),
-                        }),
-                        {
-                            label: 'Commitment Items',
-                            description: 'First 2 items appear in a larger 2-column row; remaining items fill a 3-column row',
-                            itemLabel: (props) => props.fields.title.value || 'New Item',
-                        }
-                    ),
-                }, { label: 'Commitments Section' }),
-
-                // Sourcing Standards Section
-                sourcingStandards: fields.object({
-                    title: fields.text({ label: 'Section Title', defaultValue: 'Our sourcing standards' }),
-                    watermarkText: fields.text({ label: 'Watermark Text', description: 'Large decorative text displayed behind the heading' }),
-                    body: fields.text({ label: 'Body Text', multiline: true }),
-                    image: fields.object({
-                        src: fields.image({
-                            label: 'Photo',
-                            directory: 'src/assets/images/homepage/sourcing',
-                            publicPath: '@assets/images/homepage/sourcing/',
-                        }),
-                        alt: fields.text({ label: 'Image Alt Text' }),
-                        caption: fields.text({ label: 'Caption', description: 'Optional caption shown below the photo' }),
-                    }, { label: 'Photo' }),
-                    items: fields.array(
-                        fields.object({
-                            title: fields.text({ label: 'Standard Title' }),
-                            description: fields.text({ label: 'Description', multiline: true }),
-                        }),
-                        {
-                            label: 'Standards',
-                            itemLabel: (props) => props.fields.title.value || 'New Standard',
-                        }
-                    ),
-                }, { label: 'Sourcing Standards Section' }),
-
+                // Newsletter Section
+                newsletter: fields.object({
+                    title: fields.text({ label: 'Title', defaultValue: 'Stay in the Loop' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    placeholder: fields.text({ label: 'Input Placeholder', defaultValue: 'Enter your email address' }),
+                    buttonText: fields.text({ label: 'Button Text', defaultValue: 'Subscribe' }),
+                }, { label: 'Newsletter Section' }),
             },
         }),
-        aboutpage: singleton({
-            label: 'About Page',
-            path: 'src/content/aboutpage/',
+        staffPage: singleton({
+            label: 'Our Team Page',
+            path: 'src/content/our-teampage/',
             schema: {
                 seoTitle: fields.text({ label: 'Page Title' }),
                 seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
@@ -395,30 +574,47 @@ export default config({
                 // Hero
                 hero: fields.object({
                     eyebrow: fields.text({ label: 'Eyebrow' }),
-                    headline: fields.text({ label: 'Headline' }),
+                    headline: fields.text({ label: 'Headline', description: 'Wrap a word in {curly braces} to render it in the accent serif style' }),
                     description: fields.text({ label: 'Description', multiline: true }),
                     image: fields.image({
                         label: 'Hero Image',
-                        directory: 'src/assets/images/about/hero',
-                        publicPath: '@assets/images/about/hero/',
+                        directory: 'src/assets/images/our-team/hero',
+                        publicPath: '@assets/images/our-team/hero/',
                     }),
-                    buttons: fields.array(
-                        fields.object({
-                            text: fields.text({ label: 'Button Text' }),
-                            url: fields.text({ label: 'Button URL' }),
-                        }),
-                        {
-                            label: 'Buttons',
-                            itemLabel: (props) => props.fields.text.value || 'New Button',
-                        }
-                    ),
                 }, { label: 'Hero Section' }),
 
-                // Commitments
-                commitments: fields.object({
-                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Our Commitments' }),
-                    sectionSubtitle: fields.text({ label: 'Section Subtitle', multiline: true }),
-                    items: fields.array(
+                // Team section display (members live in the Team singleton)
+                team: fields.object({
+                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Meet the Team' }),
+                    subtitle: fields.text({ label: 'Subtitle', multiline: true }),
+                }, { label: 'Team Section' }),
+            },
+        }),
+        commitmentsPage: singleton({
+            label: 'Our Story Page',
+            path: 'src/content/commitmentspage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+
+                // Hero
+                hero: fields.object({
+                    eyebrow: fields.text({ label: 'Eyebrow' }),
+                    headline: fields.text({ label: 'Headline', description: 'Wrap a word in {curly braces} to render it in the accent serif style' }),
+                    description: fields.text({ label: 'Description', multiline: true }),
+                    image: fields.image({
+                        label: 'Hero Image',
+                        directory: 'src/assets/images/our-story/hero',
+                        publicPath: '@assets/images/our-story/hero/',
+                    }),
+                }, { label: 'Hero Section' }),
+
+                // Story
+                story: fields.object({
+                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Our Story' }),
+                    tagline: fields.text({ label: 'Tagline', multiline: true, description: 'Large italic pull-quote' }),
+                    mission: fields.text({ label: 'Mission Statement', multiline: true }),
+                    commitments: fields.array(
                         fields.object({
                             title: fields.text({ label: 'Title' }),
                             description: fields.text({ label: 'Description', multiline: true }),
@@ -433,44 +629,34 @@ export default config({
                             }),
                         }),
                         {
-                            label: 'Commitment Items',
+                            label: 'Key Commitments',
                             description: 'First 2 items appear in a larger 2-column row; remaining items fill a 3-column row',
-                            itemLabel: (props) => props.fields.title.value || 'New Item',
+                            itemLabel: (props) => props.fields.title.value || 'New Commitment',
                         }
                     ),
-                }, { label: 'Commitments Section' }),
-
-                // Sourcing Standards
-                sourcingStandards: fields.object({
-                    title: fields.text({ label: 'Section Title', defaultValue: 'Our sourcing standards' }),
-                    watermarkText: fields.text({ label: 'Watermark Text', description: 'Large decorative text displayed behind the heading' }),
-                    body: fields.text({ label: 'Body Text', multiline: true }),
-                    image: fields.object({
-                        src: fields.image({
-                            label: 'Photo',
-                            directory: 'src/assets/images/about/sourcing',
-                            publicPath: '@assets/images/about/sourcing/',
-                        }),
-                        alt: fields.text({ label: 'Image Alt Text' }),
-                        caption: fields.text({ label: 'Caption', description: 'Optional caption shown below the photo' }),
-                    }, { label: 'Photo' }),
-                    items: fields.array(
+                    sourcingStandards: fields.array(
                         fields.object({
                             title: fields.text({ label: 'Standard Title' }),
                             description: fields.text({ label: 'Description', multiline: true }),
                         }),
                         {
-                            label: 'Standards',
+                            label: 'Sourcing Standards',
                             itemLabel: (props) => props.fields.title.value || 'New Standard',
                         }
                     ),
-                }, { label: 'Sourcing Standards Section' }),
+                }, { label: 'Our Story Section' }),
 
-                // Team section display (members live in the Team singleton)
-                team: fields.object({
-                    sectionTitle: fields.text({ label: 'Section Title', defaultValue: 'Meet the Team' }),
-                    subtitle: fields.text({ label: 'Subtitle', multiline: true }),
-                }, { label: 'Team Section' }),
+                // FAQ
+                faqs: fields.array(
+                    fields.object({
+                        question: fields.text({ label: 'Question' }),
+                        answer: fields.text({ label: 'Answer', multiline: true }),
+                    }),
+                    {
+                        label: 'FAQs',
+                        itemLabel: (props) => props.fields.question.value || 'New Question',
+                    }
+                ),
 
                 // Newsletter
                 newsletter: fields.object({
@@ -481,6 +667,6 @@ export default config({
                 }, { label: 'Newsletter Section' }),
             },
         }),
-        
+
     }
 });

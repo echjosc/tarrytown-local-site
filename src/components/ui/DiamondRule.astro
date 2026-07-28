@@ -1,0 +1,38 @@
+---
+type Props = {
+	color?: string;
+	width?: number;
+	class?: string;
+};
+
+const { color, width = 40, class: className } = Astro.props;
+---
+
+<div class:list={['diamond-rule', className]} style={color ? `--diamond-rule-color: ${color}` : undefined} aria-hidden="true">
+	<span class="diamond-rule__line" style={`width: ${width}px`} />
+	<span class="diamond-rule__mark" />
+	<span class="diamond-rule__line" style={`width: ${width}px`} />
+</div>
+
+<style>
+	.diamond-rule {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+	}
+	.diamond-rule__line {
+		display: block;
+		height: 1px;
+		background: var(--diamond-rule-color, var(--color-accent));
+		flex-shrink: 0;
+	}
+	.diamond-rule__mark {
+		display: block;
+		width: 7px;
+		height: 7px;
+		background: var(--diamond-rule-color, var(--color-accent));
+		transform: rotate(45deg);
+		flex-shrink: 0;
+	}
+</style>

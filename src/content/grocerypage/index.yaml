@@ -1,0 +1,73 @@
+seoTitle: Grocery | Tarrytown Local
+seoDescription: >-
+  Our grocery is small on purpose — local produce, fresh baked bread, flour
+  from our mill, pasture-raised meats and dairy, and intentional pantry
+  goods.
+hero:
+  eyebrow: Grocery
+  headline: A small grocery, chosen with intention.
+  description: ''
+intro: >-
+  Our grocery is small on purpose. Some things are staples. Some things
+  are treats. All of them were chosen for a reason. You will not find
+  fifteen aisles, but you will find food chosen with lots of intention by
+  people who care what you eat.
+categories:
+  - icon: produce
+    title: Local Produce
+    description: >-
+      Whatever's ripe from Hudson Valley farms, picked at the peak of the
+      season.
+  - icon: mill
+    title: Bread & Flour
+    description: >-
+      Fresh-baked bread every day, and the same flour we mill in-house for
+      it.
+  - icon: pantry
+    title: Pantry & Provisions
+    description: >-
+      Grains, beans, sauces, and snacks, plus pasture-raised meats and
+      dairy.
+  - icon: grab-and-go
+    title: Grab & Go
+    description: >-
+      Prepared meals and frozen foods straight from our kitchen.
+sourcingPhilosophy:
+  title: How We Source
+  body: >-
+    Most of what we sell comes from New York farms and producers, with a
+    strong focus on the greater Hudson Valley. When we go farther, there is
+    a reason.
+  items:
+    - title: Local First
+      description: >-
+        Hudson Valley producers, first and always. The shorter the
+        distance, the better the flavor.
+    - title: Regional When Needed
+      description: >-
+        When we can't find it locally, we look regionally — still New York,
+        still close to home.
+    - title: Domestic When Necessary
+      description: >-
+        And when neither will do, we go domestic — always chosen with a
+        focus on personal, planetary, and community health.
+askUs:
+  title: We Think A Grocery Store Should Help You Cook
+  body: >-
+    Not just sell you ingredients and abandon you in the parking lot.
+  prompts:
+    - What do I do with these greens?
+    - Which beans cook fastest?
+    - What bread freezes well?
+    - What cheese belongs in a grilled cheese?
+    - What should I make (or pick up) tonight?
+suggestion:
+  heading: Have A Product You Want Us To Carry?
+  body: >-
+    Is there something you wish you could buy closer to home? A local farm
+    we should know about? A cheese that's haunting you? A bread you wish we
+    would throw into our rotation?
+
+
+    Tell us. We can't carry everything, but we promise to read it, look
+    into it, and keep building a grocery we all want and need.

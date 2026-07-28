@@ -1,0 +1,120 @@
+---
+import Base from "@/layouts/Base.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from '../../keystatic.config';
+import VegaMainHero from "@/components/sections/VegaMainHero.astro";
+import VegaCommitments from "@/components/sections/VegaCommitments.astro";
+import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
+import VegaFAQ from "@/components/sections/VegaFAQ.astro";
+import VegaNewsletterSignup from "@/components/sections/VegaNewsletterSignup.astro";
+import DiamondRule from "@/components/ui/DiamondRule.astro";
+import { resolveImage } from '@/utils/resolveImage';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const commitmentsPage = await reader.singletons.commitmentsPage.read();
+---
+
+<Base
+	title={commitmentsPage?.seoTitle || "Our Story"}
+	description={commitmentsPage?.seoDescription || "Our commitments to flavor, nutrition, accessibility, transparency, and low waste — and the sourcing standards behind everything we serve and sell."}
+>
+	<!-- Hero -->
+	<VegaMainHero
+		variant="background"
+		size="compact"
+		eyebrow={commitmentsPage?.hero?.eyebrow || 'Our Story'}
+		title={commitmentsPage?.hero?.headline || 'Rooted in {real food}. Built for {our community}.'}
+		description={commitmentsPage?.hero?.description || ''}
+		imageSrc={resolveImage(commitmentsPage?.hero?.image)}
+	/>
+
+	<!-- Our Story -->
+	{(commitmentsPage?.story?.tagline || commitmentsPage?.story?.mission) && (
+		<section class="story-intro section">
+			<div class="container">
+				{commitmentsPage.story.sectionTitle && <p class="story-eyebrow">{commitmentsPage.story.sectionTitle}</p>}
+				{commitmentsPage.story.tagline && <p class="story-tagline">{commitmentsPage.story.tagline}</p>}
+				<DiamondRule width={32} class="story-divider" />
+				{commitmentsPage.story.mission && <p class="story-mission">{commitmentsPage.story.mission}</p>}
+			</div>
+		</section>
+	)}
+
+	<!-- Commitments -->
+	<VegaCommitments
+		sectionTitle="Key Commitments"
+		sectionSubtitle={undefined}
+		items={(commitmentsPage?.story?.commitments ?? []).map((item) => ({
+			title: item.title,
+			description: item.description,
+			tagline: item.tagline || undefined,
+			variant: (item.variant as 'light' | 'dark') || 'light',
+		}))}
+	/>
+
+	<!-- Sourcing Standards -->
+	<VegaSourcingStandards
+		title="Our Sourcing Standards"
+		watermarkText="Source"
+		body={undefined}
+		items={(commitmentsPage?.story?.sourcingStandards ?? []).map((item) => ({
+			title: item.title,
+			description: item.description,
+		}))}
+	/>
+
+	<!-- FAQ -->
+	<VegaFAQ
+		sectionTitle="Frequently Asked Questions"
+		items={(commitmentsPage?.faqs ?? []).map((item) => ({
+			question: item.question,
+			answer: item.answer,
+		}))}
+	/>
+
+	<!-- Newsletter -->
+	<VegaNewsletterSignup
+		title={commitmentsPage?.newsletter?.title || "Stay in the Loop"}
+		description={commitmentsPage?.newsletter?.description || "Sign up for our newsletter to get the latest updates on our opening, menu launches, and special events. We promise to only send you the good stuff."}
+		placeholder={commitmentsPage?.newsletter?.placeholder || "Enter your email address"}
+		buttonText={commitmentsPage?.newsletter?.buttonText || "Subscribe"}
+	/>
+</Base>
+
+<style>
+	.container {
+		text-align: center;
+	}
+
+	.story-eyebrow {
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		margin-bottom: 1rem;
+	}
+
+	.story-tagline {
+		font-family: var(--font-secondary), sans-serif;
+		font-weight: 500;
+		font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+		color: var(--color-charcoal);
+		line-height: 1.4;
+		max-width: 760px;
+		margin-inline: auto;
+		margin-bottom: 1.25rem;
+	}
+
+	:global(.story-divider) {
+		margin: 0 auto 1.75rem;
+	}
+
+	.story-mission {
+		font-size: 1rem;
+		color: var(--color-text-muted);
+		line-height: 1.8;
+		max-width: 760px;
+		margin-inline: auto;
+	}
+</style>

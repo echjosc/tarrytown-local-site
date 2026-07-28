@@ -1,0 +1,163 @@
+---
+// Generic Netlify-backed form, driven by a `fields` prop, reused for the
+// menu-suggestion, product-suggestion, and event-inquiry forms.
+// Netlify detects the form at build time via the data-netlify attribute +
+// matching hidden form-name input, same pattern as VegaContactForm.astro.
+
+type Field = {
+	name: string;
+	label: string;
+	type?: 'text' | 'email' | 'tel' | 'date' | 'number' | 'textarea';
+	placeholder?: string;
+	required?: boolean;
+	fullWidth?: boolean;
+	rows?: number;
+};
+
+type Props = {
+	formName: string;
+	fields: Field[];
+	netlify?: boolean;
+	successPath?: string;
+	submitLabel?: string;
+};
+
+const {
+	formName,
+	fields,
+	netlify = true,
+	successPath = '/?success=true',
+	submitLabel = 'Send',
+} = Astro.props;
+---
+
+<div class="inquiry-form-wrap">
+	<form
+		class="inquiry-form"
+		name={formName}
+		method="POST"
+		{...(netlify ? { 'data-netlify': 'true', action: successPath } : {})}
+	>
+		{netlify && <input type="hidden" name="form-name" value={formName} />}
+
+		<div class="inquiry-form__grid">
+			{fields.map((field) => (
+				<div class:list={['inquiry-form__field', field.fullWidth && 'inquiry-form__field--full']}>
+					<label class="inquiry-form__label" for={`${formName}-${field.name}`}>{field.label}</label>
+					{field.type === 'textarea' ? (
+						<textarea
+							class="inquiry-form__input inquiry-form__textarea"
+							id={`${formName}-${field.name}`}
+							name={field.name}
+							placeholder={field.placeholder}
+							required={field.required}
+							rows={field.rows ?? 5}
+						/>
+					) : (
+						<input
+							class="inquiry-form__input"
+							type={field.type ?? 'text'}
+							id={`${formName}-${field.name}`}
+							name={field.name}
+							placeholder={field.placeholder}
+							required={field.required}
+						/>
+					)}
+				</div>
+			))}
+		</div>
+
+		<button class="inquiry-form__submit" type="submit">{submitLabel}</button>
+	</form>
+</div>
+
+<style>
+	.inquiry-form-wrap {
+		background: var(--color-bg, #FAF6EE);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: var(--radius-dashed, 20px);
+		padding: clamp(1.75rem, 4vw, 2.75rem);
+	}
+
+	.inquiry-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+	}
+
+	.inquiry-form__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem 2rem;
+	}
+	@media (max-width: 560px) {
+		.inquiry-form__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.inquiry-form__field--full {
+		grid-column: 1 / -1;
+	}
+
+	.inquiry-form__field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.inquiry-form__label {
+		font-size: 0.62rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-text-muted, #6B6560);
+	}
+
+	.inquiry-form__input {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
+		background: transparent;
+		padding: 0.6rem 0 0.4rem;
+		font-family: inherit;
+		font-size: 0.95rem;
+		color: var(--color-charcoal, #221E1A);
+		outline: none;
+		transition: border-color 0.2s ease;
+		box-sizing: border-box;
+	}
+	.inquiry-form__input::placeholder {
+		color: var(--color-text-light, #9A9186);
+	}
+	.inquiry-form__input:focus {
+		border-bottom-color: var(--color-primary, #2E4A3B);
+	}
+
+	.inquiry-form__textarea {
+		resize: none;
+		min-height: 120px;
+		line-height: 1.65;
+	}
+
+	.inquiry-form__submit {
+		align-self: flex-start;
+		background: var(--color-charcoal, #221E1A);
+		color: var(--color-bg, #FAF6EE);
+		border: 1.5px solid var(--color-charcoal, #221E1A);
+		border-radius: 0;
+		box-shadow: var(--shadow-hard);
+		padding: 0.75rem 2rem;
+		font-family: inherit;
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition: background 0.2s ease, border-color 0.2s ease;
+	}
+	.inquiry-form__submit:hover {
+		background: var(--color-primary, #2E4A3B);
+		border-color: var(--color-primary, #2E4A3B);
+	}
+</style>

@@ -1,4 +1,6 @@
 ---
+import DiamondRule from '@/components/ui/DiamondRule.astro';
+
 type HoursRow = {
 	days: string;
 	hours: string;
@@ -59,6 +61,7 @@ const {
 		<!-- Info -->
 		<div class="location-info" data-animate="fade-right">
 			<h2 class="location-title">{title}</h2>
+			<DiamondRule width={28} class="location-divider" />
 
 			<address class="location-address">
 				{addressLines.map((line) => (
@@ -97,18 +100,15 @@ const {
 
 <style lang="scss">
 	.vega-location {
-		--loc-navy: #2D3A5C;
-		--loc-muted: #6B7A8D;
-		--loc-rule: #D8D3CC;
-		--loc-accent: #2D3A5C;
-		--loc-map-bg: #C8C4BC;
+		--loc-navy: var(--color-charcoal, #221E1A);
+		--loc-muted: var(--color-text-muted, #6B6560);
+		--loc-rule: var(--color-border, #E4DCCB);
+		--loc-accent: var(--color-primary, #2E4A3B);
+		--loc-map-bg: var(--color-border-dashed, #6B9C86);
 
 		padding: 5rem 0 4rem;
 
 		.container {
-			max-width: 1000px;
-			margin: 0 auto;
-			padding: 0 1.5rem;
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 4rem;
@@ -122,12 +122,11 @@ const {
 
 		// Map
 		.map-frame {
-			border-radius: var(--radius);
+			border-radius: var(--radius-dashed);
 			overflow: hidden;
 			aspect-ratio: 1 / 1;
 			background: var(--loc-map-bg);
-			box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
-			border: 14px solid white;
+			border: 2px dashed var(--color-border-dashed, #6B9C86);
 		}
 
 		.map-iframe {
@@ -148,7 +147,7 @@ const {
 				background: var(--loc-navy);
 				color: white;
 				padding: 10px;
-				border-radius: 10px;
+				border-radius: 0;
 				width: 48px;
 				height: 48px;
 			}
@@ -162,10 +161,18 @@ const {
 		}
 
 		.location-title {
-			font-size: clamp(1.75rem, 3.5vw, 2.25rem);
-			font-weight: 700;
+			font-family: var(--font-primary), sans-serif;
+			font-size: clamp(1.5rem, 3vw, 2rem);
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 0.02em;
 			color: var(--loc-navy);
-			margin-bottom: 0.75rem;
+			margin-bottom: 0.85rem;
+		}
+
+		:global(.location-divider) {
+			justify-content: flex-start;
+			margin-bottom: 1.75rem;
 		}
 
 		.location-address {
@@ -199,11 +206,12 @@ const {
 		}
 
 		.hours-title {
-			font-size: 1.1rem;
-			font-weight: 400;
-			// font-style: italic;
-			font-family: var(--font-accent), Georgia, serif;
-			color: var(--loc-navy);
+			font-size: 0.65rem;
+			font-weight: 700;
+			font-family: var(--font-primary), sans-serif;
+			letter-spacing: 0.18em;
+			text-transform: uppercase;
+			color: var(--loc-muted);
 			margin-bottom: 0.75rem;
 		}
 

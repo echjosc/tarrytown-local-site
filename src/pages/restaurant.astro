@@ -1,0 +1,172 @@
+---
+import Base from "@/layouts/Base.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
+import VegaMainHero from "@/components/sections/VegaMainHero.astro";
+import VegaSampleMenu from "@/components/sections/VegaSampleMenu.astro";
+import VegaInquiryForm from "@/components/sections/VegaInquiryForm.astro";
+import CalloutBox from "@/components/ui/CalloutBox.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const restaurantPage = await reader.singletons.restaurantPage.read();
+
+const introParagraphs = (restaurantPage?.intro || '').split('\n\n').filter(Boolean);
+---
+
+<Base
+	title={restaurantPage?.seoTitle || "Restaurant"}
+	description={restaurantPage?.seoDescription || "Dine-in or take something good to go. Breakfast, lunch, sandwiches, soups, salads, and small plates."}
+>
+	<!-- Hero -->
+	<VegaMainHero
+		eyebrow={restaurantPage?.hero?.eyebrow || 'Restaurant'}
+		title={restaurantPage?.hero?.headline || 'Dine-in, or take something good to go.'}
+		description={restaurantPage?.hero?.description || undefined}
+		imageSrc={resolveImage(restaurantPage?.hero?.image)}
+	/>
+
+	<!-- Intro -->
+	{introParagraphs.length > 0 && (
+		<section class="restaurant-intro section">
+			<div class="container">
+				{introParagraphs.map((p) => <p class="intro-para" data-animate="fade-up">{p}</p>)}
+			</div>
+		</section>
+	)}
+
+	<!-- Hours & Reservation -->
+	<section class="restaurant-hours">
+		<div class="container">
+			<div class="hours-box" data-animate="fade-up">
+				{restaurantPage?.hours?.length ? (
+					<div class="hours-rows">
+						{restaurantPage.hours.map((row) => (
+							<div class="hours-row">
+								<span class="hours-days">{row.days}</span>
+								<span class="hours-time">{row.hours}</span>
+							</div>
+						))}
+					</div>
+				) : null}
+				<a href={restaurantPage?.reservationUrl || '#'} class="btn btn--primary">
+					{restaurantPage?.reservationText || 'Make a Reservation'}
+				</a>
+				<p class="walk-in-note">Or just walk in — we'll find you a table.</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Sample Menu -->
+	{restaurantPage?.sampleMenu?.categories?.length ? (
+		<VegaSampleMenu
+			heading={restaurantPage.sampleMenu.heading || undefined}
+			categories={restaurantPage.sampleMenu.categories.map((cat) => ({
+				name: cat.name,
+				items: (cat.items ?? []).map((item) => ({ name: item.name, description: item.description || undefined })),
+			}))}
+		/>
+	) : null}
+
+	<!-- Dinner Note -->
+	{restaurantPage?.dinnerNote && (
+		<section class="dinner-note section">
+			<div class="container">
+				<CalloutBox title="Dinner, Coming Soon" align="center">
+					<p>{restaurantPage.dinnerNote}</p>
+				</CalloutBox>
+			</div>
+		</section>
+	)}
+
+	<!-- Menu Suggestion -->
+	<section class="menu-suggestion section">
+		<div class="container">
+			<SectionHeader
+				title={restaurantPage?.suggestion?.heading || 'Tell Us What You Want To Eat'}
+				align="center"
+				data-animate="fade-up"
+			/>
+			{restaurantPage?.suggestion?.body && (
+				<div class="suggestion-body">
+					{restaurantPage.suggestion.body.split('\n\n').filter(Boolean).map((p) => <p>{p}</p>)}
+				</div>
+			)}
+			<VegaInquiryForm
+				formName="menu-suggestion"
+				successPath="/restaurant?success=true"
+				submitLabel="Send Suggestion"
+				fields={[
+					{ name: 'name', label: 'Your Name', required: true },
+					{ name: 'email', label: 'Email Address', type: 'email', required: true },
+					{ name: 'dish', label: 'The Dish', placeholder: 'A favorite sandwich, a soup, a memory...', required: true },
+					{ name: 'story', label: 'Tell Us About It', type: 'textarea', fullWidth: true },
+				]}
+			/>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.restaurant-intro {
+		padding-top: 1rem;
+	}
+	.intro-para {
+		font-size: 1rem;
+		color: var(--color-text-muted);
+		line-height: 1.85;
+		text-align: center;
+		max-width: 700px;
+		margin-inline: auto;
+		margin-bottom: 1.5rem;
+	}
+	.intro-para:last-child {
+		margin-bottom: 0;
+	}
+
+	.restaurant-hours {
+		padding-bottom: 2rem;
+	}
+	.hours-box {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+	}
+	.hours-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.hours-row {
+		display: flex;
+		gap: 0.75rem;
+		justify-content: center;
+		font-size: 1rem;
+	}
+	.hours-days {
+		color: var(--color-text-muted);
+	}
+	.hours-time {
+		font-weight: 700;
+		color: var(--color-charcoal);
+	}
+	.walk-in-note {
+		font-size: 0.85rem;
+		font-family: var(--font-secondary), sans-serif;
+		color: var(--color-text-light);
+		margin: 0;
+	}
+
+	.suggestion-body {
+		max-width: 560px;
+		margin: 0 auto 2.5rem;
+		text-align: center;
+	}
+	.suggestion-body p {
+		color: var(--color-text-muted);
+		line-height: 1.8;
+	}
+</style>

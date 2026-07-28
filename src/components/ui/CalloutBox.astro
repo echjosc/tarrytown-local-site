@@ -1,0 +1,59 @@
+---
+import DiamondRule from '@/components/ui/DiamondRule.astro';
+
+type Props = {
+	title?: string;
+	align?: 'center' | 'left';
+	class?: string;
+};
+
+const { title, align = 'center', class: className } = Astro.props;
+---
+
+<div class:list={['callout-box', `callout-box--${align}`, className]}>
+	{title && (
+		<header class="callout-box__header">
+			<h3 class="callout-box__title">{title}</h3>
+			<DiamondRule width={32} />
+		</header>
+	)}
+	<div class="callout-box__body">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.callout-box {
+		background: var(--color-bg);
+		border: 2px dashed var(--color-border-dashed);
+		border-radius: var(--radius-dashed);
+		padding: clamp(1.75rem, 4vw, 3rem);
+	}
+
+	.callout-box--center {
+		text-align: center;
+	}
+	.callout-box--left {
+		text-align: left;
+	}
+
+	.callout-box__header {
+		margin-bottom: 1.5rem;
+	}
+	.callout-box--left .callout-box__header :global(.diamond-rule) {
+		justify-content: flex-start;
+	}
+
+	.callout-box__title {
+		font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+		margin-bottom: 0.85rem;
+	}
+
+	.callout-box__body {
+		color: var(--color-text-muted);
+		line-height: 1.75;
+	}
+	.callout-box__body :global(p:last-child) {
+		margin-bottom: 0;
+	}
+</style>

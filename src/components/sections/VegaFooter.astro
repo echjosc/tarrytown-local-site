@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import Brandmark from '@/components/ui/Brandmark.astro';
 
 type NavLink = { label: string; url: string };
 type NavColumn = { heading: string; links: NavLink[] };
@@ -36,14 +36,9 @@ const socialIcons: Record<string, string> = {
 		<div class="container">
 			<!-- Brand column -->
 			<div class="brand-col">
-				{logoSrc && (
-					<a href="/" class="footer-logo">
-						{typeof logoSrc === 'object'
-							? <Image src={logoSrc} alt={logoAlt} height={100} style="width:auto" />
-							: <img src={logoSrc as string} alt={logoAlt} />
-						}
-					</a>
-				)}
+				<a href="/" class="footer-logo">
+					<Brandmark logoSrc={logoSrc} logoAlt={logoAlt} size="large" />
+				</a>
 				{tagline && <p class="footer-tagline">{tagline}</p>}
 				{socials.length > 0 && (
 					<div class="social-links">
@@ -90,19 +85,13 @@ const socialIcons: Record<string, string> = {
 
 <style lang="scss">
 	.vega-footer {
-		--footer-navy: #2D3A5C;
-		--footer-muted: #6B7A8D;
-		--footer-rule: #D8D3CC;
-		--footer-bg: #EDEAE5;
-		--footer-bottom-bg: #E4E0DA;
+		--footer-navy: var(--color-charcoal, #221E1A);
+		--footer-muted: var(--color-text-muted, #6B6560);
+		--footer-rule: var(--color-border, #E4DCCB);
+		--footer-bg: var(--color-bg-muted, #F1EADD);
+		--footer-bottom-bg: var(--color-border-light, #EFE8DA);
 
 		background: var(--footer-bg);
-
-		.container {
-			max-width: 1100px;
-			margin: 0 auto;
-			padding: 0 1.5rem;
-		}
 
 		// Main area
 		.footer-main {
@@ -133,13 +122,12 @@ const socialIcons: Record<string, string> = {
 		.footer-logo {
 			display: inline-block;
 
-			img {
-				display: block;
-
-				width: 100%;
-				max-width: 180px;
-				object-fit: contain;
-				border-radius: 6px;
+			:global(.brandmark) {
+				align-items: flex-start;
+				text-align: left;
+			}
+			:global(.brandmark__divider) {
+				display: none;
 			}
 		}
 
@@ -177,13 +165,25 @@ const socialIcons: Record<string, string> = {
 		}
 
 		.nav-heading {
-			font-size: .875rem;
+			display: flex;
+			align-items: center;
+			gap: 0.5em;
+			font-size: 0.65rem;
 			font-weight: 700;
-			letter-spacing: 0.06em;
+			letter-spacing: 0.2em;
 			text-transform: uppercase;
 			color: var(--footer-navy);
 			margin: 0;
 			font-family: var(--font-primary);
+		}
+		.nav-heading::before {
+			content: '';
+			display: block;
+			width: 5px;
+			height: 5px;
+			background: var(--color-accent, #7C2E28);
+			transform: rotate(45deg);
+			flex-shrink: 0;
 		}
 
 		.nav-list {

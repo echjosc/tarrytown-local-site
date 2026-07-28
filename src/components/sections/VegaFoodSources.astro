@@ -1,0 +1,112 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import InteractiveMap from '@/components/react/InteractiveMap';
+
+type Location = {
+	lat: number;
+	lng: number;
+	title?: string;
+	description?: string;
+	type?: 'home' | 'produce' | 'meat' | 'farm';
+	url?: string;
+	image?: string;
+};
+
+type Props = {
+	sectionTitle?: string;
+	subtitle?: string;
+	locations: Location[];
+};
+
+const { sectionTitle = 'Where Does Your Food Come From?', subtitle, locations } = Astro.props;
+
+const typeLabels: Record<string, string> = {
+	home: 'Tarrytown Local',
+	produce: 'Produce',
+	meat: 'Meat & Dairy',
+	farm: 'Farm',
+};
+---
+
+<section class="food-sources section" id="food-sources">
+	<div class="container">
+		<SectionHeader title={sectionTitle} subtitle={subtitle} data-animate="fade-up" />
+
+		<div class="food-sources__map" data-animate="fade-up">
+			<InteractiveMap client:only="react" coordinates={locations} />
+		</div>
+
+		{locations.length > 0 && (
+			<div class="food-sources__grid">
+				{locations.map((loc) => (
+					<div class="farm-card" data-animate="fade-up-sm" data-animate-stagger="0.08">
+						{loc.type && <span class="farm-card__type">{typeLabels[loc.type] || loc.type}</span>}
+						<h3 class="farm-card__title">{loc.title}</h3>
+						{loc.description && <p class="farm-card__desc">{loc.description}</p>}
+						{loc.url && (
+							<a href={loc.url} class="farm-card__link" target="_blank" rel="noopener noreferrer">
+								Visit Website &rarr;
+							</a>
+						)}
+					</div>
+				))}
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	.food-sources__map {
+		margin-bottom: 3rem;
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: var(--radius-dashed, 20px);
+		overflow: hidden;
+	}
+
+	.food-sources__grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.farm-card {
+		background: var(--color-bg, #FAF6EE);
+		border: 1px solid var(--color-border, #E4DCCB);
+		border-radius: var(--radius, 2px);
+		padding: 1.5rem;
+	}
+
+	.farm-card__type {
+		display: inline-block;
+		font-size: 0.6rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--color-primary, #2E4A3B);
+		margin-bottom: 0.5rem;
+	}
+
+	.farm-card__title {
+		font-size: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.farm-card__desc {
+		font-size: 0.88rem;
+		color: var(--color-text-muted, #6B6560);
+		line-height: 1.65;
+		margin-bottom: 0.75rem;
+	}
+
+	.farm-card__link {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-accent, #7C2E28);
+		text-decoration: none;
+	}
+	.farm-card__link:hover {
+		text-decoration: underline;
+	}
+</style>

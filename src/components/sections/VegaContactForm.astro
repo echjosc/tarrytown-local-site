@@ -75,23 +75,25 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 <style>
 	.form-wrap {
 		position: relative;
-		background: #fff;
+		background: var(--color-bg, #FAF6EE);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
 		padding: 2.75rem 3rem;
 		overflow: hidden;
 		height: 100%;
 		box-sizing: border-box;
-		border-radius: var(--radius);
+		border-radius: var(--radius-dashed, 20px);
 	}
 
 	.form-watermark {
 		position: absolute;
 		top: -3.5rem;
 		right: -1rem;
-		font-family: var(--font-primary), Georgia, serif;
+		font-family: var(--font-primary), sans-serif;
 		font-size: 20rem;
 		font-weight: 800;
 		line-height: 1;
-		color: rgba(45, 58, 92, 0.035);
+		color: rgba(34, 30, 26, 0.035);
+		text-transform: uppercase;
 		pointer-events: none;
 		user-select: none;
 		z-index: 0;
@@ -130,33 +132,33 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 	}
 
 	.form-label {
-		font-size: 0.68rem;
+		font-size: 0.62rem;
 		font-weight: 700;
-		letter-spacing: 0.14em;
+		letter-spacing: 0.18em;
 		text-transform: uppercase;
-		color: #2D3A5C;
+		color: var(--color-text-muted, #6B6560);
 	}
 
 	.form-input {
 		width: 100%;
 		border: none;
-		border-bottom: 1.5px solid #D4CCBF;
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
 		background: transparent;
 		padding: 0.6rem 0 0.4rem;
 		font-family: inherit;
 		font-size: 0.95rem;
-		color: #2D3A5C;
+		color: var(--color-charcoal, #221E1A);
 		outline: none;
 		transition: border-color 0.2s ease;
 		box-sizing: border-box;
 	}
 
 	.form-input::placeholder {
-		color: #A0ADB8;
+		color: var(--color-text-light, #9A9186);
 	}
 
 	.form-input:focus {
-		border-bottom-color: #C9A882;
+		border-bottom-color: var(--color-primary, #2E4A3B);
 	}
 
 	.form-textarea {
@@ -168,20 +170,23 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 
 	.form-submit {
 		align-self: flex-start;
-		background: #2D3A5C;
-		color: #fff;
-		border: none;
-		padding: 0.9rem 2.25rem;
+		background: var(--color-charcoal, #221E1A);
+		color: var(--color-bg, #FAF6EE);
+		border: 1.5px solid var(--color-charcoal, #221E1A);
+		border-radius: 0;
+		box-shadow: var(--shadow-hard);
+		padding: 0.75rem 2rem;
 		font-family: inherit;
-		font-size: 0.78rem;
+		font-size: 0.65rem;
 		font-weight: 700;
-		letter-spacing: 0.1em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		cursor: pointer;
-		transition: background 0.2s ease;
+		transition: background 0.2s ease, border-color 0.2s ease;
 	}
 
 	.form-submit:hover {
-		background: #3D4F80;
+		background: var(--color-primary, #2E4A3B);
+		border-color: var(--color-primary, #2E4A3B);
 	}
 </style>

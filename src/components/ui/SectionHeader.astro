@@ -1,5 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import DiamondRule from '@/components/ui/DiamondRule.astro';
 
 type Props = HTMLAttributes<'div'> & {
 	title: string;
@@ -14,14 +15,9 @@ const { title, subtitle, icon, align = 'center', class: className, ...attrs } = 
 <div class:list={['section-header', `section-header--${align}`, className]} {...attrs}>
 	<h2 class="section-header__title">{title}</h2>
 
-	<div class="section-header__divider" aria-hidden="true">
-		<span class="section-header__rule" />
-		{icon && (
-			<>
-				<span class="section-header__icon" set:html={icon} />
-				<span class="section-header__rule" />
-			</>
-		)}
+	<div class="section-header__divider">
+		<DiamondRule width={36} />
+		{icon && <span class="section-header__icon" set:html={icon} />}
 	</div>
 
 	{subtitle && <p class="section-header__subtitle">{subtitle}</p>}
@@ -29,7 +25,7 @@ const { title, subtitle, icon, align = 'center', class: className, ...attrs } = 
 
 <style>
 	.section-header {
-		margin-bottom: 3rem;
+		margin-bottom: 3.5rem;
 	}
 
 	.section-header--center {
@@ -41,11 +37,12 @@ const { title, subtitle, icon, align = 'center', class: className, ...attrs } = 
 	}
 
 	.section-header__title {
-		font-family: var(--font-primary), Georgia, serif;
-		font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-		font-weight: 700;
-		color: #2D3A5C;
-		letter-spacing: -0.02em;
+		font-family: var(--font-primary), sans-serif;
+		font-size: clamp(1.6rem, 3vw, 2.5rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: var(--color-charcoal, #221E1A);
 		margin-bottom: 1rem;
 	}
 
@@ -53,42 +50,32 @@ const { title, subtitle, icon, align = 'center', class: className, ...attrs } = 
 	.section-header__divider {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
-		margin-bottom: 1.25rem;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
 	}
 
 	.section-header--center .section-header__divider {
 		justify-content: center;
 	}
 
-	.section-header__rule {
-		display: block;
-		height: 2px;
-		width: 40px;
-		background: #C9A882;
-		border-radius: 2px;
-		flex-shrink: 0;
-	}
-
 	.section-header__icon {
 		display: flex;
 		align-items: center;
-		color: #6B8F80;
+		color: var(--color-primary, #2E4A3B);
 		flex-shrink: 0;
 	}
 
 	.section-header__icon :global(svg) {
-		width: 18px;
-		height: 18px;
+		width: 16px;
+		height: 16px;
 	}
 
 	/* ── Subtitle ────────────────────────────────────────────── */
 	.section-header__subtitle {
-		font-family: Georgia, 'Times New Roman', serif;
-		font-style: italic;
-		font-size: 1rem;
-		color: #6B7A8D;
-		line-height: 1.7;
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 0.95rem;
+		color: var(--color-text-muted, #6B6560);
+		line-height: 1.75;
 		margin: 0;
 	}
 

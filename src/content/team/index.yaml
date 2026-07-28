@@ -41,3 +41,51 @@ members:
       flour production.
     image: '@assets/images/team/members/2/image.jpg'
     socials: []
+  - name: Nikole
+    role: Floor Manager
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: Matt
+    role: Floor Captain
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: John
+    role: Sous Chef
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: Rick
+    role: Chef de Partie
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: Morgan
+    role: Horticulturalist
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: Daria
+    role: Marketing and Media
+    bio: >
+      Bio coming soon.
+    image: ''
+    socials: []
+  - name: TBD
+    role: Market Associate
+    bio: >
+      This spot is open — we're hiring!
+    image: ''
+    socials: []
+  - name: TBD
+    role: Market Associate
+    bio: >
+      This spot is open — we're hiring!
+    image: ''
+    socials: []

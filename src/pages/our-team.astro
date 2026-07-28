@@ -1,0 +1,47 @@
+---
+import Base from "@/layouts/Base.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
+import VegaMainHero from "@/components/sections/VegaMainHero.astro";
+import VegaTeam from "@/components/sections/VegaTeam.astro";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const staffPage = await reader.singletons.staffPage.read();
+const team = await reader.singletons.team.read();
+---
+
+<Base
+	title={staffPage?.seoTitle || "Our Team"}
+	description={staffPage?.seoDescription || "Meet the people behind Tarrytown Local — the humans who source, cook, mill, and stock the shelves of our neighborhood restaurant and grocery."}
+>
+	<!-- Hero -->
+	<VegaMainHero
+		variant="background"
+		size="compact"
+		eyebrow={staffPage?.hero?.eyebrow || 'Our Team'}
+		title={staffPage?.hero?.headline || 'The People Behind {Every Plate}.'}
+		description={staffPage?.hero?.description || undefined}
+		imageSrc={resolveImage(staffPage?.hero?.image)}
+	/>
+
+	<!-- Team -->
+	<VegaTeam
+		sectionTitle={staffPage?.team?.sectionTitle || "Meet the Team"}
+		subtitle={staffPage?.team?.subtitle || undefined}
+		members={(team?.members ?? []).map((member) => ({
+			name: member.name,
+			role: member.role,
+			bio: (member.bio || '').split('\n\n').filter(Boolean),
+			image: resolveImage(member.image) ?? member.image ?? undefined,
+			imageAlt: member.imageAlt || undefined,
+			socials: member.socials?.length
+				? member.socials.map((s) => ({
+						platform: s.platform as 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'youtube' | 'website',
+						url: s.url,
+						label: s.label || undefined,
+					}))
+				: undefined,
+		}))}
+	/>
+</Base>

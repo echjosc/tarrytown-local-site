@@ -1,62 +1,64 @@
 
 /* ── Variables ─────────────────────────────────────────── */
 :root {
-    /* Premium Brand Colors */
-    --color-primary: #0CA5C8;       /* Indigo */
-    --color-primary-dark: #087F8B;
-    --color-primary-light: #81E6D9;
-    --color-accent: #C85B0B;        /* Cyan */
-    --color-bg: #F4EFE9;            /* Neutral light */
-    --color-bg-muted: #f3f4f6;
-    --color-text: #111827;          /* Slate 900 */
-    --color-text-muted: #4b5563;    /* Slate 600 */
-    --color-border: #e5e7eb;
+    /* ─ Palette ─────────────────────────────────────────── */
+    --color-primary:        #2E4A3B;   /* Forest green */
+    --color-primary-dark:   #1F332A;   /* Deep forest */
+    --color-primary-light:  #6B9C86;   /* Sage / teal — dashed borders, hover accents */
+    --color-accent:         #7C2E28;   /* Brick / maroon — rules, diamonds, dividers */
+    --color-accent-dark:    #5E211D;   /* Deeper brick */
+    --color-charcoal:       #221E1A;   /* Near-black — headings, nav */
+    --color-bg:             #FAF6EE;   /* Warm cream */
+    --color-bg-muted:       #F1EADD;   /* Slightly deeper cream */
+    --color-bg-dark:        #1F332A;   /* Deep forest — newsletter bg */
+    --color-text:           #2A2820;   /* Warm near-black */
+    --color-text-muted:     #6B6560;   /* Warm stone */
+    --color-text-light:     #9A9186;   /* Light warm gray */
+    --color-border:         #E4DCCB;   /* Warm hairline */
+    --color-border-light:   #EFE8DA;   /* Very light warm border */
+    --color-border-dashed:  #6B9C86;   /* Sage-teal dashed border — callout boxes */
 
-    /* Glassmorphism Tokens */
-    --glass-bg: rgba(255, 255, 255, 0.75);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    /* ─ Typography ──────────────────────────────────────── */
+    /* TODO: swap to the client's "TAY Birdie" font once files are provided — must render caps-only wherever used */
+    --font-primary:   var(--font-libre-franklin);  /* Display / brand headings — bold sans, uppercase-only */
+    --font-secondary: var(--font-roboto);          /* Body / UI text */
 
-    /* Typography */
-    --font-primary: var(--font-birdie);
-    --font-secondary: var(--font-roboto-mono);
-    --font-accent: var(--font-homemade-apple);
-    
-    --font-size-sm: 0.875rem;
+    --font-size-xs:   0.7rem;
+    --font-size-sm:   0.875rem;
     --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2.25rem;
-    --font-size-4xl: 3rem;
-    --font-size-5xl: 4rem;
+    --font-size-lg:   1.125rem;
+    --font-size-xl:   1.25rem;
+    --font-size-2xl:  1.5rem;
+    --font-size-3xl:  2.25rem;
+    --font-size-4xl:  3rem;
+    --font-size-5xl:  4rem;
 
-    /* Spacing */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
+    /* ─ Spacing ─────────────────────────────────────────── */
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-6:  1.5rem;
+    --space-8:  2rem;
     --space-12: 3rem;
     --space-16: 4rem;
+    --space-20: 5rem;
     --space-24: 6rem;
 
-    /* Layout */
+    /* ─ Layout ──────────────────────────────────────────── */
     --responsive-width: 92%;
-    --max-width: 1280px;
+    --max-width: 1024px;
 
-    --radius: 4px;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-full: 9999px;
+    /* ─ Radii ───────────────────────────────────────────── */
+    --radius:        0;
+    --radius-sm:     0;
+    --radius-md:     0;
+    --radius-lg:     0;
+    --radius-dashed: 0;   /* flat dashed-border callout boxes */
+    --radius-full:   9999px;   /* intentional pills/circles — not a soft-corner treatment */
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /* ─ Shadows ─────────────────────────────────────────── */
+    --shadow-hard: 6px 6px 0 0 var(--color-accent);   /* hard offset shadow — brand mark / signage look */
 }
 
 /* ── Reset ─────────────────────────────────────────────── */
@@ -75,9 +77,9 @@ html {
     color: var(--color-text);
     background-color: var(--color-bg);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.65;
 }
-
 
 body {
     margin: 0;
@@ -96,24 +98,20 @@ svg {
 a {
     color: var(--color-primary);
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease;
 }
-
 a:hover {
     color: var(--color-primary-dark);
 }
 
-/* headers */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ── Headings ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--color-text);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-charcoal);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
 }
 
 h1 { font-size: var(--font-size-4xl); margin-bottom: var(--space-4); }
@@ -134,7 +132,7 @@ p {
 }
 
 .section {
-    padding-block: var(--space-16);
+    padding-block: var(--space-20);
 }
 @media (min-width: 768px) {
     .section {
@@ -144,76 +142,138 @@ p {
 
 .text-center { text-align: center; }
 
+/* ─ Eyebrow label (reusable micro-label style) ────────── */
+.eyebrow {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+}
+
+/* ─ Thin editorial rule ───────────────────────────────── */
+.rule {
+    display: block;
+    height: 1px;
+    background: var(--color-border);
+}
+
+/* ─ Rounded dashed-border callout box ─────────────────── */
+.dashed-box {
+    background: var(--color-bg);
+    border: 2px dashed var(--color-border-dashed);
+    border-radius: var(--radius-dashed);
+    padding: var(--space-8);
+}
+
+/* ─ Rule–diamond–rule divider (see DiamondRule.astro) ─── */
+.diamond-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+}
+.diamond-divider__rule {
+    height: 1px;
+    width: 40px;
+    background: var(--color-accent);
+}
+.diamond-divider__mark {
+    color: var(--color-accent);
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 1.75rem;
-    border-radius: var(--radius-full);
+    padding: 0.7rem 1.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
     font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     cursor: pointer;
-    border: none;
+    border: 1.5px solid transparent;
+    box-shadow: var(--shadow-hard);
 }
 
 .btn--primary {
-    background-color: var(--color-primary);
-    color: white;
-    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+    background-color: var(--color-charcoal);
+    color: var(--color-bg);
+    border-color: var(--color-charcoal);
 }
 .btn--primary:hover {
-    background-color: var(--color-primary-dark);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.23);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-bg);
 }
 
 .btn--secondary {
     background-color: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+    color: var(--color-charcoal);
+    border-color: var(--color-charcoal);
 }
 .btn--secondary:hover {
-    background-color: var(--color-primary-light);
-    color: white;
-    border-color: var(--color-primary-light);
+    background-color: var(--color-charcoal);
+    color: var(--color-bg);
 }
 
+.btn--ghost {
+    background-color: transparent;
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+}
+.btn--ghost:hover {
+    border-color: var(--color-charcoal);
+    color: var(--color-charcoal);
+}
+
+/* ── Cards ─────────────────────────────────────────────── */
 .card {
-    background: white;
-    border-radius: var(--radius-lg);
+    background: var(--color-bg);
+    border-radius: var(--radius);
     border: 1px solid var(--color-border);
     padding: var(--space-8);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.25s ease;
 }
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--color-primary-light);
+    border-color: var(--color-accent);
 }
 
+/* ── Prose ─────────────────────────────────────────────── */
 .prose {
     max-width: 65ch;
     margin: 0 auto;
 }
 .prose h2 { margin-top: var(--space-12); }
-.prose ul, .prose ol { margin-bottom: var(--space-4); padding-left: var(--space-6); color: var(--color-text-muted); }
-.prose img { border-radius: var(--radius-md); margin-bottom: var(--space-4); }
+.prose ul, .prose ol {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+    color: var(--color-text-muted);
+}
+.prose img { border-radius: var(--radius-sm); margin-bottom: var(--space-4); }
 
+/* ── Page hero (generic) ───────────────────────────────── */
 .page-hero {
-    padding-block: var(--space-16) var(--space-12);
+    padding-block: var(--space-20) var(--space-16);
     text-align: center;
-    background: linear-gradient(180deg, var(--color-bg-muted) 0%, var(--color-bg) 100%);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
 }
 .page-hero__title {
     font-size: var(--font-size-4xl);
-    font-weight: 800;
+    font-weight: 400;
     margin-bottom: var(--space-4);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
 }
 .page-hero__lead {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto;
@@ -231,14 +291,11 @@ p {
     [data-animate] { opacity: 1 !important; transform: none !important; }
 }
 
-/* Glassmorphism helpers for Base.astro */
+/* ── Nav header ────────────────────────────────────────── */
 .glass-header {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: var(--glass-border);
+    background: var(--color-bg);
     position: sticky;
     top: 0;
     z-index: 50;
-    box-shadow: var(--glass-shadow);
+    border-bottom: 1px solid var(--color-border);
 }

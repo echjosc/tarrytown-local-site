@@ -1,0 +1,105 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
+type FaqItem = {
+	question: string;
+	answer: string;
+};
+
+type Props = {
+	sectionTitle?: string;
+	subtitle?: string;
+	items: FaqItem[];
+};
+
+const { sectionTitle = 'Frequently Asked Questions', subtitle, items } = Astro.props;
+---
+
+<section class="vega-faq section" id="faq">
+	<div class="container">
+		<SectionHeader title={sectionTitle} subtitle={subtitle} data-animate="fade-up" />
+
+		<div class="faq-list">
+			{items.map((item) => (
+				<details class="faq-item" data-animate="fade-up-sm" data-animate-stagger="0.05">
+					<summary class="faq-item__question">
+						<span>{item.question}</span>
+						<span class="faq-item__toggle" aria-hidden="true" />
+					</summary>
+					<p class="faq-item__answer" set:html={item.answer} />
+				</details>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq-list {
+		max-width: 800px;
+		margin-inline: auto;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.faq-item {
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
+		padding-block: 1.35rem;
+	}
+	.faq-item:first-child {
+		border-top: 1px solid var(--color-border, #E4DCCB);
+	}
+
+	.faq-item__question {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		cursor: pointer;
+		list-style: none;
+		font-family: var(--font-primary), sans-serif;
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--color-charcoal, #221E1A);
+	}
+	.faq-item__question::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-item__toggle {
+		position: relative;
+		flex-shrink: 0;
+		width: 10px;
+		height: 10px;
+	}
+	.faq-item__toggle::before,
+	.faq-item__toggle::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background: var(--color-accent, #7C2E28);
+		transform: translate(-50%, -50%);
+		transition: transform 0.2s ease;
+	}
+	.faq-item__toggle::before {
+		width: 10px;
+		height: 2px;
+	}
+	.faq-item__toggle::after {
+		width: 2px;
+		height: 10px;
+	}
+	.faq-item[open] .faq-item__toggle::after {
+		transform: translate(-50%, -50%) rotate(90deg) scale(0);
+	}
+
+	.faq-item__answer {
+		margin: 0.9rem 0 0;
+		font-size: 0.92rem;
+		color: var(--color-text-muted, #6B6560);
+		line-height: 1.75;
+	}
+	.faq-item__answer :global(a) {
+		color: var(--color-primary, #2E4A3B);
+	}
+</style>

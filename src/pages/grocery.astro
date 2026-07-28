@@ -1,0 +1,127 @@
+---
+import Base from "@/layouts/Base.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
+import VegaMainHero from "@/components/sections/VegaMainHero.astro";
+import VegaPillars from "@/components/sections/VegaPillars.astro";
+import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
+import VegaInquiryForm from "@/components/sections/VegaInquiryForm.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import CalloutBox from "@/components/ui/CalloutBox.astro";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const groceryPage = await reader.singletons.groceryPage.read();
+---
+
+<Base
+	title={groceryPage?.seoTitle || "Grocery"}
+	description={groceryPage?.seoDescription || "Our grocery is small on purpose — local produce, fresh baked bread, flour from our mill, and intentional pantry goods."}
+>
+	<!-- Hero -->
+	<VegaMainHero
+		eyebrow={groceryPage?.hero?.eyebrow || 'Grocery'}
+		title={groceryPage?.hero?.headline || 'A small grocery, chosen with intention.'}
+		description={groceryPage?.hero?.description || undefined}
+		imageSrc={resolveImage(groceryPage?.hero?.image)}
+	/>
+
+	<!-- Categories -->
+	<VegaPillars
+		tagline={groceryPage?.intro || undefined}
+		items={
+			groceryPage?.categories?.length
+				? groceryPage.categories.map((c) => ({
+						icon: c.icon || undefined,
+						title: c.title,
+						description: c.description,
+					}))
+				: []
+		}
+	/>
+
+	<!-- Sourcing Philosophy -->
+	<VegaSourcingStandards
+		title={groceryPage?.sourcingPhilosophy?.title || 'How We Source'}
+		watermarkText="Source"
+		body={groceryPage?.sourcingPhilosophy?.body || undefined}
+		items={(groceryPage?.sourcingPhilosophy?.items ?? []).map((item) => ({
+			title: item.title,
+			description: item.description,
+		}))}
+	/>
+
+	<!-- Ask Us -->
+	<section class="ask-us section">
+		<div class="container">
+			<SectionHeader
+				title={groceryPage?.askUs?.title || 'We Think A Grocery Store Should Help You Cook'}
+				subtitle={groceryPage?.askUs?.body || undefined}
+				align="center"
+				data-animate="fade-up"
+			/>
+			{groceryPage?.askUs?.prompts?.length ? (
+				<div class="ask-us__prompts" data-animate="fade-up-sm">
+					{groceryPage.askUs.prompts.map((prompt) => (
+						<span class="prompt-chip">{prompt}</span>
+					))}
+				</div>
+			) : null}
+		</div>
+	</section>
+
+	<!-- Product Suggestion -->
+	<section class="product-suggestion section">
+		<div class="container">
+			<CalloutBox title={groceryPage?.suggestion?.heading || 'Have A Product You Want Us To Carry?'} align="center">
+				{groceryPage?.suggestion?.body && (
+					<div class="suggestion-body">
+						{groceryPage.suggestion.body.split('\n\n').filter(Boolean).map((p) => <p>{p}</p>)}
+					</div>
+				)}
+			</CalloutBox>
+
+			<div class="suggestion-form">
+				<VegaInquiryForm
+					formName="product-suggestion"
+					successPath="/grocery?success=true"
+					submitLabel="Send Suggestion"
+					fields={[
+						{ name: 'name', label: 'Your Name', required: true },
+						{ name: 'email', label: 'Email Address', type: 'email', required: true },
+						{ name: 'product', label: 'Product or Farm', placeholder: 'A cheese, a bread, a local farm...', required: true },
+						{ name: 'why', label: 'Why We Should Carry It', type: 'textarea', fullWidth: true },
+					]}
+				/>
+			</div>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.ask-us__prompts {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+
+	.prompt-chip {
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 0.9rem;
+		color: var(--color-charcoal);
+		background: var(--color-bg-muted);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-full);
+		padding: 0.6rem 1.25rem;
+	}
+
+	.suggestion-body p {
+		color: var(--color-text-muted);
+		line-height: 1.8;
+	}
+
+	.suggestion-form {
+		margin-top: 2.5rem;
+	}
+</style>

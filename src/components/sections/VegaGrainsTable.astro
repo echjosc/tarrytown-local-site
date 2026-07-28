@@ -1,0 +1,96 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
+type Variety = {
+	name: string;
+	farm?: string;
+	location?: string;
+};
+
+type Grain = {
+	category: string;
+	varieties: Variety[];
+};
+
+type Props = {
+	sectionTitle?: string;
+	subtitle?: string;
+	grains: Grain[];
+};
+
+const { sectionTitle = 'Primary Grains on Our Rotation', subtitle, grains } = Astro.props;
+---
+
+<section class="grains-table section">
+	<div class="container">
+		<SectionHeader title={sectionTitle} subtitle={subtitle} data-animate="fade-up" />
+
+		<div class="grains-grid">
+			{grains.map((grain) => (
+				<div class="grain-card" data-animate="fade-up-sm" data-animate-stagger="0.07">
+					<h3 class="grain-card__category">{grain.category}</h3>
+					<ul class="grain-card__varieties">
+						{grain.varieties.map((v) => (
+							<li class="variety">
+								<span class="variety__name">{v.name}</span>
+								{(v.farm || v.location) && (
+									<span class="variety__source">
+										{v.farm}{v.farm && v.location ? ' — ' : ''}{v.location}
+									</span>
+								)}
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.grains-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.grain-card {
+		background: var(--color-bg, #FAF6EE);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: var(--radius-dashed, 20px);
+		padding: 1.75rem;
+	}
+
+	.grain-card__category {
+		font-size: 1rem;
+		margin-bottom: 1.1rem;
+		padding-bottom: 0.85rem;
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
+	}
+
+	.grain-card__varieties {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
+	}
+
+	.variety {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.variety__name {
+		font-weight: 700;
+		font-size: 0.9rem;
+		color: var(--color-primary, #2E4A3B);
+	}
+
+	.variety__source {
+		font-size: 0.82rem;
+		color: var(--color-text-muted, #6B6560);
+	}
+</style>

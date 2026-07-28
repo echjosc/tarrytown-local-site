@@ -1,0 +1,111 @@
+---
+import CalloutBox from '@/components/ui/CalloutBox.astro';
+import DiamondRule from '@/components/ui/DiamondRule.astro';
+
+type MenuItem = {
+	name: string;
+	description?: string;
+};
+
+type MenuCategory = {
+	name: string;
+	items: MenuItem[];
+};
+
+type Props = {
+	heading?: string;
+	categories: MenuCategory[];
+};
+
+const { heading, categories } = Astro.props;
+---
+
+<section class="sample-menu section">
+	<div class="container sample-menu-inner">
+		<CalloutBox title="Sample Menu" align="center">
+			{heading && <p class="sample-menu__intro">{heading}</p>}
+
+			<div class="sample-menu__categories">
+				{categories.map((cat) => (
+					<div class="menu-category" data-animate="fade-up-sm" data-animate-stagger="0.06">
+						<h3 class="menu-category__name">{cat.name}</h3>
+						<DiamondRule width={22} class="menu-category__rule" />
+						<ul class="menu-category__items">
+							{cat.items.map((item) => (
+								<li class="menu-item">
+									<span class="menu-item__name">{item.name}</span>
+									{item.description && <span class="menu-item__desc">{item.description}</span>}
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+		</CalloutBox>
+	</div>
+</section>
+
+<style>
+	.sample-menu-inner {
+		max-width: 900px;
+		margin-inline: auto;
+	}
+
+	.sample-menu__intro {
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 1.05rem;
+		color: var(--color-text-muted);
+		max-width: 46ch;
+		margin: 0 auto 2.5rem;
+		text-align: center;
+	}
+
+	.sample-menu__categories {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2.5rem 3rem;
+		text-align: left;
+	}
+	@media (max-width: 600px) {
+		.sample-menu__categories {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.menu-category__name {
+		font-size: 1rem;
+		margin-bottom: 0.75rem;
+		text-align: center;
+	}
+
+	:global(.menu-category__rule) {
+		margin-bottom: 1.25rem;
+	}
+
+	.menu-category__items {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.menu-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.menu-item__name {
+		font-weight: 700;
+		font-size: 0.92rem;
+		color: var(--color-charcoal);
+	}
+
+	.menu-item__desc {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		line-height: 1.55;
+	}
+</style>

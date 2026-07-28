@@ -38,9 +38,37 @@ const logoAlt = businessInfo?.name || 'Tarrytown Local';
 
 const navLinks = [
 	{ label: 'Home', url: '/' },
-	{ label: 'About', url: '/about' },
-	{ label: 'Farmers', url: '/farmers' },
-	{ label: 'Blog', url: '/blog' },
+	{
+		label: 'About',
+		children: [
+			{ label: 'Our Team', url: '/our-team' },
+			{ label: 'Our Story', url: '/our-story' },
+			{ label: 'Where We Get Our Food', url: '/farmers' },
+		],
+	},
+	{
+		label: 'What We Do',
+		children: [
+			{ label: 'Restaurant', url: '/restaurant' },
+			{ label: 'Bakery', url: '/bakery' },
+			{ label: 'Grocery', url: '/grocery' },
+			{ label: 'Events & Catering', url: '/events' },
+		],
+	},
+	{ label: 'Contact', url: '/contact' },
+	{ label: 'The Blog', url: '/blog' },
+];
+
+const footerNavLinks = [
+	{ label: 'Home', url: '/' },
+	{ label: 'The Blog', url: '/blog' },
+	{ label: 'Restaurant', url: '/restaurant' },
+	{ label: 'Bakery', url: '/bakery' },
+	{ label: 'Grocery', url: '/grocery' },
+	{ label: 'Events & Catering', url: '/events' },
+	{ label: 'Our Team', url: '/our-team' },
+	{ label: 'Our Story', url: '/our-story' },
+	{ label: 'Where We Get Our Food', url: '/farmers' },
 	{ label: 'Contact', url: '/contact' },
 ];
 ---
@@ -52,10 +80,8 @@ const navLinks = [
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<Font cssVariable='--font-roboto-mono' preload />
-		<Font cssVariable='--font-homemade-apple' preload />
-		<Font cssVariable='--font-birdie' preload />
-		<Font cssVariable='--font-nunito' preload />
+		<Font cssVariable='--font-libre-franklin' preload />
+		<Font cssVariable='--font-roboto' preload />
 		<Seo
 			title={title}
 			description={description}
@@ -91,12 +117,12 @@ const navLinks = [
 			columns={[
 				{
 					heading: 'Explore',
-					links: navLinks,
+					links: footerNavLinks,
 				},
 				{
 					heading: 'Resources',
 					links: [
-						{ label: 'FAQs', url: '/faqs' },
+						{ label: 'FAQs', url: '/our-story#faq' },
 						{ label: 'Privacy Policy', url: '/privacy' },
 						{ label: 'Terms of Service', url: '/terms' },
 					],
@@ -130,89 +156,7 @@ const navLinks = [
 </script>
 
 <style>
-.header-inner {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding-block: var(--space-3);
-}
-.brand-logo {
-	font-family: var(--font-primary);
-	font-weight: 800;
-	font-size: var(--font-size-2xl);
-	color: var(--color-primary);
-	text-decoration: none;
-	letter-spacing: -0.03em;
-}
-.nav-links {
-	display: none;
-	gap: var(--space-6);
-}
-@media (min-width: 768px) {
-	.nav-links { display: flex; }
-}
-.nav-links a {
-	color: var(--color-text-muted);
-	font-weight: 500;
-	font-size: var(--font-size-sm);
-}
-.nav-links a:hover {
-	color: var(--color-primary);
-}
-.btn-sm {
-	padding: 0.6rem 1.25rem;
-	font-size: var(--font-size-sm);
-}
-
 .main-content {
 	flex: 1;
-}
-
-.site-footer {
-	background-color: var(--color-bg-muted);
-	border-top: 1px solid var(--color-border);
-	padding-top: var(--space-12);
-	padding-bottom: var(--space-6);
-	margin-top: auto;
-}
-.footer-inner {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-8);
-	margin-bottom: var(--space-8);
-}
-@media (min-width: 768px) {
-	.footer-inner {
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: flex-start;
-	}
-}
-.footer-brand {
-	max-width: 320px;
-}
-.footer-description {
-	margin-top: var(--space-3);
-	font-size: var(--font-size-sm);
-	color: var(--color-text-muted);
-}
-.footer-nav {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-3);
-}
-.footer-nav a {
-	font-size: var(--font-size-sm);
-	color: var(--color-text-muted);
-}
-.footer-nav a:hover {
-	color: var(--color-primary);
-}
-.footer-bottom {
-	text-align: center;
-	font-size: var(--font-size-sm);
-	color: var(--color-text-muted);
-	border-top: 1px solid var(--color-border);
-	padding-top: var(--space-4);
 }
 </style>

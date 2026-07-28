@@ -133,12 +133,6 @@ const categories = [
 		padding-bottom: 5rem;
 	}
 
-	.container {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 0 1.5rem;
-	}
-
 	.journal-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -157,23 +151,23 @@ const categories = [
 		flex-direction: column;
 		text-decoration: none;
 		color: inherit;
-		background: #fff;
-		border-radius: var(--radius);
+		background: var(--color-bg, #FAF6EE);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: var(--radius-dashed, 20px);
 		overflow: hidden;
-		box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
-		transition: box-shadow 0.25s ease, transform 0.25s ease;
+		transition: border-color 0.25s ease, transform 0.25s ease;
 		position: relative;
 	}
 
 	.post-card:hover {
-		box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.08);
+		border-color: var(--color-accent, #7C2E28);
 		transform: translateY(-2px);
 	}
 
 	.post-card__image {
 		aspect-ratio: 16 / 10;
 		overflow: hidden;
-		background: #EDEAE5;
+		background: var(--color-bg-muted, #F1EADD);
 	}
 
 	.post-card__image img {
@@ -203,17 +197,19 @@ const categories = [
 	}
 
 	.post-card__title {
-		font-family: var(--font-primary), Georgia, serif;
-		font-size: 1.25rem;
-		font-weight: 700;
-		line-height: 1.3;
-		color: #2D3A5C;
+		font-family: var(--font-primary), sans-serif;
+		font-size: 1.1rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		line-height: 1.35;
+		color: var(--color-charcoal, #221E1A);
 		margin-bottom: 0.6rem;
 	}
 
 	.post-card__excerpt {
 		font-size: 0.9rem;
-		color: #6B7A8D;
+		color: var(--color-text-muted, #6B6560);
 		line-height: 1.65;
 		flex: 1;
 		margin: 0;
@@ -229,7 +225,7 @@ const categories = [
 		gap: 0.5rem;
 		margin-top: 1.25rem;
 		font-size: 0.8rem;
-		color: #8A9AB0;
+		color: var(--color-text-light, #9A9186);
 	}
 
 	.post-card__author {
@@ -263,11 +259,11 @@ const categories = [
 	.journal-empty {
 		text-align: center;
 		padding: 4rem 0;
-		color: #8A9AB0;
+		color: var(--color-text-light, #9A9186);
 	}
 
 	.journal-empty a {
-		color: #2D3A5C;
-		font-weight: 600;
+		color: var(--color-charcoal, #221E1A);
+		font-weight: 700;
 	}
 </style>

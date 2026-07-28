@@ -14,15 +14,15 @@ type Props = {
 const {
 	quote,
 	items = [],
-	ctaText = 'Explore Our Commitments',
-	ctaUrl = '/about',
+	ctaText = 'Explore Our Story',
+	ctaUrl = '/our-story',
 } = Astro.props;
 
 const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`;
 ---
 
 <section class="philosophy">
-	<div class="container">
+	<div class="container philosophy-inner">
 
 		{quote && (
 			<div class="philosophy__header" data-animate="fade-up">
@@ -54,14 +54,15 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 
 <style>
 	.philosophy {
-		background: #F2EFE9;
-		padding: 5rem 0;
+		background: var(--color-bg-muted, #F1EADD);
+		padding: 5.5rem 0;
+		border-top: 1px solid var(--color-border, #E4DCCB);
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
 	}
 
-	.container {
+	.philosophy-inner {
 		max-width: 900px;
-		margin: 0 auto;
-		padding: 0 1.5rem;
+		margin-inline: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -80,7 +81,7 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 	.philosophy__icon {
 		display: flex;
 		align-items: center;
-		color: #B8B0A6;
+		color: var(--color-primary, #2E4A3B);
 	}
 
 	.philosophy__icon :global(svg) {
@@ -89,12 +90,12 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 	}
 
 	.philosophy__quote {
-		font-family: var(--font-primary), Georgia, serif;
-		font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-		font-style: italic;
-		font-weight: 400;
-		color: #2D3A5C;
-		line-height: 1.4;
+		font-family: var(--font-secondary), sans-serif;
+		font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+		font-weight: 500;
+		letter-spacing: 0;
+		color: var(--color-charcoal, #221E1A);
+		line-height: 1.45;
 		margin: 0;
 		max-width: 760px;
 	}
@@ -114,18 +115,18 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 	}
 
 	.philosophy__item-title {
-		font-size: 0.72rem;
+		font-size: 0.65rem;
 		font-weight: 700;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
-		color: #8A9AB0;
+		color: var(--color-text-light, #9A9186);
 		margin: 0;
 	}
 
 	.philosophy__item-desc {
-		font-size: 0.95rem;
-		line-height: 1.7;
-		color: #4A5568;
+		font-size: 0.92rem;
+		line-height: 1.75;
+		color: var(--color-text-muted, #6B6560);
 		margin: 0;
 	}
 
@@ -137,21 +138,23 @@ const leafIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
 
 	.philosophy__btn {
 		display: inline-block;
-		padding: 0.85rem 2rem;
-		background: #2D3A5C;
-		color: #fff;
-		font-size: 0.75rem;
+		padding: 0.75rem 2rem;
+		background: var(--color-charcoal, #221E1A);
+		color: var(--color-bg, #FAF6EE);
+		font-size: 0.65rem;
 		font-weight: 700;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		text-decoration: none;
-		border-radius: 9999px;
-		transition: background 0.2s ease, transform 0.15s ease;
+		border-radius: 0;
+		border: 1.5px solid var(--color-charcoal, #221E1A);
+		box-shadow: var(--shadow-hard);
+		transition: background 0.2s ease, color 0.2s ease;
 	}
 
 	.philosophy__btn:hover {
-		background: #1E2940;
-		transform: translateY(-1px);
+		background: var(--color-primary, #2E4A3B);
+		border-color: var(--color-primary, #2E4A3B);
 	}
 
 	@media (max-width: 600px) {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -150,47 +150,58 @@ const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapPro
                 const coord = coordinates[activeMarker];
                 const type = coord.type ?? 'farm';
                 return (
-                    <div className={styles.detail}>
-                        <button className={styles.detailClose} onClick={() => setActiveMarker(null)} aria-label="Close">
-                            ✕
+                    <div className={styles.detail} style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}>
+                        <button className={styles.detailBack} onClick={() => setActiveMarker(null)}>
+                            <span aria-hidden="true">←</span> Back to all locations
                         </button>
                         {coord.image && (
                             <img className={styles.detailImage} src={coord.image} alt={coord.title} />
                         )}
-                        <div
-                            className={styles.detailType}
-                            style={{ color: TYPE_COLORS[type] }}
-                        >
-                            <span>{TYPE_LABELS[type]}</span>
-                        </div>
+                        <span className={styles.detailType}>{TYPE_LABELS[type]}</span>
                         <h2 className={styles.detailTitle}>{coord.title}</h2>
                         <p className={styles.detailDescription}>{coord.description}</p>
-                        <div className={styles.detailActions}>
-                            {coord.url && (
+                        {coord.url && (
+                            <div className={styles.detailActions}>
                                 <a
                                     className={styles.detailLink}
                                     href={coord.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    Visit website →
+                                    Visit Website →
                                 </a>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 );
             })() : (
                 <div className={styles.list}>
-                    {coordinates.map((coord, index) => (
-                        <div
-                            key={index}
-                            className={clsx(styles.listItem, { [styles['listItem--active']]: activeMarker === index })}
-                            onClick={() => setActiveMarker(index)}
-                        >
-                            <strong>{coord.title}</strong><br />
-                            {coord.description}
-                        </div>
-                    ))}
+                    {coordinates.map((coord, index) => {
+                        const type = coord.type ?? 'farm';
+                        return (
+                            <div
+                                key={index}
+                                className={clsx(styles.listItem, { [styles['listItem--active']]: activeMarker === index })}
+                                style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}
+                                onClick={() => setActiveMarker(index)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        setActiveMarker(index);
+                                    }
+                                }}
+                            >
+                                <div className={styles.listItemBody}>
+                                    <span className={styles.listItemType}>{TYPE_LABELS[type]}</span>
+                                    <strong className={styles.listItemTitle}>{coord.title}</strong>
+                                    <p className={styles.listItemDesc}>{coord.description}</p>
+                                </div>
+                                <span className={styles.listItemArrow} aria-hidden="true">→</span>
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </div>

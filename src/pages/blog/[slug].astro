@@ -133,10 +133,10 @@ const postDate = post.data.date ? new Date(post.data.date).toISOString() : undef
 	color: inherit;
 }
 .prose blockquote {
-	border-left: 3px solid var(--color-primary);
+	border-left: 2px solid var(--color-accent, #7C2E28);
 	padding-left: var(--space-6);
 	margin: var(--space-6) 0;
-	font-style: italic;
+	font-family: var(--font-secondary), sans-serif;
 	color: var(--color-text-muted);
 }
 .prose table {

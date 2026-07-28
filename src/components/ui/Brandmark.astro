@@ -1,0 +1,143 @@
+---
+import type { ImageMetadata } from 'astro';
+import Img from '@/components/ui/Img.astro';
+
+type Props = {
+	/** Optional override — if provided, renders the uploaded logo image instead of the coded wordmark. */
+	logoSrc?: ImageMetadata | string;
+	logoAlt?: string;
+	size?: 'compact' | 'large';
+	showDivider?: boolean;
+};
+
+const { logoSrc, logoAlt = 'Tarrytown Local', size = 'compact', showDivider = false } = Astro.props;
+
+const leafIcon = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21c-4-1-7-5-7-10 3 0 6 1 8 3 1 2 1 5-1 7Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 21c1-5 4-9 9-11-1 5-4 9-9 11Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 21V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+
+const targetWidth = size === 'large' ? 240 : 140;
+const aspectRatio = typeof logoSrc === 'object' && logoSrc ? logoSrc.width / logoSrc.height : 2.5;
+const targetHeight = Math.round(targetWidth / aspectRatio);
+---
+
+{logoSrc ? (
+	<Img src={logoSrc} alt={logoAlt} width={targetWidth} height={targetHeight} class={`brandmark-image brandmark-image--${size}`} loading="eager" />
+) : (
+	<div class:list={['brandmark', `brandmark--${size}`]}>
+		<span class="brandmark__leaf" set:html={leafIcon} />
+		<span class="brandmark__word">Tarrytown</span>
+		<span class="brandmark__local">L<span class="brandmark__dot">&middot;</span>O<span class="brandmark__dot">&middot;</span>C<span class="brandmark__dot">&middot;</span>A<span class="brandmark__dot">&middot;</span>L</span>
+		{showDivider && (
+			<div class="brandmark__divider" aria-hidden="true">
+				<span class="brandmark__divider-line" />
+				<span class="brandmark__divider-mark" />
+				<span class="brandmark__divider-line" />
+			</div>
+		)}
+	</div>
+)}
+
+<style>
+	.brandmark {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.1rem;
+		text-align: center;
+	}
+
+	.brandmark__leaf {
+		display: block;
+		color: var(--color-primary);
+		margin-bottom: -0.35em;
+	}
+	.brandmark__leaf :global(svg) {
+		width: 1.1em;
+		height: 1.1em;
+	}
+
+	.brandmark__word {
+		font-family: var(--font-primary), sans-serif;
+		font-weight: 700;
+		color: var(--color-primary);
+		line-height: 1;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	.brandmark__local {
+		font-family: var(--font-primary), sans-serif;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: var(--color-charcoal);
+	}
+	.brandmark__dot {
+		color: var(--color-accent);
+		display: inline-block;
+		margin-inline: 0.18em;
+	}
+
+	.brandmark__divider {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+		margin-top: 0.6em;
+	}
+	.brandmark__divider-line {
+		height: 1px;
+		width: 44px;
+		background: var(--color-accent);
+	}
+	.brandmark__divider-mark {
+		display: block;
+		width: 6px;
+		height: 6px;
+		background: var(--color-accent);
+		transform: rotate(45deg);
+		flex-shrink: 0;
+	}
+
+	/* ── Compact (nav) ───────────────────────────────────── */
+	.brandmark--compact .brandmark__leaf {
+		display: none;
+	}
+	.brandmark--compact {
+		flex-direction: row;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+	.brandmark--compact .brandmark__word {
+		font-size: 1.5rem;
+	}
+	.brandmark--compact .brandmark__local {
+		font-size: 0.55rem;
+		letter-spacing: 0.05em;
+	}
+
+	/* ── Large (hero / footer) ───────────────────────────── */
+	.brandmark--large .brandmark__leaf {
+		width: 2rem;
+	}
+	.brandmark--large .brandmark__word {
+		font-size: clamp(2.5rem, 6vw, 4rem);
+	}
+	.brandmark--large .brandmark__local {
+		font-size: clamp(0.8rem, 1.6vw, 1rem);
+		letter-spacing: 0.08em;
+		margin-top: 0.15em;
+	}
+
+	.brandmark-image {
+		display: block;
+		height: auto;
+	}
+	.brandmark-image--compact {
+		max-height: 2.5rem;
+		width: auto;
+	}
+	.brandmark-image--large {
+		max-height: 5rem;
+		width: auto;
+		margin-inline: auto;
+	}
+</style>

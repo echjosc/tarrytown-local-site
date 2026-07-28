@@ -131,21 +131,15 @@ const platformLabels: Record<string, string> = {
 
 
 <style lang="scss">
-	$navy:        #2D3A5C;
-	$accent:      #C9A882;
-	$text-muted:  #6B7A8D;
-	$label-muted: #8A9AB0;
-	$bg:          #F7F4F0;
+	$navy:        #221E1A;
+	$accent:      #7C2E28;
+	$text-muted:  #6B6560;
+	$label-muted: #9A9186;
+	$bg:          #FAF6EE;
 
 	.team {
 		background: $bg;
 		padding: 5rem 0;
-	}
-
-	.container {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 0 1.5rem;
 	}
 
 	.team-list {
@@ -208,26 +202,16 @@ const platformLabels: Record<string, string> = {
 		}
 	}
 
-	.member-photo-wrap {
-		position: relative;
-		flex-shrink: 0;
-		width: 300px;
-
-		@media (max-width: 768px) {
-			width: 100%;
-			max-width: 260px;
-		}
-	}
-
 	.member-watermark {
 		position: absolute;
 		top: -0.5rem;
 		left: -0.75rem;
-		font-family: var(--font-primary), Georgia, serif;
+		font-family: var(--font-primary), sans-serif;
 		font-size: 10rem;
-		font-weight: 800;
+		font-weight: 700;
+		text-transform: uppercase;
 		line-height: 1;
-		color: rgba($navy, 0.06);
+		color: rgba($navy, 0.05);
 		pointer-events: none;
 		user-select: none;
 		z-index: 0;
@@ -244,11 +228,12 @@ const platformLabels: Record<string, string> = {
 			object-fit: cover;
 			object-position: bottom center;
 			display: block;
-			border-radius: var(--radius);
+			border-radius: var(--radius-dashed, 20px);
+			border: 2px dashed var(--color-border-dashed, #6B9C86);
 		}
 
 		:global(.member-photo--placeholder) {
-			background: #E5DDD5;
+			background: var(--color-bg-muted, #F1EADD);
 		}
 	}
 
@@ -264,9 +249,11 @@ const platformLabels: Record<string, string> = {
 	}
 
 	.member-name {
-		font-family: var(--font-primary), Georgia, serif;
-		font-size: clamp(1.75rem, 2.5vw, 2.25rem);
-		font-weight: 700;
+		font-family: var(--font-primary), sans-serif;
+		font-size: clamp(1.5rem, 2.5vw, 2rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
 		color: $navy;
 		line-height: 1.1;
 		margin-bottom: 0.4rem;
@@ -290,17 +277,6 @@ const platformLabels: Record<string, string> = {
 			line-height: 1.75;
 			color: $text-muted;
 			margin: 0;
-		}
-	}
-
-	.member-icon {
-		display: block;
-		margin-top: 1.5rem;
-		color: #A0ADB8;
-
-		:global(svg) {
-			width: 20px;
-			height: 20px;
 		}
 	}
 

@@ -43,18 +43,20 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 		</>
 	)}
 
-	<div class="interior-banner__content">
-		{eyebrow && <p class="interior-banner__eyebrow">{eyebrow}</p>}
+	<div class="container">
+		<div class="interior-banner__content">
+			{eyebrow && <p class="interior-banner__eyebrow">{eyebrow}</p>}
 
-		{tags && tags.length > 0 && (
-			<div class="interior-banner__tags">
-				{tags.map((tag) => <Tag label={tag} variant={hasImage ? 'overlay' : 'default'} />)}
-			</div>
-		)}
+			{tags && tags.length > 0 && (
+				<div class="interior-banner__tags">
+					{tags.map((tag) => <Tag label={tag} variant={hasImage ? 'overlay' : 'default'} />)}
+				</div>
+			)}
 
-		<h1 class="interior-banner__title">{title}</h1>
+			<h1 class="interior-banner__title">{title}</h1>
 
-		{metaLine && <p class="interior-banner__meta">{metaLine}</p>}
+			{metaLine && <p class="interior-banner__meta">{metaLine}</p>}
+		</div>
 	</div>
 </div>
 
@@ -66,12 +68,17 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 		overflow: hidden;
 	}
 
+	.interior-banner .container {
+		height: 100%;
+	}
+
 	.interior-banner__content {
 		position: relative;
 		z-index: 1;
 		display: flex;
 		flex-direction: column;
 		max-width: 860px;
+		height: 100%;
 	}
 
 	.interior-banner__tags {
@@ -82,12 +89,14 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 	}
 
 	.interior-banner__title {
-		font-family: var(--font-primary), Georgia, serif;
+		font-family: var(--font-primary), sans-serif;
 		font-size: clamp(1.75rem, 4vw, 3rem);
-		font-weight: 700;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
 		line-height: 1.15;
 		margin-bottom: 0.75rem;
-		color: #2D3A5C; /* overridden to white by --image modifier */
+		color: var(--color-charcoal, #221E1A);
 	}
 
 	/* ── With image ──────────────────────────────────────────── */
@@ -107,18 +116,12 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 	.interior-banner__overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0.05) 0%,
-			rgba(0, 0, 0, 0.55) 70%,
-			rgba(0, 0, 0, 0.72) 100%
-		);
+		background: rgba(0, 0, 0, 0.6);
 	}
 
 	.interior-banner--image .interior-banner__content {
-		height: 100%;
 		justify-content: flex-end;
-		padding: 2.5rem 3rem;
+		padding-block: 2.5rem 3rem;
 	}
 
 	.interior-banner--image .interior-banner__eyebrow {
@@ -127,7 +130,6 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 
 	.interior-banner--image .interior-banner__title {
 		color: #fff;
-		text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 	}
 
 	.interior-banner--image .interior-banner__meta {
@@ -136,34 +138,34 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 
 	/* ── Without image ───────────────────────────────────────── */
 	.interior-banner--plain {
-		background: #F7F4F0;
-		border-bottom: 1px solid #E5E0D8;
+		background: var(--color-bg-muted, #F1EADD);
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
 	}
 
 	.interior-banner--plain .interior-banner__content {
-		padding: 3.5rem 3rem 3rem;
+		padding-block: 3.5rem 3rem;
 	}
 
 	.interior-banner--plain .interior-banner__eyebrow {
-		color: #8A9AB0;
+		color: var(--color-accent, #7C2E28);
 	}
 
 	.interior-banner--plain .interior-banner__title {
-		color: #2D3A5C;
+		color: var(--color-charcoal, #221E1A);
 	}
 
 	.interior-banner--plain .interior-banner__meta {
-		color: #8A9AB0;
+		color: var(--color-text-light, #9A9186);
 	}
 
 	/* ── Shared meta ─────────────────────────────────────────── */
 	.interior-banner__eyebrow {
 		font-size: 0.7rem;
-		font-weight: 600;
+		font-weight: 700;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		margin-bottom: 0.75rem;
-		color: #8A9AB0; /* overridden to white by --image modifier */
+		color: var(--color-text-light, #9A9186); /* overridden to white by --image modifier */
 	}
 
 	.interior-banner__meta {
@@ -171,13 +173,15 @@ const metaLine = meta ?? [author ? `By ${author}` : null, date ? formatDate(date
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		color: #8A9AB0; /* overridden to white by --image modifier */
+		color: var(--color-text-light, #9A9186); /* overridden to white by --image modifier */
 	}
 
 	@media (max-width: 640px) {
-		.interior-banner--image .interior-banner__content,
+		.interior-banner--image .interior-banner__content {
+			padding-block: 1.5rem;
+		}
 		.interior-banner--plain .interior-banner__content {
-			padding: 1.5rem;
+			padding-block: 1.5rem;
 		}
 	}
 </style>

@@ -40,30 +40,31 @@ const { eyebrow, title, subtitle, categories } = Astro.props;
 	}
 
 	.page-hero__eyebrow {
-		font-size: 0.7rem;
-		font-weight: 600;
-		letter-spacing: 0.2em;
+		font-size: 0.62rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
 		text-transform: uppercase;
-		color: #8A9AB0;
+		color: var(--color-accent, #7C2E28);
 		margin-bottom: 1rem;
 	}
 
 	.page-hero__title {
-		font-family: var(--font-primary), Georgia, serif;
-		font-size: clamp(2.5rem, 6vw, 3.75rem);
-		font-weight: 700;
-		color: #2D3A5C;
-		letter-spacing: -0.02em;
-		line-height: 1.1;
+		font-family: var(--font-primary), sans-serif;
+		font-size: clamp(2.25rem, 5vw, 3.5rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: var(--color-charcoal, #221E1A);
+		line-height: 1.15;
 		margin-bottom: 0.6rem;
 	}
 
 	.page-hero__subtitle {
-		font-family: var(--font-secondary), Arial, sans-serif;
-		/* font-style: italic; */
+		font-family: var(--font-secondary), sans-serif;
 		font-size: 0.95rem;
-		color: #8A9AB0;
+		color: var(--color-text-muted, #6B6560);
 		margin-bottom: 2.5rem;
+		letter-spacing: 0.01em;
 	}
 
 	.page-hero__categories {
@@ -90,22 +91,24 @@ const { eyebrow, title, subtitle, categories } = Astro.props;
 		justify-content: center;
 		width: 52px;
 		height: 52px;
-		background: #EDEAE5;
-		border-radius: 14px;
-		color: #5A6A80;
+		background: var(--color-bg-muted, #F1EADD);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: 0;
+		color: var(--color-primary, #2E4A3B);
 		transition: background 0.2s ease, color 0.2s ease;
 	}
 
 	.page-hero__cat:hover .page-hero__cat-icon {
-		background: #2D3A5C;
+		background: var(--color-charcoal, #221E1A);
+		border-color: var(--color-charcoal, #221E1A);
 		color: white;
 	}
 
 	.page-hero__cat-label {
 		font-size: 0.65rem;
-		font-weight: 600;
+		font-weight: 700;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		color: #8A9AB0;
+		color: var(--color-text-light, #9A9186);
 	}
 </style>

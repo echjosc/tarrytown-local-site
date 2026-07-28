@@ -1,6 +1,5 @@
 ---
 import Base from "@/layouts/Base.astro";
-import VegaContactForm from "@/components/sections/VegaContactForm.astro";
 import PageHero from "@/components/ui/PageHero.astro";
 import InteractiveMap from "@/components/react/InteractiveMap";
 import { createReader } from '@keystatic/core/reader';
@@ -11,8 +10,8 @@ const farmersPage = await reader.singletons.farmersPage.read();
 ---
 
 <Base
-	title="Farmers & Producers"
-	description="Reach out to Tarrytown Local for inquiries about private events, catering, press, or just to say hello."
+	title="Where We Get Our Food"
+	description="Meet the farmers and producers we work with across the Hudson Valley, and see where the food we serve and sell actually comes from."
 >
 	<!-- ── Hero ──────────────────────────────────────────────── -->
 	<PageHero
@@ -20,7 +19,7 @@ const farmersPage = await reader.singletons.farmersPage.read();
 		subtitle={farmersPage?.heroSubtitle || undefined}
 	/>
 
-	<div data-animate="fade-up">
+	<div class="container" data-animate="fade-up">
 		<InteractiveMap
 			client:only="react"
 			coordinates={farmersPage?.locations?.length
@@ -39,6 +38,8 @@ const farmersPage = await reader.singletons.farmersPage.read();
 	</div>
 </Base>
 
-<style lang="scss">
-	
+<style>
+	.container {
+		padding-bottom: var(--space-20);
+	}
 </style>

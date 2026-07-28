@@ -10,26 +10,45 @@ type Props = {
 	description?: string;
 	imageSrc?: ImageMetadata | string;
 	buttons?: { text: string; url: string }[];
+	/** Renders each word of the title separated by a ◆, e.g. "EAT ◆ GOOD ◆ FOOD" */
+	diamondTitle?: boolean;
+	/** 'split' (default): text + framed image side-by-side. 'background': full-width background image with overlay. */
+	variant?: 'split' | 'background';
+	/** Only affects the 'background' variant. 'full' (default): tall homepage-style hero. 'compact': shorter banner for interior pages. */
+	size?: 'full' | 'compact';
 };
 
-const { eyebrow, title, description, imageSrc, buttons } = Astro.props;
+const { eyebrow, title, description, imageSrc, buttons, diamondTitle = false, variant = 'split', size = 'full' } = Astro.props;
 
 const titleParts = title.split(/(\{.*?\})/);
+const titleWords = title.split(' ');
 ---
 
-<section class="vega-main-hero">
+<section class:list={['vega-main-hero', `vega-main-hero--${variant}`, variant === 'background' && `vega-main-hero--${size}`]}>
+	{variant === 'background' && (
+		<div class="hero-bg">
+			<Img src={imageSrc || placeholderImg} alt="" class="hero-bg-img" width={1920} height={1080} loading="eager" fetchpriority="high" />
+			<div class="hero-bg-overlay" />
+		</div>
+	)}
 	<div class="container">
 		<div class="text-content">
 			{eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
 			<h1 class="vega-main-hero-title">
-				{
-					titleParts.map((part) =>
-						part.startsWith("{") ? (
-							<span class="script">{part.slice(1, -1)}</span>
-						) : (
-							<Fragment>{part}</Fragment>
-						),
-					)
+				{diamondTitle
+					? titleWords.map((word, i) => (
+							<Fragment>
+								{word}
+								{i < titleWords.length - 1 && <span class="title-diamond" aria-hidden="true" />}
+							</Fragment>
+						))
+					: titleParts.map((part) =>
+							part.startsWith("{") ? (
+								<span class="script">{part.slice(1, -1)}</span>
+							) : (
+								<Fragment>{part}</Fragment>
+							),
+						)
 				}
 			</h1>
 			{
@@ -49,13 +68,13 @@ const titleParts = title.split(/(\{.*?\})/);
 				)
 			}
 		</div>
-		<div class="image-content">	
-			<div class="deco-circle deco-circle--1"></div>
-			<div class="deco-circle deco-circle--2"></div>
-			<div class="image-frame">
-				<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} loading="eager" fetchpriority="high" />
+		{variant === 'split' && (
+			<div class="image-content">
+				<div class="image-frame">
+					<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} loading="eager" fetchpriority="high" />
+				</div>
 			</div>
-		</div>
+		)}
 	</div>
 </section>
 
@@ -70,7 +89,7 @@ const titleParts = title.split(/(\{.*?\})/);
 			const title = hero.querySelector(".vega-main-hero-title");
 			const desc = hero.querySelector(".vega-main-hero-description");
 			const buttons = hero.querySelector(".button-group");
-			const image = hero.querySelector(".image-content");
+			const image = hero.querySelector(".image-content, .hero-bg");
 
 			const from = { opacity: 0, y: 24 };
 			const fromImg = { opacity: 0, y: 32 };
@@ -88,15 +107,19 @@ const titleParts = title.split(/(\{.*?\})/);
 
 <style lang="scss">
 	.vega-main-hero {
-		--hero-navy: #2D3A5C;
-		--hero-circle: rgba(180, 185, 220, 0.35);
+		--hero-charcoal: var(--color-charcoal, #221E1A);
+		--hero-muted:    var(--color-text-muted, #6B6560);
+		--hero-olive:    var(--color-primary, #2E4A3B);
+		--hero-amber:    var(--color-accent, #7C2E28);
+		--hero-cream:    var(--color-bg, #FAF6EE);
 
-		padding: 5rem 0 4rem;
+		padding: 5rem 0 4.5rem;
+		border-bottom: 1px solid var(--color-border, #E4DCCB);
 
 		.container {
 			display: flex;
 			flex-wrap: wrap;
-			gap: 3rem;
+			gap: 3.5rem;
 			align-items: center;
 		}
 
@@ -112,47 +135,20 @@ const titleParts = title.split(/(\{.*?\})/);
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			padding: 2rem;
-		}
-
-		.deco-circle {
-			position: absolute;
-			border-radius: 50%;
-			background: var(--hero-circle);
-			pointer-events: none;
-		}
-
-		.deco-circle--1 {
-			width: 220px;
-			height: 220px;
-			top: -10px;
-			left: 5%;
-			z-index: 0;
-		}
-
-		.deco-circle--2 {
-			width: 170px;
-			height: 170px;
-			bottom: -10px;
-			right: -2%;
-			z-index: 0;
+			padding: 1.5rem;
 		}
 
 		.image-frame {
 			position: relative;
-			z-index: 1;
-			background: white;
-			padding: 14px;
-			border-radius: var(--radius);
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.14);
-			transform: rotate(-2deg);
+			border: 1.5px solid var(--hero-charcoal);
+			box-shadow: var(--shadow-hard);
+			border-radius: 0;
 			max-width: 460px;
 			width: 100%;
 			box-sizing: border-box;
 
 			:global(.image-img) {
-				border-radius: 2px;
-				
+				border-radius: 0;
 				width: 100%;
 				height: 100%;
 				aspect-ratio: 6 / 5;
@@ -160,81 +156,201 @@ const titleParts = title.split(/(\{.*?\})/);
 		}
 
 		.hero-eyebrow {
-			font-size: 0.72rem;
+			font-size: 0.65rem;
 			font-weight: 600;
-			letter-spacing: 0.14em;
+			letter-spacing: 0.22em;
 			text-transform: uppercase;
-			color: #7A8BA8;
+			color: var(--hero-muted);
 			margin-bottom: 1rem;
 		}
 
 		.vega-main-hero-title {
 			font-size: clamp(2.4rem, 5vw, 3.5rem);
-			font-weight: 700;
-			line-height: 1.15;
-			color: var(--hero-navy);
-			margin-bottom: 1rem;
+			font-weight: 800;
+			line-height: 1.12;
+			color: var(--hero-charcoal);
+			margin-bottom: 1.25rem;
+			text-transform: uppercase;
+			letter-spacing: 0.02em;
 
 			.script {
 				font-family: var(--font-primary), sans-serif;
-				color: var(--color-primary);
+				font-weight: 500;
+				text-transform: uppercase;
+				color: var(--hero-olive);
 				white-space: nowrap;
+			}
+
+			.title-diamond {
+				display: inline-block;
+				width: 0.22em;
+				height: 0.22em;
+				background: var(--hero-amber);
+				transform: rotate(45deg);
+				margin-inline: 0.32em;
+				vertical-align: 0.3em;
 			}
 		}
 
 		.vega-main-hero-subtitle {
-			font-size: 1.15rem;
-			font-family: var(--font-accent), cursive;
-			font-style: italic;
-			color: var(--hero-navy);
+			font-size: 0.9rem;
+			font-family: var(--font-secondary), sans-serif;
+			color: var(--hero-muted);
 			margin-bottom: 1.25rem;
-			opacity: 0.85;
+			letter-spacing: 0.02em;
 		}
 
 		.vega-main-hero-description {
-			font-size: 1rem;
-			color: var(--color-text-muted);
-			max-width: 480px;
-			line-height: 1.7;
+			font-size: 0.95rem;
+			color: var(--hero-muted);
+			max-width: 460px;
+			line-height: 1.75;
 			margin-bottom: 0;
 		}
 
 		.button-group {
 			display: flex;
-			gap: 1rem;
-			margin-top: 2rem;
+			gap: 0.85rem;
+			margin-top: 2.25rem;
 			flex-wrap: wrap;
 
 			:global(.ui-button) {
-				background-color: var(--hero-navy);
-				color: white;
-				font-size: 0.9rem;
-				font-weight: 600;
-				padding: 0.7em 1.6em;
-				border-radius: 999px;
-				border: 2px solid var(--hero-navy);
-				transition: background-color 0.25s ease, color 0.25s ease;
+				background-color: var(--hero-charcoal);
+				color: var(--hero-cream);
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				padding: 0.75em 1.75em;
+				border-radius: 0;
+				border: 1.5px solid var(--hero-charcoal);
+				transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 
 				&:hover {
-					background-color: #1e2a45;
-					color: white;
+					background-color: var(--hero-olive);
+					border-color: var(--hero-olive);
+					color: var(--hero-cream);
 				}
 			}
 
 			:global(.ui-button--secondary) {
 				background-color: transparent;
-				color: var(--hero-navy);
-				border: 2px solid var(--hero-navy);
+				color: var(--hero-charcoal);
+				border: 1.5px solid var(--hero-charcoal);
 
 				&:hover {
-					background-color: var(--hero-navy);
-					color: white;
+					background-color: var(--hero-charcoal);
+					color: var(--hero-cream);
+				}
+			}
+		}
+
+		// ── Background variant: full-bleed image, text overlaid ──
+		&.vega-main-hero--background {
+			position: relative;
+			width: 100%;
+			min-height: 80vh;
+			padding: 0;
+			border-bottom: none;
+			display: flex;
+			align-items: flex-end;
+			overflow: hidden;
+
+			.hero-bg {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+
+				:global(.hero-bg-img) {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+
+				.hero-bg-overlay {
+					position: absolute;
+					inset: 0;
+					background: linear-gradient(180deg, rgba(34, 30, 26, 0.35) 0%, rgba(34, 30, 26, 0.35) 40%, rgba(34, 30, 26, 0.85) 100%);
+				}
+			}
+
+			.container {
+				position: relative;
+				z-index: 1;
+				display: block;
+				padding-block: 4.5rem 4rem;
+			}
+
+			.text-content {
+				max-width: 640px;
+			}
+
+			.hero-eyebrow {
+				color: rgba(250, 246, 238, 0.75);
+			}
+
+			.vega-main-hero-title {
+				color: var(--hero-cream);
+
+				.script {
+					color: var(--hero-amber);
+				}
+			}
+
+			.vega-main-hero-description {
+				color: rgba(250, 246, 238, 0.85);
+				max-width: 520px;
+			}
+
+			.button-group {
+				:global(.ui-button) {
+					background-color: var(--hero-cream);
+					color: var(--hero-charcoal);
+					border-color: var(--hero-cream);
+
+					&:hover {
+						background-color: var(--hero-olive);
+						border-color: var(--hero-olive);
+						color: var(--hero-cream);
+					}
+				}
+
+				:global(.ui-button--secondary) {
+					background-color: transparent;
+					color: var(--hero-cream);
+					border-color: var(--hero-cream);
+
+					&:hover {
+						background-color: var(--hero-cream);
+						border-color: var(--hero-cream);
+						color: var(--hero-charcoal);
+					}
+				}
+			}
+
+			@media (max-width: 640px) {
+				min-height: 70vh;
+
+				.container {
+					padding-block: 3rem 2.5rem;
+				}
+			}
+
+			&.vega-main-hero--compact {
+				min-height: 45vh;
+
+				.container {
+					padding-block: 3rem 2.5rem;
+				}
+
+				@media (max-width: 640px) {
+					min-height: 340px;
 				}
 			}
 		}
 	}
 
-	// Pre-animation states — scoped to .js so no-JS visitors see content
+	// Pre-animation states
 	:global(.js) .hero-eyebrow,
 	:global(.js) .vega-main-hero-title,
 	:global(.js) .vega-main-hero-description,
@@ -243,7 +359,8 @@ const titleParts = title.split(/(\{.*?\})/);
 		transform: translateY(24px);
 	}
 
-	:global(.js) .image-content {
+	:global(.js) .image-content,
+	:global(.js) .hero-bg {
 		opacity: 0;
 		transform: translateY(32px);
 	}

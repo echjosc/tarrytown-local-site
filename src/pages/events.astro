@@ -1,0 +1,113 @@
+---
+import Base from "@/layouts/Base.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+import { resolveImage } from '@/utils/resolveImage';
+import VegaMainHero from "@/components/sections/VegaMainHero.astro";
+import VegaInquiryForm from "@/components/sections/VegaInquiryForm.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const eventsPage = await reader.singletons.eventsPage.read();
+---
+
+<Base
+	title={eventsPage?.seoTitle || "Events & Catering"}
+	description={eventsPage?.seoDescription || "Onsite private events and offsite catering, all built around the same food we serve and sell."}
+>
+	<!-- Hero -->
+	<VegaMainHero
+		eyebrow={eventsPage?.hero?.eyebrow || 'Events & Catering'}
+		title={eventsPage?.hero?.headline || 'We want to feed you and your friends.'}
+		description={eventsPage?.hero?.description || undefined}
+		imageSrc={resolveImage(eventsPage?.hero?.image)}
+	/>
+
+	<!-- Examples -->
+	{eventsPage?.examples?.length ? (
+		<section class="examples section">
+			<div class="container">
+				<p class="examples__lead" data-animate="fade-up">We can do it all — from</p>
+				<div class="examples__list">
+					{eventsPage.examples.map((example, i) => (
+						<div class="example-card" data-animate="fade-up-sm" data-animate-stagger="0.08">
+							<span class="example-card__num">{String(i + 1).padStart(2, '0')}</span>
+							<p class="example-card__text">{example}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+	) : null}
+
+	<!-- Inquiry -->
+	<section class="event-inquiry section">
+		<div class="container">
+			<SectionHeader
+				title={eventsPage?.inquiry?.heading || 'Planning Something? Tell Us About It!'}
+				subtitle={eventsPage?.inquiry?.body || undefined}
+				align="center"
+				data-animate="fade-up"
+			/>
+
+			<VegaInquiryForm
+				formName="event-inquiry"
+				successPath="/events?success=true"
+				submitLabel="Send Inquiry"
+				fields={[
+					{ name: 'name', label: 'Your Name', required: true },
+					{ name: 'email', label: 'Email Address', type: 'email', required: true },
+					{ name: 'phone', label: 'Phone Number', type: 'tel' },
+					{ name: 'event-type', label: 'Event Type', placeholder: 'Private dinner, catering, tasting menu...' },
+					{ name: 'date', label: 'Date', type: 'date' },
+					{ name: 'guests', label: 'Estimated Guest Count', type: 'number' },
+					{ name: 'details', label: 'Tell Us More', type: 'textarea', fullWidth: true, required: true },
+				]}
+			/>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.examples__lead {
+		text-align: center;
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 1.1rem;
+		color: var(--color-text-muted);
+		margin-bottom: 2rem;
+	}
+
+	.examples__list {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.25rem;
+	}
+	@media (max-width: 700px) {
+		.examples__list {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.example-card {
+		background: var(--color-bg);
+		border: 2px dashed var(--color-border-dashed);
+		border-radius: var(--radius-dashed);
+		padding: 1.75rem 1.5rem;
+		text-align: center;
+	}
+
+	.example-card__num {
+		display: block;
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 1.5rem;
+		color: var(--color-accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.example-card__text {
+		font-size: 0.95rem;
+		color: var(--color-charcoal);
+		line-height: 1.6;
+		margin: 0;
+	}
+</style>

@@ -21,7 +21,7 @@ import Base from "@/layouts/Base.astro";
 
 			<div class="not-found__actions">
 				<a href="/" class="btn btn--primary">Back to Home</a>
-				<a href="/menu" class="btn btn--outline">See the Menu</a>
+				<a href="/restaurant" class="btn btn--secondary">See the Menu</a>
 			</div>
 
 			<div class="not-found__decoration" aria-hidden="true">
@@ -43,7 +43,7 @@ import Base from "@/layouts/Base.astro";
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: #F7F4F0;
+		background: var(--color-bg, #FAF6EE);
 		padding: 4rem 1.5rem;
 		text-align: center;
 	}
@@ -78,9 +78,11 @@ import Base from "@/layouts/Base.astro";
 	}
 
 	.not-found__handwritten {
-		font-family: var(--font-accent), cursive;
+		font-family: var(--font-secondary), sans-serif;
+		font-weight: 500;
 		font-size: clamp(2rem, 6vw, 3rem);
-		color: #2D3A5C;
+		letter-spacing: 0;
+		color: var(--color-charcoal, #221E1A);
 		margin: -1.5rem 0 1.75rem;
 		line-height: 1.2;
 	}
@@ -102,8 +104,8 @@ import Base from "@/layouts/Base.astro";
 
 	.not-found__decoration {
 		margin-top: 3.5rem;
-		color: #2D3A5C;
-		opacity: 0.1;
+		color: var(--color-accent, #7C2E28);
+		opacity: 0.35;
 		width: 80px;
 		height: 80px;
 	}

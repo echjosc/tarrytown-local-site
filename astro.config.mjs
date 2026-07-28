@@ -18,37 +18,19 @@ export default defineConfig({
 		},
 	},
 
-	experimental: {
-		fonts: [
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Roboto Mono',
-				cssVariable: '--font-roboto-mono',
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Homemade Apple',
-				cssVariable: '--font-homemade-apple',
-			},
-			{
-				provider: fontProviders.fontsource(),
-				name: 'Nunito',
-				cssVariable: '--font-nunito',
-			},
-			{
-				provider: fontProviders.local(),
-				name: 'Birdie',
-				cssVariable: '--font-birdie',
-				options: {
-					variants: [
-						{
-							weight: 'normal',
-							style: 'normal',
-							src: ['./src/assets/fonts/birdie/TAYBirdieRegular.woff2', './src/assets/fonts/birdie/TAYBirdieRegular.woff'],
-						}
-					]
-				}
-			}
-		]
-	}
+	fonts: [
+		{
+			// TODO: swap to the client's "TAY Birdie" font once files are provided (see src/styles/global.css --font-primary)
+			provider: fontProviders.fontsource(),
+			name: 'Libre Franklin',
+			cssVariable: '--font-libre-franklin',
+			weights: [400, 500, 600, 700, 800],
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Roboto',
+			cssVariable: '--font-roboto',
+			weights: [400, 500, 600, 700],
+		},
+	],
 });

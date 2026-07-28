@@ -1,11 +1,56 @@
 hero:
-  buttons: []
+  eyebrow: Coming to Tarrytown
+  headline: Eat Good Food
+  description: >-
+    Your neighborhood spot for good food. A rotating selection of the best
+    local, sustainable, and healthful ingredients we can find — plus a
+    restaurant, bakery, and grocery to bring it all home.
+  buttons:
+    - text: See the Menu
+      url: /restaurant
+    - text: Shop the Grocery
+      url: /grocery
   image: '@assets/images/homepage/hero/image.png'
-offerings:
-  sectionTitle: What We Do
-  featured:
-    image: '@assets/images/homepage/offerings/featured/image.png'
-  cards: []
+tagline: >-
+  Offering a rotating selection of the best local, sustainable, and
+  healthful ingredients we can find.
+pillars:
+  - icon: pantry
+    title: Pantry Staples
+    description: >-
+      Grains, beans, and intentional pantry goods chosen with a reason
+      behind every jar and bag.
+    linkUrl: /grocery
+  - icon: produce
+    title: Seasonal Produce
+    description: >-
+      Local produce that arrives at the mercy of the seasons — not a
+      spreadsheet.
+    linkUrl: /grocery
+  - icon: mill
+    title: Mill and Bakery
+    description: >-
+      We mill 100% of our flour in-house and bake fresh, naturally
+      leavened bread every day.
+    linkUrl: /bakery
+  - icon: grab-and-go
+    title: Grab n’ Go or Dine In
+    description: >-
+      Walk in for breakfast and lunch, or grab something good to take
+      with you.
+    linkUrl: /restaurant
+statement:
+  quote: >-
+    We stock our shelves, coolers, and kitchen with great ingredients from
+    producers we actually know, and we think you should too!
+  ctaText: Meet Our Farmers
+  ctaUrl: /farmers
+location:
+  title: Find Us
+  hoursTitle: Hours of Operation
+  directionsUrl: '#'
+  directionsText: Get Directions
+  mapLabel: Tarrytown Local Location
 newsletter:
   title: Stay in the Loop
   description: >-
@@ -13,32 +58,3 @@ newsletter:
     launches, and special events. We promise to only send you the good stuff.
   placeholder: Enter your email address
   buttonText: Subscribe
-location:
-  title: Find Us
-  hoursTitle: Hours of Operation
-  directionsUrl: '#'
-  directionsText: Get Directions
-  mapLabel: Tarrytown Local Location
-commitments:
-  sectionTitle: Our Commitments
-  quote: >-
-    We believe in food that honors the earth, nourishes the spirit, and binds
-    the community.
-  ctaText: Explore Our Commitments
-  ctaUrl: /about
-  items:
-    - title: Radically Local
-      description: >-
-        We source 90% of our ingredients from farmers within a 50-mile radius of
-        Tarrytown, ensuring peak freshness.
-    - title: Truly Seasonal
-      description: >-
-        Our menu shifts with the rhythm of the Hudson Valley, celebrating the
-        unique flavors each month provides.
-    - title: Community Rooted
-      description: >-
-        We are more than a bakery; we are a gathering place dedicated to
-        fostering connection through shared tables.
-sourcingStandards:
-  title: Our sourcing standards
-  items: []
