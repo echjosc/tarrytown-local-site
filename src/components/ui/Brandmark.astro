@@ -20,7 +20,7 @@ const targetHeight = Math.round(targetWidth / aspectRatio);
 ---
 
 {logoSrc ? (
-	<Img src={logoSrc} alt={logoAlt} width={targetWidth} height={targetHeight} class={`brandmark-image brandmark-image--${size}`} loading="eager" />
+	<Img src={logoSrc} alt={logoAlt} width={targetWidth} height={targetHeight} format="png" quality="max" class={`brandmark-image brandmark-image--${size}`} loading="eager" />
 ) : (
 	<div class:list={['brandmark', `brandmark--${size}`]}>
 		<span class="brandmark__leaf" set:html={leafIcon} />

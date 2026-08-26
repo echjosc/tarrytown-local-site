@@ -54,7 +54,9 @@ sourcingPhilosophy:
 askUs:
   title: We Think A Grocery Store Should Help You Cook
   body: >-
-    Not just sell you ingredients and abandon you in the parking lot.
+    Not just sell you ingredients and abandon you in the parking lot. Come
+    ask us anything — these are the kinds of questions our team loves
+    getting.
   prompts:
     - What do I do with these greens?
     - Which beans cook fastest?

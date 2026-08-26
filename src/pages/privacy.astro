@@ -1,0 +1,46 @@
+---
+import Base from "@/layouts/Base.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const privacyPage = await reader.singletons.privacyPage.read();
+
+const paragraphs = (privacyPage?.body || '').split('\n\n').filter(Boolean);
+---
+
+<Base
+	title={privacyPage?.seoTitle || "Privacy Policy"}
+	description="Tarrytown Local's privacy policy."
+>
+	<!-- Hero -->
+	<PageHero
+		title={privacyPage?.heroTitle || "Privacy Policy"}
+		subtitle={privacyPage?.lastUpdated ? `Last updated: ${privacyPage.lastUpdated}` : undefined}
+	/>
+
+	<!-- Content -->
+	<section class="legal-body section">
+		<div class="container">
+			{paragraphs.map((p) => <p class="legal-para">{p}</p>)}
+		</div>
+	</section>
+</Base>
+
+<style>
+	.container {
+		max-width: 720px;
+	}
+
+	.legal-para {
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		line-height: 1.85;
+		margin-bottom: 1.5rem;
+	}
+
+	.legal-para:last-child {
+		margin-bottom: 0;
+	}
+</style>

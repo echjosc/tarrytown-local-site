@@ -12,6 +12,14 @@ import { resolveImage } from '@/utils/resolveImage';
 const reader = createReader(process.cwd(), keystaticConfig);
 const homepage = await reader.singletons.homepage.read();
 const businessInfo = await reader.singletons.businessInfo.read();
+const restaurantPage = await reader.singletons.restaurantPage.read();
+
+const fullAddress = businessInfo?.addressLines?.length
+	? businessInfo.addressLines.join(', ')
+	: '57 N Broadway, Tarrytown, NY 10591';
+const directionsUrl = homepage?.location?.directionsUrl && homepage.location.directionsUrl !== '#'
+	? homepage.location.directionsUrl
+	: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
 ---
 
 <Base
@@ -21,6 +29,7 @@ const businessInfo = await reader.singletons.businessInfo.read();
 	<!-- ── Hero ─────────────────────────────────────────────── -->
 	<VegaMainHero
 		variant="background"
+		eyebrowVariant="badge"
 		eyebrow={homepage?.hero.eyebrow || undefined}
 		title={homepage?.hero.headline || 'Eat Good Food'}
 		diamondTitle
@@ -33,8 +42,9 @@ const businessInfo = await reader.singletons.businessInfo.read();
 						url: btn.url
 					}))
 				: [
-						{ text: 'See the Menu', url: '/restaurant' },
+						{ text: 'See the Menu', url: '/menu' },
 						{ text: 'Shop the Grocery', url: '/grocery' },
+						{ text: 'Meet the Farmers', url: '/farmers' },
 					]
 		}
 	/>
@@ -63,18 +73,30 @@ const businessInfo = await reader.singletons.businessInfo.read();
 		/>
 	)}
 
-	<!-- Location Section (address, phone & hours sourced from Business Info singleton) -->
+	<!-- Location Section (address & phone from Business Info; grocery hours from Business Info, restaurant hours from Restaurant Page) -->
 	<VegaLocation
 		title={homepage?.location?.title || "Find Us"}
 		addressLines={businessInfo?.addressLines?.length ? [...businessInfo.addressLines] : ["123 Main Street", "Tarrytown, NY 10591"]}
-		hoursTitle={homepage?.location?.hoursTitle || "Hours of Operation"}
-		hours={businessInfo?.hours?.length ? businessInfo.hours.map((row) => ({ ...row })) : [
-			{ days: "Monday - Friday", hours: "7am - 7pm" },
-			{ days: "Saturday", hours: "8am - 8pm" },
-			{ days: "Sunday", hours: "8am - 6pm" },
+		hoursGroups={[
+			{
+				label: homepage?.location?.groceryHoursLabel || "Grocery Store Hours",
+				rows: businessInfo?.hours?.length ? businessInfo.hours.map((row) => ({ ...row })) : [
+					{ days: "Monday - Friday", hours: "7am - 7pm" },
+					{ days: "Saturday", hours: "8am - 8pm" },
+					{ days: "Sunday", hours: "8am - 6pm" },
+				],
+			},
+			{
+				label: homepage?.location?.restaurantHoursLabel || "Restaurant Hours",
+				rows: restaurantPage?.hours?.length ? restaurantPage.hours.map((row) => ({ ...row })) : [
+					{ days: "Monday - Friday", hours: "7am - 7pm" },
+					{ days: "Saturday", hours: "8am - 8pm" },
+					{ days: "Sunday", hours: "8am - 6pm" },
+				],
+			},
 		]}
 		phone={businessInfo?.phone || undefined}
-		directionsUrl={homepage?.location?.directionsUrl || "#"}
+		directionsUrl={directionsUrl}
 		directionsText={homepage?.location?.directionsText || "Get Directions"}
 		mapEmbedUrl={businessInfo?.mapEmbedUrl || undefined}
 		mapLabel={homepage?.location?.mapLabel || "Tarrytown Local Location"}

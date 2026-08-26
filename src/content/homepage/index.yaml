@@ -7,9 +7,11 @@ hero:
     restaurant, bakery, and grocery to bring it all home.
   buttons:
     - text: See the Menu
-      url: /restaurant
+      url: /menu
     - text: Shop the Grocery
       url: /grocery
+    - text: Meet the Farmers
+      url: /farmers
   image: '@assets/images/homepage/hero/image.png'
 tagline: >-
   Offering a rotating selection of the best local, sustainable, and
@@ -47,8 +49,9 @@ statement:
   ctaUrl: /farmers
 location:
   title: Find Us
-  hoursTitle: Hours of Operation
-  directionsUrl: '#'
+  groceryHoursLabel: Grocery Store Hours
+  restaurantHoursLabel: Restaurant Hours
+  directionsUrl: ''
   directionsText: Get Directions
   mapLabel: Tarrytown Local Location
 newsletter:

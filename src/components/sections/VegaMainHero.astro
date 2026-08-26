@@ -16,9 +16,11 @@ type Props = {
 	variant?: 'split' | 'background' | 'none';
 	/** Only affects the 'background' variant. 'full' (default): tall homepage-style hero. 'compact': shorter banner for interior pages. */
 	size?: 'full' | 'compact';
+	/** 'default': small uppercase kicker (used for page labels like "Restaurant"). 'badge': larger, boxed callout — use for announcements that need to stand out, like a pre-opening notice. */
+	eyebrowVariant?: 'default' | 'badge';
 };
 
-const { eyebrow, title, description, imageSrc, buttons, diamondTitle = false, variant = 'split', size = 'full' } = Astro.props;
+const { eyebrow, title, description, imageSrc, buttons, diamondTitle = false, variant = 'split', size = 'full', eyebrowVariant = 'default' } = Astro.props;
 
 const titleParts = title.split(/(\{.*?\})/);
 const titleWords = title.split(' ');
@@ -33,7 +35,7 @@ const titleWords = title.split(' ');
 	)}
 	<div class="container">
 		<div class="text-content">
-			{eyebrow && <p class="hero-eyebrow">{eyebrow}</p>}
+			{eyebrow && <p class:list={['hero-eyebrow', eyebrowVariant === 'badge' && 'hero-eyebrow--badge']}>{eyebrow}</p>}
 			<h1 class="vega-main-hero-title">
 				{diamondTitle
 					? titleWords.map((word, i) => (
@@ -162,6 +164,13 @@ const titleWords = title.split(' ');
 			text-transform: uppercase;
 			color: var(--hero-muted);
 			margin-bottom: 1rem;
+
+			&--badge {
+				font-size: 1.05rem;
+				font-weight: 700;
+				letter-spacing: 0.16em;
+				margin-bottom: 1.25rem;
+			}
 		}
 
 		.vega-main-hero-title {
@@ -287,6 +296,10 @@ const titleWords = title.split(' ');
 
 			.hero-eyebrow {
 				color: rgba(250, 246, 238, 0.75);
+
+				&--badge {
+					color: var(--hero-cream);
+				}
 			}
 
 			.vega-main-hero-title {

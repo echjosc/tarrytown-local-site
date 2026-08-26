@@ -45,7 +45,7 @@ const postDate = post.data.date ? new Date(post.data.date).toISOString() : undef
 		/>
 
 		<!-- Content -->
-		<div class="container">
+		<div class="container blog-post__content">
 			<div class="prose">
 				<Content />
 			</div>
@@ -79,6 +79,9 @@ const postDate = post.data.date ? new Date(post.data.date).toISOString() : undef
 }
 
 /* ── Prose enhancements ──────────────────────────────────── */
+.blog-post__content {
+	padding-top: 3rem;
+}
 .prose {
 	padding-bottom: var(--space-12);
 }

@@ -33,7 +33,10 @@ const eventsPage = await reader.singletons.eventsPage.read();
 				<div class="examples__list">
 					{eventsPage.examples.map((example, i) => (
 						<div class="example-card" data-animate="fade-up-sm" data-animate-stagger="0.08">
-							<span class="example-card__num">{String(i + 1).padStart(2, '0')}</span>
+							<span class="example-diamond">
+								<span class="example-diamond__bg" aria-hidden="true"></span>
+								<span class="example-diamond__num">{String(i + 1).padStart(2, '0')}</span>
+							</span>
 							<p class="example-card__text">{example}</p>
 						</div>
 					))}
@@ -73,16 +76,19 @@ const eventsPage = await reader.singletons.eventsPage.read();
 <style>
 	.examples__lead {
 		text-align: center;
-		font-family: var(--font-secondary), sans-serif;
-		font-size: 1.1rem;
-		color: var(--color-text-muted);
-		margin-bottom: 2rem;
+		font-family: var(--font-primary), sans-serif;
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		color: var(--color-charcoal);
+		margin-bottom: 2.5rem;
 	}
 
 	.examples__list {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: 1.25rem;
+		gap: 1.5rem;
 	}
 	@media (max-width: 700px) {
 		.examples__list {
@@ -91,25 +97,67 @@ const eventsPage = await reader.singletons.eventsPage.read();
 	}
 
 	.example-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		background: var(--color-bg);
-		border: 2px dashed var(--color-border-dashed);
+		border: 1px solid var(--color-border);
 		border-radius: var(--radius-dashed);
-		padding: 1.75rem 1.5rem;
+		padding: 2.75rem 1.5rem 1.75rem;
 		text-align: center;
+		transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 	}
 
-	.example-card__num {
-		display: block;
-		font-family: var(--font-secondary), sans-serif;
-		font-size: 1.5rem;
-		color: var(--color-accent);
-		margin-bottom: 0.75rem;
+	.example-card:hover {
+		transform: translateY(-6px);
+		box-shadow: var(--shadow-hard);
+		border-color: var(--color-accent);
+	}
+
+	/* Badge floats above the card, straddling the top edge.
+	   The number stays upright — only the diamond behind it spins on hover. */
+	.example-diamond {
+		position: absolute;
+		top: -24px;
+		left: 50%;
+		transform: translateX(-50%);
+		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.example-diamond__bg {
+		position: absolute;
+		inset: 0;
+		background: var(--color-accent);
+		transform: rotate(45deg);
+		transition: transform 0.4s ease;
+	}
+
+	.example-card:hover .example-diamond__bg {
+		transform: rotate(135deg) scale(1.1);
+	}
+
+	.example-diamond__num {
+		position: relative;
+		z-index: 1;
+		font-family: var(--font-primary), sans-serif;
+		font-size: 0.85rem;
+		font-weight: 800;
+		letter-spacing: 0.02em;
+		color: var(--color-bg, #FAF6EE);
 	}
 
 	.example-card__text {
-		font-size: 0.95rem;
+		font-family: var(--font-primary), sans-serif;
+		font-size: 1.05rem;
+		font-weight: 700;
 		color: var(--color-charcoal);
-		line-height: 1.6;
+		line-height: 1.5;
 		margin: 0;
 	}
 </style>

@@ -6,11 +6,15 @@ type HoursRow = {
 	hours: string;
 };
 
+type HoursGroup = {
+	label: string;
+	rows: HoursRow[];
+};
+
 type Props = {
 	title?: string;
 	addressLines?: string[];
-	hoursTitle?: string;
-	hours?: HoursRow[];
+	hoursGroups?: HoursGroup[];
 	phone?: string;
 	directionsUrl?: string;
 	directionsText?: string;
@@ -21,11 +25,23 @@ type Props = {
 const {
 	title = "Find Us",
 	addressLines = ["123 Main Street", "Tarrytown, NY 10591"],
-	hoursTitle = "Hours of Operation",
-	hours = [
-		{ days: "Monday - Friday", hours: "7:00 AM - 6:00 PM" },
-		{ days: "Saturday", hours: "8:00 AM - 7:00 PM" },
-		{ days: "Sunday", hours: "8:00 AM - 4:00 PM" },
+	hoursGroups = [
+		{
+			label: "Grocery Store Hours",
+			rows: [
+				{ days: "Monday - Friday", hours: "7:00 AM - 6:00 PM" },
+				{ days: "Saturday", hours: "8:00 AM - 7:00 PM" },
+				{ days: "Sunday", hours: "8:00 AM - 4:00 PM" },
+			],
+		},
+		{
+			label: "Restaurant Hours",
+			rows: [
+				{ days: "Monday - Friday", hours: "7:00 AM - 6:00 PM" },
+				{ days: "Saturday", hours: "8:00 AM - 7:00 PM" },
+				{ days: "Sunday", hours: "8:00 AM - 4:00 PM" },
+			],
+		},
 	],
 	phone,
 	directionsUrl = "#",
@@ -72,17 +88,21 @@ const {
 				)}
 			</address>
 
-			<div class="hours-block">
-				<h3 class="hours-title">{hoursTitle}</h3>
-				<div class="hours-rule"></div>
-				<dl class="hours-list">
-					{hours.map((row) => (
-						<div class="hours-row">
-							<dt class="hours-days">{row.days}</dt>
-							<dd class="hours-time">{row.hours}</dd>
-						</div>
-					))}
-				</dl>
+			<div class="hours-groups">
+				{hoursGroups.map((group) => (
+					<div class="hours-block">
+						<h3 class="hours-title">{group.label}</h3>
+						<div class="hours-rule"></div>
+						<dl class="hours-list">
+							{group.rows.map((row) => (
+								<div class="hours-row">
+									<dt class="hours-days">{row.days}</dt>
+									<dd class="hours-time">{row.hours}</dd>
+								</div>
+							))}
+						</dl>
+					</div>
+				))}
 			</div>
 
 			{directionsUrl && (
@@ -201,8 +221,15 @@ const {
 		}
 
 		// Hours
-		.hours-block {
+		.hours-groups {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
 			margin-bottom: 2rem;
+		}
+
+		.hours-block {
+			margin-bottom: 0;
 		}
 
 		.hours-title {

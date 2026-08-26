@@ -44,11 +44,13 @@ const navLinks = [
 			{ label: 'Our Team', url: '/our-team' },
 			{ label: 'Our Story', url: '/our-story' },
 			{ label: 'Where We Get Our Food', url: '/farmers' },
+			{ label: 'FAQs', url: '/our-story#faq' },
 		],
 	},
 	{
 		label: 'What We Do',
 		children: [
+			{ label: 'Menu', url: '/menu' },
 			{ label: 'Restaurant', url: '/restaurant' },
 			{ label: 'Bakery', url: '/bakery' },
 			{ label: 'Grocery', url: '/grocery' },
@@ -59,17 +61,21 @@ const navLinks = [
 	{ label: 'The Blog', url: '/blog' },
 ];
 
-const footerNavLinks = [
+const footerExploreLinks = [
 	{ label: 'Home', url: '/' },
-	{ label: 'The Blog', url: '/blog' },
-	{ label: 'Restaurant', url: '/restaurant' },
-	{ label: 'Bakery', url: '/bakery' },
-	{ label: 'Grocery', url: '/grocery' },
-	{ label: 'Events & Catering', url: '/events' },
 	{ label: 'Our Team', url: '/our-team' },
 	{ label: 'Our Story', url: '/our-story' },
 	{ label: 'Where We Get Our Food', url: '/farmers' },
 	{ label: 'Contact', url: '/contact' },
+	{ label: 'The Blog', url: '/blog' },
+];
+
+const footerWhatWeDoLinks = [
+	{ label: 'Menu', url: '/menu' },
+	{ label: 'Restaurant', url: '/restaurant' },
+	{ label: 'Bakery', url: '/bakery' },
+	{ label: 'Grocery', url: '/grocery' },
+	{ label: 'Events & Catering', url: '/events' },
 ];
 ---
 
@@ -99,7 +105,7 @@ const footerNavLinks = [
 			logoSrc={logoSrc}
 			logoAlt={logoAlt}
 			links={navLinks}
-			cta={{ label: 'Call Us!', url: 'tel:+1234567890' }}
+			cta={{ label: 'Menu', url: '/menu' }}
 		/>
 
 		<main class="main-content">
@@ -110,6 +116,7 @@ const footerNavLinks = [
 			logoSrc={logoSrc}
 			logoAlt={logoAlt}
 			tagline="Your guide to the best of Tarrytown, NY."
+			phone={businessInfo?.phone || undefined}
 			socials={businessInfo?.socials?.map((s) => ({
 				platform: s.platform as 'instagram' | 'pinterest' | 'facebook' | 'tiktok' | 'twitter',
 				url: s.url,
@@ -117,7 +124,11 @@ const footerNavLinks = [
 			columns={[
 				{
 					heading: 'Explore',
-					links: footerNavLinks,
+					links: footerExploreLinks,
+				},
+				{
+					heading: 'What We Do',
+					links: footerWhatWeDoLinks,
 				},
 				{
 					heading: 'Resources',

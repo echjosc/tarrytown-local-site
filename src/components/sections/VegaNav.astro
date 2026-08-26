@@ -136,7 +136,17 @@ const {
 			group.classList.toggle("nav-group--open", !open);
 			trigger.setAttribute("aria-expanded", String(!open));
 		};
-		trigger?.addEventListener("click", toggleGroup);
+		trigger?.addEventListener("click", (event) => {
+			if (isMobile()) {
+				toggleGroup(event);
+				return;
+			}
+			// On desktop the dropdown is purely hover-driven. A click still focuses
+			// this element though, and :focus-within would then keep the dropdown
+			// open even after the mouse moves away. Blur it so hover is back in
+			// sole control — this is what was causing dropdowns to stick open.
+			trigger.blur();
+		});
 		trigger?.addEventListener("keydown", (event) => {
 			if (event.key === "Enter" || event.key === " ") {
 				event.preventDefault();
@@ -303,6 +313,7 @@ const {
 		.nav-dropdown-link {
 			display: block;
 			padding: 0.85em 1.25rem;
+			border-left: 3px solid transparent;
 			font-size: 0.78rem;
 			font-weight: 600;
 			letter-spacing: 0.06em;
@@ -310,7 +321,7 @@ const {
 			color: var(--nav-muted);
 			text-decoration: none;
 			white-space: nowrap;
-			transition: color 0.2s ease, background 0.2s ease;
+			transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 
 			&:hover {
 				color: var(--nav-charcoal);
@@ -319,6 +330,9 @@ const {
 
 			&.nav-dropdown-link--active {
 				color: var(--nav-charcoal);
+				font-weight: 700;
+				background: var(--nav-border);
+				border-left-color: var(--color-accent, #7C2E28);
 			}
 		}
 
@@ -440,10 +454,14 @@ const {
 			}
 
 			.nav-dropdown-link {
-				padding: 0.85em 0;
+				padding: 0.85em 0 0.85em 0.75rem;
 				font-size: 0.85rem;
 
 				&:hover {
+					background: transparent;
+				}
+
+				&.nav-dropdown-link--active {
 					background: transparent;
 				}
 			}

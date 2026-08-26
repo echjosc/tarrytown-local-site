@@ -10,6 +10,7 @@ type Props = {
 	logoSrc?: ImageMetadata | string;
 	logoAlt?: string;
 	tagline?: string;
+	phone?: string;
 	columns?: NavColumn[];
 	socials?: Social[];
 };
@@ -18,6 +19,7 @@ const {
 	logoSrc,
 	logoAlt = "Logo",
 	tagline,
+	phone,
 	columns = [],
 	socials = [],
 } = Astro.props;
@@ -40,6 +42,9 @@ const socialIcons: Record<string, string> = {
 					<Brandmark logoSrc={logoSrc} logoAlt={logoAlt} size="large" />
 				</a>
 				{tagline && <p class="footer-tagline">{tagline}</p>}
+				{phone && (
+					<a href={`tel:${phone.replace(/\D/g, "")}`} class="footer-phone">{phone}</a>
+				)}
 				{socials.length > 0 && (
 					<div class="social-links">
 						{socials.map((s) => (
@@ -136,13 +141,29 @@ const socialIcons: Record<string, string> = {
 			color: var(--footer-muted);
 			line-height: 1.65;
 			max-width: 220px;
-			margin: 0;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.footer-phone {
+			display: block;
+			font-size: 0.9rem;
+			font-weight: 700;
+			color: var(--footer-navy);
+			text-decoration: none;
+			text-align: center;
+			transition: color 0.2s ease;
+
+			&:hover {
+				color: var(--color-primary, #2E4A3B);
+			}
 		}
 
 		.social-links {
 			display: flex;
 			gap: 0.75rem;
 			margin-top: 0.25rem;
+			justify-content: center;
 		}
 
 		.social-link {
@@ -151,6 +172,9 @@ const socialIcons: Record<string, string> = {
 			justify-content: center;
 			color: var(--footer-muted);
 			transition: color 0.2s ease;
+
+			text-align: center;
+			
 
 			&:hover {
 				color: var(--footer-navy);

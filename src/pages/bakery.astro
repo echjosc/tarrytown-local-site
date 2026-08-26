@@ -6,6 +6,7 @@ import { resolveImage } from '@/utils/resolveImage';
 import VegaMainHero from "@/components/sections/VegaMainHero.astro";
 import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.astro";
 import VegaGrainsTable from "@/components/sections/VegaGrainsTable.astro";
+import VegaSampleMenu from "@/components/sections/VegaSampleMenu.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 
 const reader = createReader(process.cwd(), keystaticConfig);
@@ -60,6 +61,17 @@ const grainParagraphs = (bakeryPage?.workingWithGrain?.body || '').split('\n\n')
 			grains={bakeryPage.grains.map((g) => ({
 				category: g.category,
 				varieties: (g.varieties ?? []).map((v) => ({ name: v.name, farm: v.farm || undefined, location: v.location || undefined })),
+			}))}
+		/>
+	) : null}
+
+	<!-- Sample Menu -->
+	{bakeryPage?.sampleMenu?.categories?.length ? (
+		<VegaSampleMenu
+			heading={bakeryPage.sampleMenu.heading || undefined}
+			categories={bakeryPage.sampleMenu.categories.map((cat) => ({
+				name: cat.name,
+				items: (cat.items ?? []).map((item) => ({ name: item.name, description: item.description || undefined })),
 			}))}
 		/>
 	) : null}
