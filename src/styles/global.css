@@ -8,11 +8,11 @@
     --color-accent:         #7C2E28;   /* Brick / maroon — rules, diamonds, dividers */
     --color-accent-dark:    #5E211D;   /* Deeper brick */
     --color-charcoal:       #221E1A;   /* Near-black — headings, nav */
-    --color-bg:             #FAF6EE;   /* Warm cream */
+    --color-bg:             #fffefb;   /* Warm cream */
     --color-bg-muted:       #F1EADD;   /* Slightly deeper cream */
     --color-bg-dark:        #1F332A;   /* Deep forest — newsletter bg */
     --color-text:           #2A2820;   /* Warm near-black */
-    --color-text-muted:     #6B6560;   /* Warm stone */
+    --color-text-muted:     #302e2c;   /* Warm stone */
     --color-text-light:     #9A9186;   /* Light warm gray */
     --color-border:         #E4DCCB;   /* Warm hairline */
     --color-border-light:   #EFE8DA;   /* Very light warm border */
