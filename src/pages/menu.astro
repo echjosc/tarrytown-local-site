@@ -1,0 +1,52 @@
+---
+import Base from "@/layouts/Base.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import VegaMenu from "@/components/sections/VegaMenu.astro";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const menuPage = await reader.singletons.menuPage.read();
+---
+
+<Base
+	title={menuPage?.seoTitle || "Menu"}
+	description={menuPage?.seoDescription || "See what's cooking today at Tarrytown Local — our menu changes daily."}
+>
+	<!-- Hero -->
+	<PageHero
+		eyebrow="Menu"
+		title={menuPage?.heroTitle || "Today's Menu"}
+		subtitle={menuPage?.heroSubtitle || undefined}
+	/>
+
+	<!-- Menu -->
+	<VegaMenu
+		sections={[
+			{
+				heading: menuPage?.restaurantMenu?.heading || 'Restaurant Menu',
+				note: menuPage?.restaurantMenu?.note || undefined,
+				categories: (menuPage?.restaurantMenu?.categories ?? []).map((cat) => ({
+					name: cat.name,
+					items: cat.items.map((item) => ({
+						name: item.name,
+						description: item.description || undefined,
+						price: item.price || undefined,
+					})),
+				})),
+			},
+			{
+				heading: menuPage?.bakeryMenu?.heading || 'Bakery Menu',
+				note: menuPage?.bakeryMenu?.note || undefined,
+				categories: (menuPage?.bakeryMenu?.categories ?? []).map((cat) => ({
+					name: cat.name,
+					items: cat.items.map((item) => ({
+						name: item.name,
+						description: item.description || undefined,
+						price: item.price || undefined,
+					})),
+				})),
+			},
+		]}
+	/>
+</Base>

@@ -145,12 +145,12 @@ const platformLabels: Record<string, string> = {
 	.team-list {
 		display: flex;
 		flex-direction: column;
-		gap: 5rem;
+		gap: 3.5rem;
 	}
 
 	.team-member {
 		display: flex;
-		gap: 4rem;
+		gap: 2.5rem;
 		align-items: flex-start;
 
 		&--reverse {
@@ -222,14 +222,14 @@ const platformLabels: Record<string, string> = {
 			position: relative;
 			z-index: 1;
 			width: 100%;
-			max-width: 300px;
+			max-width: 160px;
 			height: auto;
 			aspect-ratio: 3 / 4;
 			object-fit: cover;
 			object-position: bottom center;
 			display: block;
 			border-radius: var(--radius-dashed, 20px);
-			border: 2px dashed var(--color-border-dashed, #6B9C86);
+			border: 2px solid var(--color-border-dashed, #6B9C86);
 		}
 
 		:global(.member-photo--placeholder) {

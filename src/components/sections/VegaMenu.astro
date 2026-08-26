@@ -1,0 +1,193 @@
+---
+import DiamondRule from '@/components/ui/DiamondRule.astro';
+
+type MenuItem = {
+	name: string;
+	description?: string;
+	price?: string;
+};
+
+type MenuCategory = {
+	name: string;
+	items: MenuItem[];
+};
+
+type MenuSection = {
+	heading: string;
+	note?: string;
+	categories: MenuCategory[];
+};
+
+type Props = {
+	sections: MenuSection[];
+};
+
+const { sections } = Astro.props;
+---
+
+<section class="vega-menu section">
+	<div class="container menu-container">
+		{sections.map((section) => (
+			<div class="menu-section" data-animate="fade-up">
+				<h2 class="menu-section__heading">{section.heading}</h2>
+				<DiamondRule width={30} class="menu-section__rule" />
+
+				{section.note && (
+					<p class="menu-note">{section.note}</p>
+				)}
+
+				{section.categories.length > 0 ? (
+					<div class="menu-categories">
+						{section.categories.map((cat) => (
+							<div class="menu-category" data-animate="fade-up-sm" data-animate-stagger="0.06">
+								<h3 class="menu-category__name">{cat.name}</h3>
+								<DiamondRule width={22} class="menu-category__rule" />
+								<ul class="menu-category__items">
+									{cat.items.map((item) => (
+										<li class="menu-item">
+											<div class="menu-item__row">
+												<span class="menu-item__name">{item.name}</span>
+												{item.price && <span class="menu-item__price">{item.price}</span>}
+											</div>
+											{item.description && <p class="menu-item__desc">{item.description}</p>}
+										</li>
+									))}
+								</ul>
+							</div>
+						))}
+					</div>
+				) : (
+					<p class="menu-empty">This menu is being updated — check back shortly.</p>
+				)}
+			</div>
+		))}
+	</div>
+</section>
+
+<style lang="scss">
+	.vega-menu {
+		padding: 4rem 0 5rem;
+	}
+
+	.menu-container {
+		max-width: 960px;
+		margin-inline: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+	}
+
+	.menu-section {
+		background: var(--color-bg-muted, #F1EADD);
+		border: 2px dashed var(--color-border-dashed, #6B9C86);
+		border-radius: var(--radius-dashed, 20px);
+		padding: clamp(2rem, 5vw, 3.5rem);
+	}
+
+	.menu-section__heading {
+		font-family: var(--font-primary), sans-serif;
+		font-size: clamp(1.5rem, 3vw, 1.9rem);
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		text-align: center;
+		color: var(--color-charcoal, #221E1A);
+		margin-bottom: 0.75rem;
+	}
+
+	:global(.menu-section__rule) {
+		justify-content: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.menu-note {
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 1rem;
+		font-style: italic;
+		color: var(--color-text-muted, #6B6560);
+		text-align: center;
+		max-width: 52ch;
+		margin: 0 auto 3rem;
+	}
+
+	.menu-empty {
+		text-align: center;
+		color: var(--color-text-muted, #6B6560);
+		font-size: 1rem;
+		padding: 2rem 0;
+	}
+
+	.menu-categories {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 3rem 4rem;
+	}
+
+	@media (max-width: 680px) {
+		.menu-categories {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+	}
+
+	.menu-category__name {
+		font-family: var(--font-primary), sans-serif;
+		font-size: 1.15rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		text-align: center;
+		color: var(--color-charcoal, #221E1A);
+		margin-bottom: 0.75rem;
+	}
+
+	:global(.menu-category__rule) {
+		margin-bottom: 1.5rem;
+	}
+
+	.menu-category__items {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.menu-item {
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid var(--color-border-light, #EFE8DA);
+	}
+
+	.menu-item:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.menu-item__row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.menu-item__name {
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--color-charcoal, #221E1A);
+	}
+
+	.menu-item__price {
+		font-weight: 700;
+		font-size: 0.95rem;
+		color: var(--color-accent, #7C2E28);
+		white-space: nowrap;
+	}
+
+	.menu-item__desc {
+		font-size: 0.88rem;
+		color: var(--color-text-muted, #6B6560);
+		line-height: 1.6;
+		margin: 0.35rem 0 0;
+	}
+</style>

@@ -64,8 +64,10 @@ const groceryPage = await reader.singletons.groceryPage.read();
 			/>
 			{groceryPage?.askUs?.prompts?.length ? (
 				<div class="ask-us__prompts" data-animate="fade-up-sm">
-					{groceryPage.askUs.prompts.map((prompt) => (
-						<span class="prompt-chip">{prompt}</span>
+					{groceryPage.askUs.prompts.map((prompt, i) => (
+						<div class:list={['text-row', i % 2 === 1 && 'text-row--sent']}>
+							<span class="text-bubble">{prompt}</span>
+						</div>
 					))}
 				</div>
 			) : null}
@@ -103,19 +105,77 @@ const groceryPage = await reader.singletons.groceryPage.read();
 <style>
 	.ask-us__prompts {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.75rem;
+		flex-direction: column;
+		gap: 0.65rem;
+		max-width: 460px;
+		margin: 1rem auto 0;
 	}
 
-	.prompt-chip {
+	.text-row {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	.text-row--sent {
+		justify-content: flex-end;
+	}
+
+	.text-bubble {
+		position: relative;
 		font-family: var(--font-secondary), sans-serif;
 		font-size: 0.9rem;
+		line-height: 1.5;
+		max-width: 78%;
+		padding: 0.75rem 1.1rem;
+		border-radius: 18px;
 		color: var(--color-charcoal);
 		background: var(--color-bg-muted);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-full);
-		padding: 0.6rem 1.25rem;
+	}
+
+	/* Curved message tail: a rounded flag in the bubble color, with a
+	   background-colored circle overlapping it to carve the classic
+	   concave curve (the standard iMessage-bubble tail trick). */
+	.text-bubble::before,
+	.text-bubble::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		height: 16px;
+	}
+
+	.text-bubble::before {
+		width: 16px;
+	}
+
+	.text-bubble::after {
+		width: 10px;
+		background: var(--color-bg, #FAF6EE);
+	}
+
+	/* Received-style bubble: tail on the bottom-left */
+	.text-row:not(.text-row--sent) .text-bubble::before {
+		left: -8px;
+		background: var(--color-bg-muted);
+		border-bottom-right-radius: 14px;
+	}
+	.text-row:not(.text-row--sent) .text-bubble::after {
+		left: -10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	/* Sent-style bubble: tail on the bottom-right, accent color */
+	.text-row--sent .text-bubble {
+		color: var(--color-bg, #FAF6EE);
+		background: var(--color-primary, #2E4A3B);
+	}
+	.text-row--sent .text-bubble::before {
+		right: -8px;
+		background: var(--color-primary, #2E4A3B);
+		border-bottom-left-radius: 14px;
+	}
+	.text-row--sent .text-bubble::after {
+		right: -10px;
+		border-bottom-left-radius: 10px;
 	}
 
 	.suggestion-body p {

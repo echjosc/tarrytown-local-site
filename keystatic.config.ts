@@ -51,9 +51,10 @@ export default config({
     },
     ui: {
         navigation: {
-            'Pages': ['homepage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
+            'Pages': ['homepage', 'menuPage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
             'Global': ['businessInfo', 'team'],
             'Blog': ['posts'],
+            'Legal': ['privacyPage', 'termsPage'],
         },
     },
     collections: {
@@ -135,7 +136,8 @@ export default config({
                         hours: fields.text({ label: 'Hours' }),
                     }),
                     {
-                        label: 'Hours',
+                        label: 'Grocery Store Hours',
+                        description: 'Hours for the grocery store only. Restaurant hours are set separately on the Restaurant Page.',
                         itemLabel: (props) => props.fields.days.value || 'New Hours Row',
                     }
                 ),
@@ -184,6 +186,78 @@ export default config({
                 storefrontImageAlt: fields.text({ label: 'Storefront Photo Alt Text' }),
             },
         }),
+        menuPage: singleton({
+            label: 'Menu Page',
+            path: 'src/content/menupage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title' }),
+                seoDescription: fields.text({ label: 'Meta Description', multiline: true }),
+                heroTitle: fields.text({ label: 'Hero Title', defaultValue: "Today's Menu" }),
+                heroSubtitle: fields.text({
+                    label: 'Hero Subtitle',
+                    multiline: true,
+                    description: 'A short line under the title — good for the date or a quick note.',
+                }),
+                restaurantMenu: fields.object({
+                    heading: fields.text({ label: 'Section Heading', defaultValue: 'Restaurant Menu' }),
+                    note: fields.text({
+                        label: 'Note',
+                        multiline: true,
+                        description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
+                    }),
+                    categories: fields.array(
+                        fields.object({
+                            name: fields.text({ label: 'Category Name' }),
+                            items: fields.array(
+                                fields.object({
+                                    name: fields.text({ label: 'Dish Name' }),
+                                    description: fields.text({ label: 'Description', multiline: true }),
+                                    price: fields.text({ label: 'Price' }),
+                                }),
+                                {
+                                    label: 'Items',
+                                    itemLabel: (props) => props.fields.name.value || 'New Item',
+                                }
+                            ),
+                        }),
+                        {
+                            label: 'Menu Categories',
+                            description: 'Edit this every morning — changes go live as soon as they\'re saved.',
+                            itemLabel: (props) => props.fields.name.value || 'New Category',
+                        }
+                    ),
+                }, { label: 'Restaurant Menu' }),
+                bakeryMenu: fields.object({
+                    heading: fields.text({ label: 'Section Heading', defaultValue: 'Bakery Menu' }),
+                    note: fields.text({
+                        label: 'Note',
+                        multiline: true,
+                        description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
+                    }),
+                    categories: fields.array(
+                        fields.object({
+                            name: fields.text({ label: 'Category Name' }),
+                            items: fields.array(
+                                fields.object({
+                                    name: fields.text({ label: 'Item Name' }),
+                                    description: fields.text({ label: 'Description', multiline: true }),
+                                    price: fields.text({ label: 'Price' }),
+                                }),
+                                {
+                                    label: 'Items',
+                                    itemLabel: (props) => props.fields.name.value || 'New Item',
+                                }
+                            ),
+                        }),
+                        {
+                            label: 'Menu Categories',
+                            description: 'Edit this every morning — changes go live as soon as they\'re saved.',
+                            itemLabel: (props) => props.fields.name.value || 'New Category',
+                        }
+                    ),
+                }, { label: 'Bakery Menu' }),
+            },
+        }),
         restaurantPage: singleton({
             label: 'Restaurant Page',
             path: 'src/content/restaurantpage/',
@@ -212,7 +286,8 @@ export default config({
                         hours: fields.text({ label: 'Hours' }),
                     }),
                     {
-                        label: 'Hours',
+                        label: 'Restaurant Hours',
+                        description: 'Hours for the restaurant/dining room only. Grocery store hours are set separately on Business Info.',
                         itemLabel: (props) => props.fields.days.value || 'New Hours Row',
                     }
                 ),
@@ -303,6 +378,28 @@ export default config({
                         itemLabel: (props) => props.fields.category.value || 'New Grain',
                     }
                 ),
+                sampleMenu: fields.object({
+                    heading: fields.text({ label: 'Heading' }),
+                    categories: fields.array(
+                        fields.object({
+                            name: fields.text({ label: 'Category Name' }),
+                            items: fields.array(
+                                fields.object({
+                                    name: fields.text({ label: 'Item Name' }),
+                                    description: fields.text({ label: 'Description', multiline: true }),
+                                }),
+                                {
+                                    label: 'Items',
+                                    itemLabel: (props) => props.fields.name.value || 'New Item',
+                                }
+                            ),
+                        }),
+                        {
+                            label: 'Menu Categories',
+                            itemLabel: (props) => props.fields.name.value || 'New Category',
+                        }
+                    ),
+                }, { label: 'Sample Menu Section' }),
             },
         }),
         groceryPage: singleton({
@@ -445,6 +542,34 @@ export default config({
                 ),
             },
         }),
+        privacyPage: singleton({
+            label: 'Privacy Policy',
+            path: 'src/content/privacypage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title', defaultValue: 'Privacy Policy' }),
+                heroTitle: fields.text({ label: 'Hero Title', defaultValue: 'Privacy Policy' }),
+                lastUpdated: fields.text({ label: 'Last Updated', description: 'e.g. "January 2026" — shown under the title' }),
+                body: fields.text({
+                    label: 'Content',
+                    multiline: true,
+                    description: 'Separate paragraphs with a blank line.',
+                }),
+            },
+        }),
+        termsPage: singleton({
+            label: 'Terms of Service',
+            path: 'src/content/termspage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title', defaultValue: 'Terms of Service' }),
+                heroTitle: fields.text({ label: 'Hero Title', defaultValue: 'Terms of Service' }),
+                lastUpdated: fields.text({ label: 'Last Updated', description: 'e.g. "January 2026" — shown under the title' }),
+                body: fields.text({
+                    label: 'Content',
+                    multiline: true,
+                    description: 'Separate paragraphs with a blank line.',
+                }),
+            },
+        }),
         team: singleton({
             label: 'Team',
             path: 'src/content/team/',
@@ -563,11 +688,12 @@ export default config({
                     ctaUrl: fields.text({ label: 'CTA Button URL', defaultValue: '/grocery' }),
                 }, { label: 'Statement Banner' }),
 
-                // Location Section (address, phone, hours & map come from Business Info)
+                // Location Section (address, phone, hours & map come from Business Info + Restaurant Page)
                 location: fields.object({
                     title: fields.text({ label: 'Section Title', defaultValue: 'Find Us' }),
-                    hoursTitle: fields.text({ label: 'Hours Heading', defaultValue: 'Hours of Operation' }),
-                    directionsUrl: fields.text({ label: 'Directions URL', description: 'Link for the "Get Directions" button' }),
+                    groceryHoursLabel: fields.text({ label: 'Grocery Hours Heading', defaultValue: 'Grocery Store Hours' }),
+                    restaurantHoursLabel: fields.text({ label: 'Restaurant Hours Heading', defaultValue: 'Restaurant Hours' }),
+                    directionsUrl: fields.text({ label: 'Directions URL', description: 'Optional — leave blank to auto-generate directions from the address in Business Info. Only fill this in if you want to link somewhere custom.' }),
                     directionsText: fields.text({ label: 'Directions Link Text', defaultValue: 'Get Directions' }),
                     mapLabel: fields.text({ label: 'Map Accessibility Label', defaultValue: 'Our location on the map' }),
                 }, { label: 'Location Section' }),

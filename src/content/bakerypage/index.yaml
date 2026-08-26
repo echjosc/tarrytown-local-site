@@ -100,3 +100,22 @@ grains:
       - name: Akitakomachi Rice
         farm: Great Joy Family Farm
         location: Pine Plains, NY
+sampleMenu:
+  heading: Our offerings rotate with the harvest, but this should give you a sense of what we bake.
+  categories:
+    - name: Breads
+      items:
+        - name: Sourdough Loaf
+          description: Slow-fermented, milled in-house daily
+        - name: Whole Grain Rye
+          description: Dense and hearty, made with our landrace rye
+        - name: Spelt Miche
+          description: Ancient grain blend, naturally leavened
+    - name: Pastries
+      items:
+        - name: Morning Croissant
+          description: Butter-laminated, baked fresh each morning
+        - name: Seasonal Fruit Danish
+          description: Rotating fruit filling based on what's in season
+        - name: Rye Chocolate Cookie
+          description: Fresh-milled rye, dark chocolate

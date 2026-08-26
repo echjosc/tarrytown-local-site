@@ -11,15 +11,19 @@ type Props = {
     loading?: 'lazy' | 'eager';
     fetchpriority?: 'high' | 'low' | 'auto';
     position?: `${'top' | 'center' | 'bottom'} ${'left' | 'center' | 'right'}` | 'center';
+    /** Force a specific output format (e.g. 'png' for logos/flat-color graphics, to avoid lossy re-encoding softening crisp edges/text). Omit to let the image service auto-negotiate. */
+    format?: 'avif' | 'jpg' | 'png' | 'webp';
+    /** 1-100, or a preset. Defaults to the image service's own default if omitted. */
+    quality?: number | 'low' | 'mid' | 'high' | 'max';
 
 };
 
-const { src, alt, width = undefined, height = undefined, class: className, loading = 'lazy', fetchpriority, position = 'center' } = Astro.props;
+const { src, alt, width = undefined, height = undefined, class: className, loading = 'lazy', fetchpriority, position = 'center', format, quality } = Astro.props;
 ---
 
 <div class:list={["ui-image-container", className].filter(Boolean)}>
     {typeof src === 'object' && src !== null ? (
-        <Image src={src} alt={alt} width={width} height={height} class:list={["ui-image"]} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
+        <Image src={src} alt={alt} width={width} height={height} format={format} quality={quality} class:list={["ui-image"]} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
     ) : (
         <img src={src} alt={alt} width={width} height={height} class={"ui-image"} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
     )}
