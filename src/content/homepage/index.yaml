@@ -6,22 +6,20 @@ hero:
     local, sustainable, and healthful ingredients we can find — plus a
     restaurant, bakery, and grocery to bring it all home.
   buttons:
-    - text: See the Menu
-      url: /menu
-    - text: Shop the Grocery
-      url: /grocery
     - text: Meet the Farmers
       url: /farmers
-  image: '@assets/images/homepage/hero/image.png'
+    - text: Learn About Our Grocery
+      url: /grocery
+  image: '@assets/images/homepage/hero/hero/image.png'
 tagline: >-
-  Offering a rotating selection of the best local, sustainable, and
-  healthful ingredients we can find.
+  Offering a rotating selection of the best local, sustainable, and healthful
+  ingredients we can find.
 pillars:
   - icon: pantry
     title: Pantry Staples
     description: >-
-      Grains, beans, and intentional pantry goods chosen with a reason
-      behind every jar and bag.
+      Grains, beans, and intentional pantry goods chosen with a reason behind
+      every jar and bag.
     linkUrl: /grocery
   - icon: produce
     title: Seasonal Produce
@@ -32,14 +30,12 @@ pillars:
   - icon: mill
     title: Mill and Bakery
     description: >-
-      We mill 100% of our flour in-house and bake fresh, naturally
-      leavened bread every day.
+      We mill 100% of our flour in-house and bake fresh, naturally leavened
+      bread every day.
     linkUrl: /bakery
   - icon: grab-and-go
     title: Grab n’ Go or Dine In
-    description: >-
-      Walk in for breakfast and lunch, or grab something good to take
-      with you.
+    description: Walk in for breakfast and lunch, or grab something good to take with you.
     linkUrl: /restaurant
 statement:
   quote: >-
@@ -51,7 +47,6 @@ location:
   title: Find Us
   groceryHoursLabel: Grocery Store Hours
   restaurantHoursLabel: Restaurant Hours
-  directionsUrl: ''
   directionsText: Get Directions
   mapLabel: Tarrytown Local Location
 newsletter:
