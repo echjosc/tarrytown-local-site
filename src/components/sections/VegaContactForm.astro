@@ -12,7 +12,7 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 
 <div class="form-wrap">
 	<form
-		class="form"
+		class="form container"
 		name="contact"
 		method="POST"
 		{...(netlify ? { 'data-netlify': 'true', action: successPath } : {})}
