@@ -46,8 +46,16 @@
     --space-24: 6rem;
 
     /* ─ Layout ──────────────────────────────────────────── */
-    --responsive-width: 90%;
+    --responsive-width: 94%;
     --max-width: 1024px;
+
+    @media (min-width: 768px) {
+        --responsive-width: 90%;
+    }
+
+    @media (min-width: 1024px) {
+        --responsive-width: 85%;
+    }
 
     /* ─ Radii ───────────────────────────────────────────── */
     --radius:        0;
