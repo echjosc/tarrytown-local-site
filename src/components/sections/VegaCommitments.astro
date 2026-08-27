@@ -81,21 +81,21 @@ const secondary = items.slice(2);
 	/* ── Grids ───────────────────────────────────────────────── */
 	.commitments__featured {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: 1.25rem;
 		margin-bottom: 1.25rem;
 	}
 
 	.commitments__secondary {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1.25rem;
 	}
 
 	@media (max-width: 768px) {
 		.commitments__featured,
 		.commitments__secondary {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 

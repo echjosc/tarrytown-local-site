@@ -10,9 +10,9 @@ type Props = {
 const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 ---
 
-<div class="form-wrap">
+<div class="form-wrap container">
 	<form
-		class="form container"
+		class="form"
 		name="contact"
 		method="POST"
 		{...(netlify ? { 'data-netlify': 'true', action: successPath } : {})}
@@ -109,7 +109,7 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 
 	.form-row {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: 2rem;
 	}
 
@@ -119,7 +119,7 @@ const { netlify = false, successPath = '/contact?success=true' } = Astro.props;
 		}
 
 		.form-row {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: 1.5rem;
 		}
 	}

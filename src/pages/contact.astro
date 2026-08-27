@@ -202,7 +202,7 @@ const restaurantHours = restaurantPage?.hours?.length ? restaurantPage.hours : [
 
 	.location-grid {
 		display: grid;
-		grid-template-columns: 2fr 3fr;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
 		gap: 1rem;
 		height: 440px;
 	}
@@ -237,7 +237,7 @@ const restaurantHours = restaurantPage?.hours?.length ? restaurantPage.hours : [
 
 	@media (max-width: 768px) {
 		.location-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			height: auto;
 		}
 
@@ -259,14 +259,14 @@ const restaurantHours = restaurantPage?.hours?.length ? restaurantPage.hours : [
 
 	.contact-grid {
 		display: grid;
-		grid-template-columns: 2fr 3fr;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
 		gap: 2rem;
 		align-items: start;
 	}
 
 	@media (max-width: 768px) {
 		.contact-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 

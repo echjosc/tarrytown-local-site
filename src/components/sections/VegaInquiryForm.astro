@@ -31,9 +31,9 @@ const {
 } = Astro.props;
 ---
 
-<div class="inquiry-form-wrap">
+<div class="inquiry-form-wrap container">
 	<form
-		class="inquiry-form container"
+		class="inquiry-form"
 		name={formName}
 		method="POST"
 		{...(netlify ? { 'data-netlify': 'true', action: successPath } : {})}
@@ -87,12 +87,12 @@ const {
 
 	.inquiry-form__grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		gap: 1.5rem 2rem;
 	}
 	@media (max-width: 560px) {
 		.inquiry-form__grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 

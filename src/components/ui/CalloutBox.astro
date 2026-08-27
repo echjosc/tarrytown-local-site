@@ -10,14 +10,14 @@ type Props = {
 const { title, align = 'center', class: className } = Astro.props;
 ---
 
-<div class:list={['callout-box', `callout-box--${align}`, className]}>
+<div class:list={['callout-box', 'container', `callout-box--${align}`, className]}>
 	{title && (
 		<header class="callout-box__header">
 			<h3 class="callout-box__title">{title}</h3>
 			<DiamondRule width={32} />
 		</header>
 	)}
-	<div class="callout-box__body container">
+	<div class="callout-box__body">
 		<slot />
 	</div>
 </div>
