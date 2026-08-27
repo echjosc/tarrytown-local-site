@@ -102,14 +102,14 @@ const resolvedIcon = icon ?? defaultIcon;
 	/* ── Two-column grid ─────────────────────────────────────── */
 	.sourcing__grid {
 		display: grid;
-		grid-template-columns: 2fr 3fr;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
 		gap: 4rem;
 		align-items: start;
 	}
 
 	@media (max-width: 768px) {
 		.sourcing__grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 			gap: 2.5rem;
 		}
 	}
@@ -208,7 +208,7 @@ const resolvedIcon = icon ?? defaultIcon;
 
 	.sourcing__item {
 		display: grid;
-		grid-template-columns: 3rem 1fr;
+		grid-template-columns: 3rem minmax(0, 1fr);
 		gap: 1rem;
 		align-items: start;
 		padding: 2rem 0;

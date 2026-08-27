@@ -87,12 +87,12 @@ const eventsPage = await reader.singletons.eventsPage.read();
 
 	.examples__list {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1.5rem;
 	}
 	@media (max-width: 700px) {
 		.examples__list {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 

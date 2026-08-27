@@ -130,12 +130,12 @@ const {
 
 		.container {
 			display: grid;
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 			gap: 4rem;
 			align-items: center;
 
 			@media (max-width: 680px) {
-				grid-template-columns: 1fr;
+				grid-template-columns: minmax(0, 1fr);
 				gap: 2.5rem;
 			}
 		}
