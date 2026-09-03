@@ -1,6 +1,6 @@
 hero:
   eyebrow: Coming to Tarrytown
-  headline: Eat Good Food
+  headline: Eat Good, Eat Local
   description: >-
     Your neighborhood spot for good food. A rotating selection of the best
     local, sustainable, and healthful ingredients we can find — plus a
@@ -10,7 +10,7 @@ hero:
       url: /farmers
     - text: Learn About Our Grocery
       url: /grocery
-  image: '@assets/images/homepage/hero/hero/image.png'
+  image: '@assets/images/homepage/hero/hero/image.jpg'
 tagline: >-
   Offering a rotating selection of the best local, sustainable, and healthful
   ingredients we can find.
