@@ -4,7 +4,7 @@ hero:
   description: >-
     Your neighborhood spot for good food. A rotating selection of the best
     local, sustainable, and healthful ingredients we can find — plus a
-    restaurant, bakery, and grocery to bring it all home.
+    restaurant, bakery, and grocery.
   buttons:
     - text: Meet the Farmers
       url: /farmers
