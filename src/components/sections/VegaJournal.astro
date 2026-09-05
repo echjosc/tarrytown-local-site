@@ -62,13 +62,13 @@ const categories = [
 
 <div class="journal-page">
 	<!-- Page hero -->
-	<PageHero {eyebrow} {title} {subtitle} {categories} />
+	<PageHero {eyebrow} {title} {subtitle} />
 
 	<!-- Post grid -->
 	<div class="journal-main container">
 		{posts.length === 0 ? (
 			<div class="journal-empty">
-				<p>No posts yet. <a href="/keystatic">Add your first post →</a></p>
+				<p>No posts yet. More content coming soon!</p>
 			</div>
 		) : (
 			<div class="journal-grid">

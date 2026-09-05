@@ -627,7 +627,11 @@ export default config({
                 // Hero
                 hero: fields.object({
                     eyebrow: fields.text({ label: 'Eyebrow' }),
-                    headline: fields.text({ label: 'Headline' }),
+                    headline: fields.text({
+                        label: 'Headline',
+                        multiline: true,
+                        description: 'Press Enter to force a line break.',
+                    }),
                     description: fields.text({ label: 'Description' }),
                     buttons: fields.array(
                         fields.object({

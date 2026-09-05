@@ -14,7 +14,7 @@ const {
 	description = "Receive seasonal recipes, event invitations, and morning thoughts from our kitchen to your inbox.",
 	placeholder = "Your email address",
 	buttonText = "Subscribe",
-	formAction = "#",
+	formAction = "/api/newsletter",
 } = Astro.props;
 ---
 
@@ -23,7 +23,7 @@ const {
 		<h2 class="newsletter-title" data-animate="fade-up">{title}</h2>
 		<DiamondRule width={28} color="rgba(250, 246, 238, 0.55)" class="newsletter-divider" />
 		<p class="newsletter-description" data-animate="fade-up-sm">{description}</p>
-		<form class="newsletter-form" data-animate="fade-up-sm" action={formAction} method="post">
+		<form class="newsletter-form" data-animate="fade-up-sm" action={formAction} method="post" novalidate>
 			<input
 				type="email"
 				name="email"
@@ -33,9 +33,56 @@ const {
 				autocomplete="email"
 			/>
 			<button type="submit" class="newsletter-button">{buttonText}</button>
+			<p class="newsletter-status" role="status" aria-live="polite" hidden></p>
 		</form>
 	</div>
 </section>
+
+<script>
+	document.querySelectorAll<HTMLFormElement>('.newsletter-form').forEach((form) => {
+		const button = form.querySelector<HTMLButtonElement>('.newsletter-button');
+		const status = form.querySelector<HTMLParagraphElement>('.newsletter-status');
+		const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+		const buttonLabel = button?.textContent ?? '';
+
+		const showStatus = (message: string, ok: boolean) => {
+			if (!status) return;
+			status.textContent = message;
+			status.hidden = false;
+			status.classList.toggle('is-error', !ok);
+			status.classList.toggle('is-success', ok);
+		};
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			if (!input || !button) return;
+
+			button.disabled = true;
+			button.textContent = 'Submitting…';
+
+			try {
+				const response = await fetch(form.action, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email: input.value }),
+				});
+				const data = await response.json();
+
+				if (response.ok && data.ok) {
+					showStatus(data.message ?? 'Thanks for subscribing!', true);
+					form.reset();
+				} else {
+					showStatus(data.error ?? 'Something went wrong. Please try again.', false);
+				}
+			} catch {
+				showStatus('Something went wrong. Please try again.', false);
+			} finally {
+				button.disabled = false;
+				button.textContent = buttonLabel;
+			}
+		});
+	});
+</script>
 
 
 <style lang="scss">
@@ -129,6 +176,25 @@ const {
 			&:hover {
 				background: var(--color-bg-muted, #F1EADD);
 				opacity: 0.9;
+			}
+
+			&:disabled {
+				opacity: 0.6;
+				cursor: default;
+			}
+		}
+
+		.newsletter-status {
+			font-size: 0.85rem;
+			line-height: 1.5;
+			margin: 0;
+
+			&.is-success {
+				color: var(--nl-text);
+			}
+
+			&.is-error {
+				color: #E8A2A2;
 			}
 		}
 

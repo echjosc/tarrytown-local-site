@@ -22,8 +22,7 @@ type Props = {
 
 const { eyebrow, title, description, imageSrc, buttons, diamondTitle = false, variant = 'split', size = 'full', eyebrowVariant = 'default' } = Astro.props;
 
-const titleParts = title.split(/(\{.*?\})/);
-const titleWords = title.split(' ');
+const titleLines = title.split('\n');
 ---
 
 <section class:list={['vega-main-hero', `vega-main-hero--${variant}`, variant === 'background' && `vega-main-hero--${size}`]}>
@@ -38,19 +37,35 @@ const titleWords = title.split(' ');
 			{eyebrow && <p class:list={['hero-eyebrow', eyebrowVariant === 'badge' && 'hero-eyebrow--badge']}>{eyebrow}</p>}
 			<h1 class="vega-main-hero-title">
 				{diamondTitle
-					? titleWords.map((word, i) => (
-							<Fragment>
-								{word}
-								{i < titleWords.length - 1 && <span class="title-diamond" aria-hidden="true" />}
-							</Fragment>
-						))
-					: titleParts.map((part) =>
-							part.startsWith("{") ? (
-								<span class="script">{part.slice(1, -1)}</span>
-							) : (
-								<Fragment>{part}</Fragment>
-							),
-						)
+					? titleLines.map((line, lineIndex) => {
+							const words = line.split(" ");
+							return (
+								<Fragment>
+									{lineIndex > 0 && <br />}
+									{words.map((word, i) => (
+										<Fragment>
+											{word}
+											{i < words.length - 1 && <span class="title-diamond" aria-hidden="true" />}
+										</Fragment>
+									))}
+								</Fragment>
+							);
+						})
+					: titleLines.map((line, lineIndex) => {
+							const lineParts = line.split(/(\{.*?\})/);
+							return (
+								<Fragment>
+									{lineIndex > 0 && <br />}
+									{lineParts.map((part) =>
+										part.startsWith("{") ? (
+											<span class="script">{part.slice(1, -1)}</span>
+										) : (
+											<Fragment>{part}</Fragment>
+										),
+									)}
+								</Fragment>
+							);
+						})
 				}
 			</h1>
 			{
