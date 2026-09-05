@@ -2,6 +2,7 @@
 import VegaFooter from '@/components/sections/VegaFooter.astro';
 import VegaNav from '@/components/sections/VegaNav.astro';
 import Seo from '@/components/seo/Seo.astro';
+import FormSuccessModal from '@/components/ui/FormSuccessModal.astro';
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
 import { createReader } from '@keystatic/core/reader';
@@ -110,6 +111,8 @@ const footerWhatWeDoLinks = [
 		<main class="main-content">
 			<slot />
 		</main>
+
+		<FormSuccessModal />
 
 		<VegaFooter
 			logoSrc={logoSrc}
