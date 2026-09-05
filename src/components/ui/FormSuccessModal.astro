@@ -1,0 +1,146 @@
+---
+// Shown after a Netlify form redirect (?success=true) lands the visitor back
+// on a page, since those forms do a full-page POST with no client-side
+// confirmation of their own. Reads/strips the query param client-side since
+// this site is statically generated.
+---
+
+<div class="form-success-modal" id="form-success-modal" role="dialog" aria-modal="true" aria-labelledby="form-success-title" hidden>
+	<div class="form-success-modal__backdrop" data-close></div>
+	<div class="form-success-modal__panel">
+		<button type="button" class="form-success-modal__close" data-close aria-label="Close">&times;</button>
+		<h2 class="form-success-modal__title" id="form-success-title">Thank You!</h2>
+		<p class="form-success-modal__body">Your submission was received. We'll be in touch soon.</p>
+		<button type="button" class="form-success-modal__ok" data-close>Close</button>
+	</div>
+</div>
+
+<style lang="scss">
+	.form-success-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+
+		&[hidden] {
+			display: none;
+		}
+
+		&__backdrop {
+			position: absolute;
+			inset: 0;
+			background: rgba(34, 30, 26, 0.55);
+		}
+
+		&__panel {
+			position: relative;
+			width: 100%;
+			max-width: 420px;
+			background: var(--color-bg, #FAF6EE);
+			border: 1.5px solid var(--color-charcoal, #221E1A);
+			border-radius: 0;
+			box-shadow: var(--shadow-hard);
+			padding: 2.5rem 2rem 2rem;
+			text-align: center;
+			animation: form-success-pop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		&__close {
+			position: absolute;
+			top: 0.75rem;
+			right: 1rem;
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			line-height: 1;
+			color: var(--color-text-light, #9A9186);
+			cursor: pointer;
+
+			&:hover {
+				color: var(--color-charcoal, #221E1A);
+			}
+		}
+
+		&__title {
+			font-family: var(--font-primary), sans-serif;
+			font-size: 1.4rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 0.02em;
+			color: var(--color-charcoal, #221E1A);
+			margin: 0 0 0.75rem;
+		}
+
+		&__body {
+			font-size: 0.95rem;
+			line-height: 1.6;
+			color: var(--color-text-muted, #6B6560);
+			margin: 0 0 1.75rem;
+		}
+
+		&__ok {
+			background: var(--color-charcoal, #221E1A);
+			color: var(--color-bg, #FAF6EE);
+			border: 1.5px solid var(--color-charcoal, #221E1A);
+			border-radius: 0;
+			padding: 0.75rem 2rem;
+			font-family: inherit;
+			font-size: 0.65rem;
+			font-weight: 700;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: background 0.2s ease, border-color 0.2s ease;
+
+			&:hover {
+				background: var(--color-primary, #2E4A3B);
+				border-color: var(--color-primary, #2E4A3B);
+			}
+		}
+	}
+
+	@keyframes form-success-pop {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+</style>
+
+<script>
+	const modal = document.getElementById('form-success-modal');
+
+	if (modal) {
+		const params = new URLSearchParams(window.location.search);
+
+		const close = () => {
+			modal.hidden = true;
+			document.body.style.removeProperty('overflow');
+		};
+
+		if (params.get('success') === 'true') {
+			params.delete('success');
+			const query = params.toString();
+			const newUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
+			window.history.replaceState({}, '', newUrl);
+
+			modal.hidden = false;
+			document.body.style.overflow = 'hidden';
+		}
+
+		modal.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => {
+			el.addEventListener('click', close);
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !modal.hidden) close();
+		});
+	}
+</script>
