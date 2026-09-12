@@ -1,46 +1,22 @@
-seoTitle: 'Menu | Tarrytown Local'
+seoTitle: Menu | Tarrytown Local
 seoDescription: >-
-  See what's cooking today at Tarrytown Local. Our restaurant and bakery
-  menus change daily based on what's fresh from the farm and market.
+  See what's cooking today at Tarrytown Local. Our restaurant and bakery menus
+  change daily based on what's fresh from the farm and market.
 heroTitle: Today's Menu
 heroSubtitle: Updated fresh every morning based on what's in season.
 restaurantMenu:
   heading: Restaurant Menu
   note: >-
-    Our menu changes daily depending on what's fresh from the farm — check
-    back each morning to see what the chef is cooking.
+    Our menu changes daily depending on what's fresh from the farm — check back
+    each morning to see what the chef is cooking.
   display:
-    discriminant: list
-    value:
-      - name: Breakfast
-        items:
-          - name: Farm Egg Sandwich
-            description: Two farm eggs, aged cheddar, arugula, on a toasted milk bun
-            price: '$9'
-          - name: Morning Grain Bowl
-            description: Milled grains, seasonal fruit, honey, toasted nuts
-            price: '$10'
-      - name: Lunch
-        items:
-          - name: Market Vegetable Soup
-            description: Rotating soup made from whatever's freshest at the market
-            price: '$8'
-          - name: Roast Chicken Sandwich
-            description: Herb-roasted chicken, pickled onion, aioli, on a baguette
-            price: '$13'
-      - name: Dinner
-        items:
-          - name: Seasonal Farm Plate
-            description: Chef's selection of the day's best local ingredients
-            price: '$22'
-          - name: Wood-Fired Vegetables
-            description: Whatever's in season, charred and finished with herb oil
-            price: '$16'
+    discriminant: file
+    value: /menus/restaurant/restaurantMenu/display/value.pdf
 bakeryMenu:
   heading: Bakery Menu
   note: >-
-    Baked fresh every morning with our own milled grains — once it's gone
-    for the day, it's gone.
+    Baked fresh every morning with our own milled grains — once it's gone for
+    the day, it's gone.
   display:
     discriminant: list
     value:
@@ -48,15 +24,15 @@ bakeryMenu:
         items:
           - name: Sourdough Loaf
             description: Slow-fermented, milled in-house daily
-            price: '$8'
+            price: $8
           - name: Whole Grain Rye
             description: Dense and hearty, made with ancient grains
-            price: '$9'
+            price: $9
       - name: Pastries
         items:
           - name: Morning Croissant
             description: Butter-laminated, baked fresh each morning
-            price: '$5'
+            price: $5
           - name: Seasonal Fruit Danish
             description: Rotating fruit filling based on what's in season
-            price: '$6'
+            price: $6
