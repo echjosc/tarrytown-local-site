@@ -151,7 +151,7 @@ const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapPro
                 const coord = coordinates[activeMarker];
                 const type = coord.type ?? 'farm';
                 return (
-                    <div className={styles.detail} style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}>
+                    <div className={styles.detail} data-lenis-prevent style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}>
                         <button className={styles.detailBack} onClick={() => setActiveMarker(null)}>
                             <span aria-hidden="true">←</span> Back to all locations
                         </button>
@@ -183,7 +183,7 @@ const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapPro
                     </div>
                 );
             })() : (
-                <div className={styles.list}>
+                <div className={styles.list} data-lenis-prevent>
                     {coordinates.map((coord, index) => {
                         const type = coord.type ?? 'farm';
                         return (
