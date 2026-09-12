@@ -36,11 +36,13 @@
 .list {
     width: 100%;
     max-width: 480px;
+    max-height: 430px;
     padding: 16px;
-    overflow-y: auto;
+    overflow: auto;
 
     @media (max-width: 768px) {
         max-width: none;
+        max-height: 420px;
         padding: 8px 0;
     }
 }
@@ -134,6 +136,7 @@
     position: relative;
     width: 100%;
     max-width: 480px;
+    max-height: 430px;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
@@ -145,6 +148,7 @@
 
     @media (max-width: 768px) {
         max-width: none;
+        max-height: 420px;
     }
 }
 
