@@ -243,10 +243,10 @@ locations:
     type: meat
     offerings:
       - Fish
-  - lat: 47.864717
-    lng: -4.304738
+  - lat: 42.660304
+    lng: -77.054099
     title: Seneca Grain and Bean
-    description: Grains & beans producer based in Penn Yann, NY.
+    description: Grains & beans producer based in Penn Yan, NY.
     type: produce
     offerings:
       - Grains
