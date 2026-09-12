@@ -11,7 +11,6 @@ restaurantMenu:
     each morning to see what the chef is cooking.
   display:
     discriminant: file
-    value: /menus/restaurant/restaurantMenu/display/value.png
 bakeryMenu:
   heading: Bakery Menu
   note: >-
