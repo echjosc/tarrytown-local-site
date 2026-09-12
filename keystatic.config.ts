@@ -523,6 +523,14 @@ export default config({
                         lng: fields.number({ label: 'Longitude', description: 'Decimal longitude (e.g. -73.8579)' }),
                         title: fields.text({ label: 'Name' }),
                         description: fields.text({ label: 'Description', multiline: true }),
+                        offerings: fields.array(
+                            fields.text({ label: 'Offering' }),
+                            {
+                                label: 'Offerings',
+                                description: 'Write-in tags for what this vendor offers, e.g. "Produce", "Meat", "Cheese"',
+                                itemLabel: (props) => props.value || 'New Offering',
+                            }
+                        ),
                         type: fields.select({
                             label: 'Type',
                             options: [

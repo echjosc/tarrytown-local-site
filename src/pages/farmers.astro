@@ -28,6 +28,7 @@ const farmersPage = await reader.singletons.farmersPage.read();
 						lng: loc.lng ?? 0,
 						title: loc.title || undefined,
 						description: loc.description || undefined,
+						offerings: loc.offerings?.filter((o): o is string => Boolean(o)) || undefined,
 						type: (loc.type as 'home' | 'produce' | 'meat' | 'farm') || 'farm',
 						url: loc.url || undefined,
 						image: loc.image || undefined,
