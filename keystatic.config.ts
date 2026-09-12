@@ -41,6 +41,51 @@ const heroStyleField = (defaultValue: 'background' | 'split' | 'none') => fields
     defaultValue,
 });
 
+// Shared "fill in the categories/items" list, used by the menu display toggle below.
+const menuCategoriesField = (itemNameLabel: string) => fields.array(
+    fields.object({
+        name: fields.text({ label: 'Category Name' }),
+        items: fields.array(
+            fields.object({
+                name: fields.text({ label: itemNameLabel }),
+                description: fields.text({ label: 'Description', multiline: true }),
+                price: fields.text({ label: 'Price' }),
+            }),
+            {
+                label: 'Items',
+                itemLabel: (props) => props.fields.name.value || 'New Item',
+            }
+        ),
+    }),
+    {
+        label: 'Menu Categories',
+        description: 'Edit this every morning — changes go live as soon as they\'re saved.',
+        itemLabel: (props) => props.fields.name.value || 'New Category',
+    }
+);
+
+// Lets editors toggle a menu section between a fill-in list and an uploaded file (image or PDF).
+const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.conditional(
+    fields.select({
+        label: 'Display Mode',
+        description: 'Fill in the menu items below, or upload a file (PNG, JPG, or PDF) to show instead.',
+        options: [
+            { label: 'Fill in the menu', value: 'list' },
+            { label: 'Upload a file (image or PDF)', value: 'file' },
+        ],
+        defaultValue: 'list',
+    }),
+    {
+        list: menuCategoriesField(itemNameLabel),
+        file: fields.file({
+            label: 'Menu File',
+            description: 'Upload a PNG, JPG, or PDF of the menu.',
+            directory: `public/menus/${dirSlug}`,
+            publicPath: `/menus/${dirSlug}/`,
+        }),
+    }
+);
+
 export default config({
     storage: {
         kind: 'github',
@@ -205,27 +250,7 @@ export default config({
                         multiline: true,
                         description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
                     }),
-                    categories: fields.array(
-                        fields.object({
-                            name: fields.text({ label: 'Category Name' }),
-                            items: fields.array(
-                                fields.object({
-                                    name: fields.text({ label: 'Dish Name' }),
-                                    description: fields.text({ label: 'Description', multiline: true }),
-                                    price: fields.text({ label: 'Price' }),
-                                }),
-                                {
-                                    label: 'Items',
-                                    itemLabel: (props) => props.fields.name.value || 'New Item',
-                                }
-                            ),
-                        }),
-                        {
-                            label: 'Menu Categories',
-                            description: 'Edit this every morning — changes go live as soon as they\'re saved.',
-                            itemLabel: (props) => props.fields.name.value || 'New Category',
-                        }
-                    ),
+                    display: menuDisplayField('restaurant', 'Dish Name'),
                 }, { label: 'Restaurant Menu' }),
                 bakeryMenu: fields.object({
                     heading: fields.text({ label: 'Section Heading', defaultValue: 'Bakery Menu' }),
@@ -234,27 +259,7 @@ export default config({
                         multiline: true,
                         description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
                     }),
-                    categories: fields.array(
-                        fields.object({
-                            name: fields.text({ label: 'Category Name' }),
-                            items: fields.array(
-                                fields.object({
-                                    name: fields.text({ label: 'Item Name' }),
-                                    description: fields.text({ label: 'Description', multiline: true }),
-                                    price: fields.text({ label: 'Price' }),
-                                }),
-                                {
-                                    label: 'Items',
-                                    itemLabel: (props) => props.fields.name.value || 'New Item',
-                                }
-                            ),
-                        }),
-                        {
-                            label: 'Menu Categories',
-                            description: 'Edit this every morning — changes go live as soon as they\'re saved.',
-                            itemLabel: (props) => props.fields.name.value || 'New Category',
-                        }
-                    ),
+                    display: menuDisplayField('bakery', 'Item Name'),
                 }, { label: 'Bakery Menu' }),
             },
         }),
