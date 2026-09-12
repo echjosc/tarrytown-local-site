@@ -7,6 +7,30 @@ import keystaticConfig from '../../keystatic.config';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const menuPage = await reader.singletons.menuPage.read();
+
+type MenuPageData = NonNullable<typeof menuPage>;
+
+function buildMenuSection(
+	section: MenuPageData['restaurantMenu'] | undefined,
+	fallbackHeading: string
+) {
+	const note = section?.note || undefined;
+	const heading = section?.heading || fallbackHeading;
+
+	if (section?.display?.discriminant === 'file') {
+		return { heading, note, mode: 'file' as const, fileUrl: section.display.value || undefined };
+	}
+
+	const categories = (section?.display?.value ?? []).map((cat) => ({
+		name: cat.name,
+		items: cat.items.map((item) => ({
+			name: item.name,
+			description: item.description || undefined,
+			price: item.price || undefined,
+		})),
+	}));
+	return { heading, note, mode: 'list' as const, categories };
+}
 ---
 
 <Base
@@ -23,30 +47,8 @@ const menuPage = await reader.singletons.menuPage.read();
 	<!-- Menu -->
 	<VegaMenu
 		sections={[
-			{
-				heading: menuPage?.restaurantMenu?.heading || 'Restaurant Menu',
-				note: menuPage?.restaurantMenu?.note || undefined,
-				categories: (menuPage?.restaurantMenu?.categories ?? []).map((cat) => ({
-					name: cat.name,
-					items: cat.items.map((item) => ({
-						name: item.name,
-						description: item.description || undefined,
-						price: item.price || undefined,
-					})),
-				})),
-			},
-			{
-				heading: menuPage?.bakeryMenu?.heading || 'Bakery Menu',
-				note: menuPage?.bakeryMenu?.note || undefined,
-				categories: (menuPage?.bakeryMenu?.categories ?? []).map((cat) => ({
-					name: cat.name,
-					items: cat.items.map((item) => ({
-						name: item.name,
-						description: item.description || undefined,
-						price: item.price || undefined,
-					})),
-				})),
-			},
+			buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu'),
+			buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu'),
 		]}
 	/>
 </Base>
