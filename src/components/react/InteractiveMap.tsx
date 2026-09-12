@@ -107,6 +107,7 @@ export type InteractiveMapProps = {
         lng: number;
         title?: string;
         description?: string;
+        offerings?: string[];
         type?: LocationType;
         url?: string;
         image?: string;
@@ -160,6 +161,13 @@ const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapPro
                         <span className={styles.detailType}>{TYPE_LABELS[type]}</span>
                         <h2 className={styles.detailTitle}>{coord.title}</h2>
                         <p className={styles.detailDescription}>{coord.description}</p>
+                        {coord.offerings && coord.offerings.length > 0 && (
+                            <ul className={styles.detailTags}>
+                                {coord.offerings.map((offering) => (
+                                    <li key={offering} className={styles.detailTag}>{offering}</li>
+                                ))}
+                            </ul>
+                        )}
                         {coord.url && (
                             <div className={styles.detailActions}>
                                 <a
