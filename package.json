@@ -15,6 +15,7 @@
     "@astrojs/markdoc": "1.0.5",
     "@astrojs/netlify": "^7.0.10",
     "@astrojs/react": "5.0.5",
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/cormorant-garamond": "^5.2.6",
     "@fontsource-variable/libre-franklin": "^5.2.8",
     "@fontsource/homemade-apple": "^5.2.8",

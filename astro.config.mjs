@@ -4,12 +4,14 @@ import netlify from '@astrojs/netlify';
 import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://tarrytownlocal.com',
 	output: 'static',
 	adapter: netlify(),
-	integrations: [react(), markdoc(), keystatic()],
+	integrations: [react(), markdoc(), keystatic(), sitemap()],
 	vite: {
 		resolve: {
 			alias: {
