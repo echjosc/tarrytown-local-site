@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tarrytownlocal.com/sitemap-index.xml
