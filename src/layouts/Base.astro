@@ -2,12 +2,14 @@
 import VegaFooter from '@/components/sections/VegaFooter.astro';
 import VegaNav from '@/components/sections/VegaNav.astro';
 import Seo from '@/components/seo/Seo.astro';
+import Schema from '@/components/seo/Schema.astro';
 import FormSuccessModal from '@/components/ui/FormSuccessModal.astro';
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import { resolveImage } from '@/utils/resolveImage';
+import { localBusiness } from '@/lib/schemas/schemas';
 
 interface Props {
 	title: string;
@@ -36,6 +38,32 @@ const businessInfo = await reader.singletons.businessInfo.read();
 
 const logoSrc = resolveImage(businessInfo?.logo);
 const logoAlt = businessInfo?.name || 'Tarrytown Local';
+
+const siteUrl = Astro.site ?? new URL('https://tarrytownlocal.com');
+const [addressStreet, addressCityStateZip] = businessInfo?.addressLines ?? [];
+const cityStateZipMatch = addressCityStateZip?.match(/^(.+),\s*([A-Z]{2})\s+(\d{5})$/);
+const latMatch = businessInfo?.mapEmbedUrl?.match(/!3d(-?\d+\.\d+)/);
+const lngMatch = businessInfo?.mapEmbedUrl?.match(/!2d(-?\d+\.\d+)/);
+
+const businessSchema = localBusiness({
+	type: 'Restaurant',
+	name: businessInfo?.name || 'Tarrytown Local',
+	description:
+		'Neighborhood restaurant and small grocery store in Tarrytown, NY, focused on local, healthful food.',
+	url: siteUrl.href,
+	telephone: businessInfo?.phone || undefined,
+	email: businessInfo?.email || undefined,
+	address: {
+		street: addressStreet || '57 N Broadway',
+		city: cityStateZipMatch?.[1] || 'Tarrytown',
+		state: cityStateZipMatch?.[2] || 'NY',
+		zip: cityStateZipMatch?.[3] || '10591',
+	},
+	geo: latMatch && lngMatch ? { lat: parseFloat(latMatch[1]), lng: parseFloat(lngMatch[1]) } : undefined,
+	logo: new URL('/images/business/logo.png', siteUrl).href,
+	image: new URL('/images/business/logo.png', siteUrl).href,
+	sameAs: businessInfo?.socials?.map((s) => s.url) ?? [],
+});
 
 const navLinks = [
 	{ label: 'Home', url: '/' },
@@ -98,6 +126,7 @@ const footerWhatWeDoLinks = [
 			publishedTime={publishedTime}
 			modifiedTime={modifiedTime}
 		/>
+		<Schema item={businessSchema} />
 	<script is:inline>document.documentElement.classList.replace('no-js', 'js')</script>
 	</head>
 	<body>
