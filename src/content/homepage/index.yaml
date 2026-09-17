@@ -1,6 +1,8 @@
 hero:
   eyebrow: Coming to Tarrytown
-  headline: Eat Good Eat Local
+  headline: |-
+    Eat Good
+    Eat Local
   description: 'Your neighborhood spot for good food. '
   buttons:
     - text: Meet the Farmers
