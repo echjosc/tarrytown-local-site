@@ -1,530 +1,330 @@
 heroTitle: The Hands That Feed Us
-heroSubtitle: Meet the farmers and producers who grow the food we serve, and learn about our commitment to supporting local agriculture and sustainable practices.
+heroSubtitle: >-
+  Meet the farmers and producers who grow the food we serve, and learn about our
+  commitment to supporting local agriculture and sustainable practices.
 locations:
   - lat: 41.0785
     lng: -73.8579
     title: Tarrytown Local
     description: Your one-stop shop for local produce and goods in Tarrytown, NY
+    offerings: []
     type: home
-  - lat: 41.5182
-    lng: -73.8231
-    title: Fishkill Farms
-    description: A family-owned farm in the Hudson Valley offering a wide variety of fruits, vegetables, and flowers.
-    type: produce
-    offerings:
-      - Fruits
-      - Vegetables
-      - Flowers
-  - lat: 41.6653
-    lng: -74.5609
-    title: Majestic Farm
-    description: A sustainable farm in the Hudson Valley specializing in organic produce and pasture-raised meats.
-    type: farm
-    offerings:
-      - Produce
-      - Meat
-  - lat: 41.40215
-    lng: -74.324213
-    title: Dan Madura Farm
-    description: Farm based in Goshen, NY.
-    type: produce
-    offerings: []
-  - lat: 41.362453
-    lng: -74.271498
-    title: Halal Pastures
-    description: Produce, meat & value-added goods producer based in Chester, NY.
-    type: meat
-    offerings:
-      - Produce
-      - Meat
-      - Value Added
-    url: https://halalpasture.com
-  - lat: 42.329253
-    lng: -73.615674
-    title: Hawthorne Valley Farm
-    description: Biodynamic farm and creamery based in Ghent, NY.
-    type: produce
-    offerings: []
-  - lat: 42.531181
-    lng: -75.523515
-    title: Norwich Meadows
-    description: Vegetable farm based in Norwich, NY.
-    type: produce
-    offerings: []
-    url: https://norwichmeadowsfarm.com
-  - lat: 41.597081
-    lng: -73.916966
-    title: Obercreek Farm
-    description: Produce producer based in Wappingers Falls, NY.
-    type: produce
-    offerings:
-      - Produce
-    url: https://obercreekfarm.com
-  - lat: 41.237743
-    lng: -74.614766
-    title: R&M Farm
-    description: Farm based in Wantage, NJ.
-    type: produce
-    offerings: []
   - lat: 41.362453
     lng: -74.271498
     title: 4 Wall Farm
     description: Mushrooms producer based in Chester, NY.
-    type: produce
     offerings:
       - Mushrooms
+    type: produce
     url: https://4wallfarm.com
   - lat: 41.40215
     lng: -74.324213
     title: 5 Spoke Creamery
     description: Cheese producer based in Goshen, NY.
-    type: produce
     offerings:
       - Cheese
-    url: https://5spokecreamery.com
-  - lat: 42.191197
-    lng: -74.994608
-    title: Berry Brook Farm
-    description: Produce producer based in Hamden, NY.
     type: produce
-    offerings:
-      - Produce
+    url: https://5spokecreamery.com
   - lat: 41.090129
     lng: -73.97049
     title: Birdies Batch
     description: Jam producer based in West Nyack, NY.
-    type: produce
     offerings:
       - Jam
-    url: https://birdiesbatch.com
-  - lat: 41.706554
-    lng: -73.928367
-    title: Bob Bee
-    description: Honey producer based in Poughkeepsie, NY.
     type: produce
-    offerings:
-      - Honey
+    url: https://birdiesbatch.com
   - lat: 41.323639
     lng: -74.187013
     title: Brooklyn Seltzer Boys
     description: Small-batch seltzer maker based in Brooklyn, NY.
-    type: produce
     offerings: []
+    type: produce
   - lat: 41.204262
     lng: -73.727076
     title: Cabbage Hill Farm
     description: Produce, flowers, meat & tea producer based in Mt. Kisco, NY.
-    type: meat
     offerings:
       - Produce
       - Flowers
       - Meat
       - Tea
+    type: meat
     url: https://cabbagehill.org
   - lat: 41.979729
     lng: -73.656309
     title: Chaseholm Creamery
     description: Cheese producer based in Pine Plains, NY.
-    type: produce
     offerings:
       - Cheese
+    type: produce
     url: https://cfcreamery.com
-  - lat: 41.561205
-    lng: -74.188481
-    title: Colden Springs
-    description: Beef, pork & chicken producer based in Walden, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Pork
-      - Chicken
   - lat: 42.103564
     lng: -73.549738
     title: Deep Roots Farm
     description: Produce producer based in Copake, NY.
-    type: produce
     offerings:
       - Produce
+    type: produce
   - lat: 41.769222
     lng: -74.300755
     title: Ever Growing Family Farm
     description: Rice producer based in Kerhonkson, NY.
-    type: produce
     offerings:
       - Rice
-  - lat: 42.890075
-    lng: -74.081516
-    title: Flakny Farm
-    description: Beef, chicken & pork producer based in Pattersonville, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Chicken
-      - Pork
+    type: produce
   - lat: 41.679816
     lng: -74.150423
     title: Full Moon Farm
     description: Beef producer based in Gardiner, NY.
-    type: meat
     offerings:
       - Beef
+    type: meat
   - lat: 41.420094
     lng: -73.954583
     title: Glynwood Center
     description: Beef, lamb, pork, turkey & chicken producer based in Cold Spring, NY.
-    type: meat
     offerings:
       - Beef
       - Lamb
       - Pork
       - Turkey
       - Chicken
+    type: meat
     url: https://glynwood.org
   - lat: 41.637366
     lng: -73.566565
     title: Harlem Valley Homestead
     description: Farm based in Wingdale, NY.
-    type: produce
     offerings: []
-  - lat: 42.252865
-    lng: -73.790959
-    title: Hudson Valley Fisheries
-    description: Fish producer based in Hudson, NY.
-    type: meat
-    offerings:
-      - Fish
-    url: https://hudsonvalleyfishfarms.com or sales@hudsonvalleyfishfarms.com
+    type: produce
   - lat: 42.050488
     lng: -73.636258
     title: Hudson Valley Hops and Grains
     description: Grains producer based in Ancram, NY.
-    type: produce
     offerings:
       - Grains
-    url: https://hudsonvalleyhopsandgrains.com
-  - lat: 41.141208
-    lng: -73.263726
-    title: Little River Farm
-    description: Fruit & produce producer based in Fairfield, CT.
     type: produce
-    offerings:
-      - Fruit
-      - Produce
+    url: https://hudsonvalleyhopsandgrains.com
   - lat: 41.830034
     lng: -73.762184
     title: Meadowland Farm
     description: Beef, produce & apples producer based in Clinton Corners, NY.
-    type: meat
     offerings:
       - Beef
       - Produce
       - Apples
+    type: meat
     url: https://meadowlandfarmny.com
   - lat: 41.176314
     lng: -73.790755
     title: Mobius Fields
     description: Produce & flowers producer based in Westchester, NY.
-    type: produce
     offerings:
       - Produce
       - Flowers
-  - lat: 41.60547
-    lng: -73.971729
-    title: Quimby Farm
-    description: Beef & fruit producer based in Marlboro, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Fruit
+    type: produce
   - lat: 41.076208
     lng: -73.858746
     title: Sasha's Seafood
     description: Fish producer based in Tarrytown, NY.
-    type: meat
     offerings:
       - Fish
+    type: meat
   - lat: 42.660304
     lng: -77.054099
     title: Seneca Grain and Bean
     description: Grains & beans producer based in Penn Yan, NY.
-    type: produce
     offerings:
       - Grains
       - Beans
+    type: produce
     url: https://senecagrainandbean.com
   - lat: 40.469105
     lng: -76.931457
     title: Small Valley Milling
     description: Grains producer based in Halifax, PA.
-    type: produce
     offerings:
       - Grains
-  - lat: 42.795629
-    lng: -74.753202
-    title: The Flockery
-    description: Lamb producer based in Cherry Valley, NY.
-    type: meat
-    offerings:
-      - Lamb
-    url: https://theflockery.com
+    type: produce
   - lat: 41.679816
     lng: -74.150423
     title: Thousand Leaf Gardens
     description: Produce & flowers producer based in Gardiner, NY.
-    type: produce
     offerings:
       - Produce
       - Flowers
+    type: produce
     url: https://thousandleafgardens.com
   - lat: 41.706554
     lng: -73.928367
     title: Titusville Farm
     description: Produce & fruit producer based in Poughkeepsie, NY.
-    type: produce
     offerings:
       - Produce
       - Fruit
-    url: https://titusville.farm
-  - lat: 41.637366
-    lng: -73.566565
-    title: White Pine Community Farm
-    description: Tea producer based in Wingdale, NY.
     type: produce
-    offerings:
-      - Tea
+    url: https://titusville.farm
   - lat: 41.679816
     lng: -74.150423
     title: Willow Pond Farm
     description: Lamb, dairy & yogurt producer based in Gardiner, NY.
-    type: meat
     offerings:
       - Lamb
       - Dairy
       - Yogurt
+    type: meat
     url: https://willowpondsheep.com
-  - lat: 41.679816
-    lng: -74.150423
-    title: Crossroads Cattle Company
-    description: Beef producer based in Gardiner, NY.
-    type: meat
-    offerings:
-      - Beef
-    url: https://crossroadscattlecony.com
-  - lat: 42.903411
-    lng: -73.562616
-    title: St. Croix
-    description: Beef & chicken producer based in Valley Falls, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Chicken
-  - lat: 41.979729
-    lng: -73.656309
-    title: Sugar Hill Farm
-    description: Beef & pork producer based in Pine Plains, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Pork
   - lat: 42.411843
     lng: -73.449609
     title: Yundwell Pastured Poultry
     description: Chicken, eggs & turkey producer based in Canaan, NY.
-    type: meat
     offerings:
       - Chicken
       - Eggs
       - Turkey
+    type: meat
     url: https://yundwell.com
   - lat: 43.033686
     lng: -73.852622
     title: Fjord Vineyards
     description: Wine producer based in Milton, NY.
-    type: produce
     offerings:
       - Wine
-  - lat: 42.178978
-    lng: -73.525951
-    title: Garret Farms
-    description: Beef producer based in Hillsdale, NY.
-    type: meat
-    offerings:
-      - Beef
-  - lat: 42.018147
-    lng: -73.591236
-    title: Herondale Farm
-    description: Beef, chicken & lamb producer based in Ancramdale, NY.
-    type: meat
-    offerings:
-      - Beef
-      - Chicken
-      - Lamb
+    type: produce
   - lat: 41.827804
     lng: -73.965047
     title: Metal House Cidery
     description: Cider producer based in Esopus, NY.
-    type: produce
     offerings:
       - Cider
+    type: produce
     url: https://metalhousecider.com
   - lat: 42.505675
     lng: -76.772379
     title: Neverstill Wines
     description: Wine producer based in Finger Lakes, NY.
-    type: produce
     offerings:
       - Wine
+    type: produce
     url: https://neverstillwines.com
   - lat: 41.50484
     lng: -73.969541
     title: Paul Brady Wines
     description: Wine producer based in Beacon, NY.
-    type: produce
     offerings:
       - Wine
+    type: produce
     url: https://paulbradywine.com
   - lat: 41.45011
     lng: -74.416481
     title: Rosina's Winery
     description: Wine producer based in Middletown, NY.
-    type: produce
     offerings:
       - Wine
+    type: produce
   - lat: 41.61329
     lng: -74.29391
     title: Wild Arc Farm
     description: Wine & cider producer based in Pine Bush, NY.
-    type: produce
     offerings:
       - Wine
       - Cider
+    type: produce
     url: https://wildarcfarm.com
-  - lat: 41.784196
-    lng: -73.937391
-    title: Wild Lea Farm
-    description: Meat producer based in Hyde Park, NY.
-    type: meat
-    offerings:
-      - Meat
   - lat: 41.176314
     lng: -73.790755
     title: Fly Honey Farm
     description: Honey producer based in Westchester, NY.
-    type: produce
     offerings:
       - Honey
+    type: produce
   - lat: 41.61329
     lng: -74.29391
     title: Great Joy Family Farm
     description: Family farm based in Pine Bush, NY.
-    type: produce
     offerings: []
+    type: produce
   - lat: 41.979729
     lng: -73.656309
     title: Ronnybrook Farm Dairy
     description: Dairy farm based in Pine Plains, NY, known for its glass-bottled milk.
-    type: produce
     offerings: []
+    type: produce
   - lat: 41.523427
     lng: -73.646795
     title: Laurel & Ash Farm
     description: Farm based in Holmes, NY.
-    type: produce
     offerings: []
+    type: produce
   - lat: 41.742703
     lng: -74.67645
     title: La Salumina
     description: Artisan salumi and cured meats from Hurleyville, NY.
-    type: produce
     offerings: []
+    type: produce
   - lat: 42.178978
     lng: -73.525951
     title: Little Apple Cidery
     description: Small-batch cidery based in Hillsdale, NY.
-    type: produce
     offerings: []
+    type: produce
   - lat: 42.890416
     lng: -74.196582
     title: Farmbody Skin Care
     description: Household producer based in Florida, NY.
-    type: produce
     offerings:
       - Household
+    type: produce
     url: https://farmbodyskincare.com
-  - lat: 37.226611
-    lng: -121.97468
-    title: Simple Ecology
-    description: Household producer based in Los Gatos, CA.
-    type: produce
-    offerings:
-      - Household
-    url: https://simpleecology.com
   - lat: 41.798119
     lng: -74.229298
     title: Accordian Wines
     description: Wine producer based in Accord, NY.
-    type: produce
     offerings:
       - Wine
+    type: produce
   - lat: 40.702212
     lng: -73.952303
     title: Sycamore Farms
     description: Value-added goods producer based in Middleton, NY.
-    type: produce
     offerings:
       - Value Added
+    type: produce
   - lat: 41.979729
     lng: -73.656309
     title: Chaseholm Farm
     description: Yogurt producer based in Pine Plains, NY.
-    type: produce
     offerings:
       - Yogurt
+    type: produce
     url: https://chaseholmfarm.com
   - lat: 41.256483
     lng: -74.359876
     title: Ash Hopper
     description: Household producer based in Warwick, NY.
-    type: produce
     offerings:
       - Household
+    type: produce
     url: https://ashhopper.com
   - lat: 41.323639
     lng: -74.187013
     title: Third Bean
     description: Chocolate producer based in Brooklyn, NY.
-    type: produce
     offerings:
       - Chocolate
+    type: produce
     url: https://thirdbean.com
   - lat: 42.390361
     lng: -73.781513
     title: Ardith Mae Creamery
     description: Cheese producer based in Stuyvesant, NY.
-    type: produce
     offerings:
       - Cheese
-  - lat: 41.362453
-    lng: -74.271498
-    title: Sun Sprout Farm
-    description: Produce & value-added goods producer based in Chester, NY.
     type: produce
-    offerings:
-      - Produce
-      - Value Added
-    url: https://sunsproutfarm.com
-  - lat: 42.506484
-    lng: -71.072831
-    title: In Pursuit Of Tea
-    description: Tea producer based in Wakefield, MA.
-    type: produce
-    offerings:
-      - Tea
-    url: https://inpursuitoftea.com
   - lat: 42.728412
     lng: -73.691788
     title: Yesfolk Tonics
     description: Craft tonics and beverages from Troy, NY.
-    type: produce
     offerings: []
+    type: produce
     url: https://yesfolktonics.com
