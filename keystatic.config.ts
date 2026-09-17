@@ -98,7 +98,7 @@ export default config({
         navigation: {
             'Pages': ['homepage', 'menuPage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
             'Global': ['businessInfo', 'team'],
-            'Blog': ['posts'],
+            'Blog': ['blogPage', 'posts'],
             'Legal': ['privacyPage', 'termsPage'],
         },
     },
@@ -207,6 +207,25 @@ export default config({
                         itemLabel: (props) => props.fields.platform.value || 'New Link',
                     }
                 ),
+            },
+        }),
+        blogPage: singleton({
+            label: 'Blog / Journal Page',
+            path: 'src/content/blogpage/',
+            schema: {
+                seoTitle: fields.text({ label: 'Page Title', defaultValue: 'The Good Dirt' }),
+                seoDescription: fields.text({
+                    label: 'Meta Description',
+                    multiline: true,
+                    defaultValue: 'Stories from Tarrytown Local.',
+                }),
+                eyebrow: fields.text({ label: 'Eyebrow', defaultValue: 'The Blog' }),
+                heroTitle: fields.text({ label: 'Hero Title', defaultValue: 'The Good Dirt' }),
+                heroSubtitle: fields.text({
+                    label: 'Hero Subtitle',
+                    multiline: true,
+                    defaultValue: 'Stories from Tarrytown Local',
+                }),
             },
         }),
         contactPage: singleton({
