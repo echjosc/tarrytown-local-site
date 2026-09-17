@@ -2,6 +2,11 @@
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import VegaJournal from '@/components/sections/VegaJournal.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const blogPage = await reader.singletons.blogPage.read();
 
 const allPosts = await getCollection('posts');
 
@@ -15,8 +20,13 @@ const posts = allPosts
 ---
 
 <Base
-	title="The Good Dirt | Journal"
-	description="Stories from the Hudson Valley."
+	title={blogPage?.seoTitle || 'The Good Dirt'}
+	description={blogPage?.seoDescription || 'Stories from the Hudson Valley.'}
 >
-	<VegaJournal {posts} />
+	<VegaJournal
+		{posts}
+		eyebrow={blogPage?.eyebrow || undefined}
+		title={blogPage?.heroTitle || undefined}
+		subtitle={blogPage?.heroSubtitle || undefined}
+	/>
 </Base>
