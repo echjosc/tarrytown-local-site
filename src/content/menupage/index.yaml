@@ -16,5 +16,4 @@ bakeryMenu:
   heading: Bakery Menu
   note: Baked fresh every morning with house-milled grains.
   display:
-    discriminant: list
-    value: []
+    discriminant: file
