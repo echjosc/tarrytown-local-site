@@ -1,31 +1,29 @@
 seoTitle: Bakery in Tarrytown, NY
 seoDescription: >-
-  We mill 100% of our flour in-house on a stone mill, using grains from
-  regional farms growing exceptional grains with farming practices we
-  believe in.
+  We mill 100% of our flour in-house on a stone mill, using grains from regional
+  farms growing exceptional grains with farming practices we believe in.
 hero:
   eyebrow: Bakery
   headline: Most bakeries buy flour. We start with grain.
-  description: ''
+  style: split
 philosophy:
   title: Our Philosophy
   watermarkText: Grain
   body: >-
     We mill 100% of our flour in-house on a stone mill, using grains from
-    regional farms growing exceptional grains with farming practices we
-    believe in.
+    regional farms growing exceptional grains with farming practices we believe
+    in.
 
 
-    In conventional milling, the bran and germ — the fiber-rich outer layer
-    and the nutrient-dense core of the grain — are typically removed to
-    create a more shelf-stable, uniform flour. That stability comes at the
-    cost of flavor and complexity.
+    In conventional milling, the bran and germ — the fiber-rich outer layer and
+    the nutrient-dense core of the grain — are typically removed to create a
+    more shelf-stable, uniform flour. That stability comes at the cost of flavor
+    and complexity.
 
 
-    This means our products won't look the same as those made with
-    commercial flour. We aren't chasing uniformity or the "perfect" loaf.
-    We're focused on baking food that is interesting, nourishing, and
-    rooted in real ingredients.
+    This means our products won't look the same as those made with commercial
+    flour. We aren't chasing uniformity or the "perfect" loaf. We're focused on
+    baking food that is interesting, nourishing, and rooted in real ingredients.
   items:
     - title: Milled Just Before Baking
       description: >-
@@ -36,33 +34,32 @@ philosophy:
         designed for shelf life and uniformity at scale.
     - title: Whole Grain, Always
       description: >-
-        Baking with fresh-milled flour brings the whole grain back into the
-        mix, so bread and pastries taste more like what they're made from.
+        Baking with fresh-milled flour brings the whole grain back into the mix,
+        so bread and pastries taste more like what they're made from.
     - title: Character Over Uniformity
       description: >-
         The same basic loaf can taste completely different depending on the
-        grain — a bread made with Redeemer Wheat tastes meaningfully
-        different from one made with Renan Wheat.
+        grain — a bread made with Redeemer Wheat tastes meaningfully different
+        from one made with Renan Wheat.
 workingWithGrain:
   title: Working with the grain, not against it
   body: >-
-    We trial the grains our trusted farmers grow each harvest to understand
-    how they perform in baking. Even within a single variety, differences
-    show up from farm to farm and harvest to harvest. Sometimes your
-    favorite wheat bakes exactly the way you expect, and sometimes it shows
-    up a little different than last time. That's just how real grain works.
+    We trial the grains our trusted farmers grow each harvest to understand how
+    they perform in baking. Even within a single variety, differences show up
+    from farm to farm and harvest to harvest. Sometimes your favorite wheat
+    bakes exactly the way you expect, and sometimes it shows up a little
+    different than last time. That's just how real grain works.
 
 
     Our bakery is focused on naturally leavened breads alongside a rotating
-    selection of rustic pastries. We work with different grains,
-    ingredients, and techniques, so offerings change regularly. Every
-    bread you eat in the restaurant started as a grain.
+    selection of rustic pastries. We work with different grains, ingredients,
+    and techniques, so offerings change regularly. Every bread you eat in the
+    restaurant started as a grain.
 
 
-    The flour we bake with is the same flour you'll find on our shelves. If
-    you don't see something you want, ask us and we'll mill it for you.
-    We'll gladly tell you how it behaves and what we might recommend using
-    it for.
+    The flour we bake with is the same flour you'll find on our shelves. If you
+    don't see something you want, ask us and we'll mill it for you. We'll gladly
+    tell you how it behaves and what we might recommend using it for.
 grains:
   - category: Hard Red Wheat
     varieties:
@@ -72,6 +69,9 @@ grains:
       - name: Redeemer
         farm: Small Valley Milling
         location: Halifax, PA
+      - name: Rouge de Bourdeaux
+        farm: Hudson Valley Hops & Grains
+        location: Ancram, NY
   - category: Soft White Wheat
     varieties:
       - name: Frederick
@@ -87,6 +87,9 @@ grains:
       - name: Oberkulmer, Zollernkorn & Frankenkorn Blend
         farm: Seneca Grain & Bean
         location: Penn Yan, NY
+      - name: Maverick Spelt
+        farm: Small Valley Milling
+        location: Halifax, PA
   - category: Oats
     varieties:
       - name: Gehl
@@ -96,26 +99,31 @@ grains:
     varieties:
       - name: Black Rice
         farm: Great Joy Family Farm
-        location: Pine Plains, NY
-      - name: Akitakomachi Rice
-        farm: Great Joy Family Farm
-        location: Pine Plains, NY
+        location: Pine Bush, NY
 sampleMenu:
-  heading: Our offerings rotate with the harvest, but this should give you a sense of what we bake.
+  heading: >-
+    Our offerings rotate with the harvest, but this should give you a sense of
+    what we bake.
   categories:
     - name: Breads
       items:
-        - name: Sourdough Loaf
-          description: Slow-fermented, milled in-house daily
-        - name: Whole Grain Rye
-          description: Dense and hearty, made with our landrace rye
-        - name: Spelt Miche
-          description: Ancient grain blend, naturally leavened
-    - name: Pastries
+        - name: Sourdough Batard
+          description: Seneca Renan Wheat
+        - name: Deli Rye Sourdough Loaf
+          description: Seneca Rye, Empire Syrups Sorghum, Burlap and Barrel Caraway
+        - name: Sourdough Focaccia
+          description: >-
+            Seneca Renan Wheat, Small Valley Milling Redeemer Wheat, Georgia
+            Olive Oil 
+    - name: Treats
       items:
-        - name: Morning Croissant
-          description: Butter-laminated, baked fresh each morning
-        - name: Seasonal Fruit Danish
-          description: Rotating fruit filling based on what's in season
-        - name: Rye Chocolate Cookie
-          description: Fresh-milled rye, dark chocolate
+        - name: Glazed Donut
+          description: Small Valley Milling Redeemer Wheat
+        - name: Savory Scone
+          description: >-
+            Seneca Frederick Wheat, Ronnybrook Cream, Harvest Moon Cheese,
+            Titusville Caramelized Onions
+        - name: Spelt Cacao Biscotti
+          description: Seneca Spelt, Third Bean Cacao Nibs
+        - name: Black Rice Cookie
+          description: Great Joy Family Farm Black Rice
