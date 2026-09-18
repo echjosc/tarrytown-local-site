@@ -6,34 +6,35 @@ seoDescription: >-
 hero:
   eyebrow: Restaurant
   headline: Dine-in, or take something good to go.
-  description: ''
+  style: split
 intro: >-
   Our kitchen starts with the same ingredients we sell in the grocery: local
-  produce, fresh-milled grains, grass fed and pasture-raised meats and
-  dairy, intentional pantry goods, and whatever showed up from farms we
-  know and trust.
+  produce, fresh-milled grains, grass fed and pasture-raised meats and dairy,
+  intentional pantry goods, and whatever showed up from farms we know and trust.
 
 
-  That means the menu changes, because the food is fresh, seasonal, and
-  coming from real farms. Tomatoes make an appearance when they can. Greens
-  arrive at the mercy of the cold and the heat.
+  That means the menu changes, because the food is fresh, seasonal, and coming
+  from real farms. Tomatoes make an appearance when they can. Greens arrive at
+  the mercy of the cold and the heat.
 
 
   We cook from there.
 
 
-  Breakfast, lunch, sandwiches, soups, salads, some small plates. Whatever
-  the day, and our ingredients, are asking for.
+  Breakfast, lunch, sandwiches, soups, salads, some small plates. Whatever the
+  day, and our ingredients, are asking for.
 hours:
   - days: Wednesday – Sunday
-    hours: Breakfast & Lunch
+    hours: 9am - 3pm
 reservationUrl: '#'
 reservationText: Make a Reservation
 dinnerNote: >-
-  Dinner coming soon. Keep an eye out for evening events like wine dinners
-  and tasting menus.
+  Dinner coming soon. Keep an eye out for evening events like wine dinners and
+  tasting menus.
 sampleMenu:
-  heading: Our menu changes often, but this should give you a sense of what we like to cook.
+  heading: >-
+    Our menu changes often, but this should give you a sense of what we like to
+    cook.
   categories:
     - name: Breakfast
       items:
@@ -62,11 +63,11 @@ sampleMenu:
 suggestion:
   heading: Tell Us What You Want To Eat
   body: >-
-    Is there something you would love to see on our menu? A favorite
-    sandwich? A soup you still think about? A dish your grandmother made?
-    A thing you ate once on vacation and have been chasing ever since?
+    Is there something you would love to see on our menu? A favorite sandwich? A
+    soup you still think about? A dish your grandmother made? A thing you ate
+    once on vacation and have been chasing ever since?
 
 
     Send us your request. We can't promise we'll make everything, but we do
-    promise to read it, think about it, and let you know if it ends up on
-    the menu.
+    promise to read it, think about it, and let you know if it ends up on the
+    menu.
