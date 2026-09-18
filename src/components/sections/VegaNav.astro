@@ -380,6 +380,20 @@ const {
 				background: var(--nav-charcoal);
 				transition: transform 0.2s ease, opacity 0.2s ease;
 			}
+
+			&[aria-expanded="true"] span {
+				&:nth-child(1) {
+					transform: translateY(6px) rotate(45deg);
+				}
+
+				&:nth-child(2) {
+					opacity: 0;
+				}
+
+				&:nth-child(3) {
+					transform: translateY(-6px) rotate(-45deg);
+				}
+			}
 		}
 
 		// Mobile
