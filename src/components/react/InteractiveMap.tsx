@@ -116,6 +116,7 @@ export type InteractiveMapProps = {
 
 const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapProps) => {
     const [activeMarker, setActiveMarker] = useState<number | null>(null);
+    const mapSectionRef = useRef<HTMLDivElement>(null);
 
     const averageLat = coordinates.reduce((sum, coord) => sum + coord.lat, 0) / coordinates.length;
     const averageLng = coordinates.reduce((sum, coord) => sum + coord.lng, 0) / coordinates.length;
@@ -128,91 +129,153 @@ const InteractiveMap = ({ coordinates = DEFAULT_COORDINATES }: InteractiveMapPro
         }
     }, [coordinates, activeMarker]);
 
+    const selectMarker = (index: number) => {
+        setActiveMarker((current) => {
+            const next = current === index ? null : index;
+            if (next !== null) {
+                requestAnimationFrame(() => {
+                    const el = mapSectionRef.current;
+                    if (!el) return;
+
+                    const NAV_HEIGHT = 84;
+                    const EXTRA_SCROLL = 0;
+
+                    const top = el.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT - EXTRA_SCROLL;
+
+                    window.scrollTo({ top, behavior: 'smooth' });
+                });
+            }
+            return next;
+        });
+    };
+
+    const partnerIndices = coordinates
+        .map((_, index) => index)
+        .filter((index) => coordinates[index].type !== 'home');
+
+    const goToOffset = (offset: number) => {
+        if (activeMarker === null) return;
+        const pos = partnerIndices.indexOf(activeMarker);
+        if (pos === -1) return;
+        const nextPos = (pos + offset + partnerIndices.length) % partnerIndices.length;
+        selectMarker(partnerIndices[nextPos]);
+    };
+
     return (
-        <div className={clsx(styles.wrapper, 'container')}>
-            <div className={styles.map}>
-                <MapContainer center={[averageLat, averageLng]} zoom={5} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <FlyToMarker coordinates={coordinates} activeMarker={activeMarker} />
-                    {coordinates.map((coord, index) => (
-                        <Marker
-                            key={index}
-                            position={[coord.lat, coord.lng]}
-                            icon={createTypedIcon(coord.type ?? 'farm', activeMarker === index)}
-                            eventHandlers={{ click: () => setActiveMarker(index) }}
+        <>
+            <div className={styles.wrapper} ref={mapSectionRef}>
+                <div className={clsx(styles.map, { [styles.mapFull]: activeMarker === null })}>
+                    <MapContainer center={[averageLat, averageLng]} zoom={5} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                    ))}
-                </MapContainer>
-            </div>
-            {activeMarker !== null && coordinates[activeMarker] ? (() => {
-                const coord = coordinates[activeMarker];
-                const type = coord.type ?? 'farm';
-                return (
-                    <div className={styles.detail} data-lenis-prevent style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}>
-                        <button className={styles.detailBack} onClick={() => setActiveMarker(null)}>
-                            <span aria-hidden="true">←</span> Back to all locations
-                        </button>
-                        {coord.image && (
-                            <img className={styles.detailImage} src={coord.image} alt={coord.title} />
-                        )}
-                        <span className={styles.detailType}>{TYPE_LABELS[type]}</span>
-                        <h2 className={styles.detailTitle}>{coord.title}</h2>
-                        <p className={styles.detailDescription}>{coord.description}</p>
-                        {coord.offerings && coord.offerings.length > 0 && (
-                            <ul className={styles.detailTags}>
-                                {coord.offerings.map((offering) => (
-                                    <li key={offering} className={styles.detailTag}>{offering}</li>
-                                ))}
-                            </ul>
-                        )}
-                        {coord.url && (
-                            <div className={styles.detailActions}>
-                                <a
-                                    className={styles.detailLink}
-                                    href={coord.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Visit Website →
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                );
-            })() : (
-                <div className={styles.list} data-lenis-prevent>
-                    {coordinates.map((coord, index) => {
-                        const type = coord.type ?? 'farm';
-                        return (
-                            <div
+                        <FlyToMarker coordinates={coordinates} activeMarker={activeMarker} />
+                        {coordinates.map((coord, index) => (
+                            <Marker
                                 key={index}
-                                className={clsx(styles.listItem, { [styles['listItem--active']]: activeMarker === index })}
-                                style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}
-                                onClick={() => setActiveMarker(index)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                        e.preventDefault();
-                                        setActiveMarker(index);
-                                    }
-                                }}
-                            >
-                                <div className={styles.listItemBody}>
-                                    <span className={styles.listItemType}>{TYPE_LABELS[type]}</span>
-                                    <strong className={styles.listItemTitle}>{coord.title}</strong>
-                                    <p className={styles.listItemDesc}>{coord.description}</p>
-                                </div>
-                                <span className={styles.listItemArrow} aria-hidden="true">→</span>
+                                position={[coord.lat, coord.lng]}
+                                icon={createTypedIcon(coord.type ?? 'farm', activeMarker === index)}
+                                zIndexOffset={activeMarker === index ? 1000 : 0}
+                                eventHandlers={{ click: () => selectMarker(index) }}
+                            />
+                        ))}
+                    </MapContainer>
+                </div>
+                {activeMarker !== null && coordinates[activeMarker] ? (() => {
+                    const coord = coordinates[activeMarker];
+                    const type = coord.type ?? 'farm';
+                    const isPartner = partnerIndices.indexOf(activeMarker) !== -1;
+                    return (
+                        <div className={styles.detail} data-lenis-prevent style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}>
+                            <div className={styles.detailNav}>
+                                {isPartner && partnerIndices.length > 1 && (
+                                    <button className={styles.detailNavBtn} onClick={() => goToOffset(-1)} aria-label="Previous producer">
+                                        <span aria-hidden="true">‹</span> Prev
+                                    </button>
+                                )}
+                                <button className={styles.detailBack} onClick={() => setActiveMarker(null)}>
+                                    <span aria-hidden="true">✕</span> Clear selection
+                                </button>
+                                {isPartner && partnerIndices.length > 1 && (
+                                    <button className={styles.detailNavBtn} onClick={() => goToOffset(1)} aria-label="Next producer">
+                                        Next <span aria-hidden="true">›</span>
+                                    </button>
+                                )}
                             </div>
-                        );
-                    })}
+                            {coord.image && (
+                                <img className={styles.detailImage} src={coord.image} alt={coord.title} />
+                            )}
+                            <span className={styles.detailType}>{TYPE_LABELS[type]}</span>
+                            <h2 className={styles.detailTitle}>{coord.title}</h2>
+                            <p className={styles.detailDescription}>{coord.description}</p>
+                            {coord.offerings && coord.offerings.length > 0 && (
+                                <ul className={styles.detailTags}>
+                                    {coord.offerings.map((offering) => (
+                                        <li key={offering} className={styles.detailTag}>{offering}</li>
+                                    ))}
+                                </ul>
+                            )}
+                            {coord.url && (
+                                <div className={styles.detailActions}>
+                                    <a
+                                        className={styles.detailLink}
+                                        href={coord.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Visit Website →
+                                    </a>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })() : null}
+            </div>
+
+            {partnerIndices.length > 0 && (
+                <div className={clsx(styles.partnersSection, 'container')}>
+                    <h2 className={styles.gridHeading}>Our Farm &amp; Producer Partners</h2>
+                    <div className={styles.grid}>
+                        {partnerIndices.map((index) => {
+                            const coord = coordinates[index];
+                            const type = coord.type ?? 'farm';
+                            const isActive = activeMarker === index;
+                            return (
+                                <div
+                                    key={index}
+                                    className={clsx(styles.card, { [styles['card--active']]: isActive })}
+                                    style={{ '--item-color': TYPE_COLORS[type] } as CSSProperties}
+                                    onClick={() => selectMarker(index)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            selectMarker(index);
+                                        }
+                                    }}
+                                >
+                                    <span className={styles.cardType}>{TYPE_LABELS[type]}</span>
+                                    <h3 className={styles.cardTitle}>{coord.title}</h3>
+                                    {coord.description && <p className={styles.cardDescription}>{coord.description}</p>}
+                                    {coord.offerings && coord.offerings.filter(Boolean).length > 0 && (
+                                        <div className={styles.cardTags}>
+                                            {coord.offerings.filter(Boolean).map((offering) => (
+                                                <span key={offering} className={styles.cardTag}>{offering}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <span className={styles.cardHint}>
+                                        {isActive ? '✓ Viewing on map' : 'Click to highlight on map →'}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

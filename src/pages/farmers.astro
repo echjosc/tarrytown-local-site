@@ -7,8 +7,6 @@ import keystaticConfig from '../../keystatic.config';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const farmersPage = await reader.singletons.farmersPage.read();
-
-const farmPartners = (farmersPage?.locations ?? []).filter((loc) => loc.type !== 'home');
 ---
 
 <Base
@@ -21,7 +19,7 @@ const farmPartners = (farmersPage?.locations ?? []).filter((loc) => loc.type !==
 		subtitle={farmersPage?.heroSubtitle || undefined}
 	/>
 
-	<div class="container" data-animate="fade-up">
+	<div class="map-section" data-animate="fade-up">
 		<InteractiveMap
 			client:only="react"
 			coordinates={farmersPage?.locations?.length
@@ -39,55 +37,10 @@ const farmPartners = (farmersPage?.locations ?? []).filter((loc) => loc.type !==
 			}
 		/>
 	</div>
-
-	{farmPartners.length > 0 && (
-		<div class="container farm-list">
-			<h2 class="farm-list__heading">Our Farm & Producer Partners</h2>
-			<ul class="farm-list__grid">
-				{farmPartners.map((loc) => (
-					<li class="farm-list__item">
-						<h3>{loc.title}</h3>
-						{loc.description && <p>{loc.description}</p>}
-						{loc.offerings?.filter(Boolean).length ? (
-							<p class="farm-list__offerings">
-								{loc.offerings.filter(Boolean).join(', ')}
-							</p>
-						) : null}
-					</li>
-				))}
-			</ul>
-		</div>
-	)}
 </Base>
 
 <style>
-	.container {
-		padding-top: var(--space-20);
+	.map-section {
 		padding-bottom: var(--space-20);
-	}
-
-	.farm-list {
-		padding-top: 0;
-	}
-
-	.farm-list__heading {
-		margin-bottom: var(--space-6);
-	}
-
-	.farm-list__grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-		gap: var(--space-6);
-		list-style: none;
-		padding: 0;
-	}
-
-	.farm-list__item h3 {
-		margin-bottom: var(--space-2);
-	}
-
-	.farm-list__offerings {
-		color: var(--color-text-muted);
-		font-size: var(--font-size-sm);
 	}
 </style>
