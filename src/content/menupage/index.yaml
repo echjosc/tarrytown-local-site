@@ -14,25 +14,7 @@ restaurantMenu:
     value: []
 bakeryMenu:
   heading: Bakery Menu
-  note: >-
-    Baked fresh every morning with our own milled grains — once it's gone for
-    the day, it's gone.
+  note: Baked fresh every morning with house-milled grains.
   display:
     discriminant: list
-    value:
-      - name: Breads
-        items:
-          - name: Sourdough Loaf
-            description: Slow-fermented, milled in-house daily
-            price: $8
-          - name: Whole Grain Rye
-            description: Dense and hearty, made with ancient grains
-            price: $9
-      - name: Pastries
-        items:
-          - name: Morning Croissant
-            description: Butter-laminated, baked fresh each morning
-            price: $5
-          - name: Seasonal Fruit Danish
-            description: Rotating fruit filling based on what's in season
-            price: $6
+    value: []
