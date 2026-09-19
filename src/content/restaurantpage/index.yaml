@@ -7,6 +7,7 @@ hero:
   eyebrow: Restaurant
   headline: Dine-in, or take something good to go.
   style: split
+  image: '@assets/images/restaurant/hero/hero/image.jpeg'
 intro: >-
   Our kitchen starts with the same ingredients we sell in the grocery: local
   produce, fresh-milled grains, grass fed and pasture-raised meats and dairy,
