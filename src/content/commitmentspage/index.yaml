@@ -6,17 +6,18 @@ hero:
   eyebrow: Our Story
   headline: Rooted in {real food}. Built for {our community}.
   description: >-
-    Tarrytown Local is a neighborhood restaurant and small grocery store
-    focused on local, healthful food. We use the same ingredients in the
-    kitchen that we sell on the shelves.
-  image: '@assets/images/our-story/hero/hero/image.png'
+    Tarrytown Local is a neighborhood restaurant and small grocery store focused
+    on local, healthful food. We use the same ingredients in the kitchen that we
+    sell on the shelves.
+  style: background
+  image: '@assets/images/our-story/hero/hero/image.jpeg'
 story:
   sectionTitle: Our Story
   tagline: Rooted in real food. Built for our community.
   mission: >-
     Tarrytown Local is dedicated to cultivating personal, planetary, and
-    community health through great ingredients. Our menu changes daily based
-    on seasonal availability from Hudson Valley farmers.
+    community health through great ingredients. Our menu changes daily based on
+    seasonal availability from Hudson Valley farmers.
   commitments:
     - title: Delicious, Always
       description: >-
@@ -65,52 +66,48 @@ faqs:
     answer: >-
       Tarrytown Local is a neighborhood restaurant and small grocery store
       focused on local, healthful food. We serve breakfast and lunch in our
-      dining room and sell the same ingredients in the grocery that we use
-      in our kitchen. We mill flour in house and bake bread fresh every day.
-      We try to make it easier (and more enjoyable) to eat well.
+      dining room and sell the same ingredients in the grocery that we use in
+      our kitchen. We mill flour in house and bake bread fresh every day. We try
+      to make it easier (and more enjoyable) to eat well.
   - question: Is this a restaurant or a grocery store?
-    answer: >-
-      Both! You can sit and eat, grab something to go, or stock up for the
-      week.
+    answer: Both! You can sit and eat, grab something to go, or stock up for the week.
   - question: What makes Tarrytown Local different from other eateries or markets?
     answer: >-
       We're obsessive about sourcing, ingredient quality, and agricultural
-      practices. We work directly with farmers and producers, prioritize
-      local and regenerative food systems, and design everything—from menus
-      to shelves—to support better eating without being preachy.
+      practices. We work directly with farmers and producers, prioritize local
+      and regenerative food systems, and design everything—from menus to
+      shelves—to support better eating without being preachy.
   - question: Is this a "health food" place?
     answer: >-
-      In a way, but probably not like other "health food" places. The food
-      is nourishing and nutrient dense, but that makes it even more
-      delicious, comforting, and grounded.
+      In a way, but probably not like other "health food" places. The food is
+      nourishing and nutrient dense, but that makes it even more delicious,
+      comforting, and grounded.
   - question: Is this a "farm-to-table" place?
     answer: >-
       That term means very little to us. In a way, all restaurants are
-      farm-to-table. We are 100% seasonally oriented and purchase directly
-      from local farmers.
+      farm-to-table. We are 100% seasonally oriented and purchase directly from
+      local farmers.
   - question: Do your menus change?
     answer: >-
-      Every day. We don't just cook with the seasons, we cook with whatever
-      is best on a given day. The kitchen staff get bored easily so we keep
-      them on their toes.
+      Every day. We don't just cook with the seasons, we cook with whatever is
+      best on a given day. The kitchen staff get bored easily so we keep them on
+      their toes.
   - question: Is everything local?
     answer: >-
-      Almost everything, and always intentionally chosen. When something
-      isn't local (like coffee or certain spices), it's because there's no
-      local option that meets our standards—and we're transparent about that
-      and ensure it's sourced from producers who care.
+      Almost everything, and always intentionally chosen. When something isn't
+      local (like coffee or certain spices), it's because there's no local
+      option that meets our standards—and we're transparent about that and
+      ensure it's sourced from producers who care.
   - question: Is everything organic?
     answer: >-
       Much of it is, but not all of it is certified organic. We focus on
-      sourcing from farmers who use responsible, transparent growing
-      practices and produce food we feel good feeding ourselves and our
-      families.
+      sourcing from farmers who use responsible, transparent growing practices
+      and produce food we feel good feeding ourselves and our families.
   - question: What's the deal with fresh-milled flour?
     answer: >-
-      Fresh stone-milled grain retains a whole lot more flavor, nutrition,
-      and character than shelf-stable industrial flour. It's better for you
-      and tastes better. <a href="/bakery">Learn more on our Bakery
-      page</a>.
+      Fresh stone-milled grain retains a whole lot more flavor, nutrition, and
+      character than shelf-stable industrial flour. It's better for you and
+      tastes better. <a href="/bakery">Learn more on our Bakery page</a>.
 newsletter:
   title: Stay in the Loop
   description: >-
