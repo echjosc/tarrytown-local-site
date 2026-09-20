@@ -53,3 +53,7 @@ test-results/
 # IDE specific files
 .vscode/
 .jetbrains/
+
+
+# AI specific files
+.claude/
