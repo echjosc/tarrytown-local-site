@@ -43,37 +43,26 @@ members:
     socials: []
   - name: Nikole
     role: Floor Manager
-    bio: >
+    bio: |
       Bio coming soon.
-    image: ''
     socials: []
   - name: Rick
     role: Chef de Partie
-    bio: >
+    bio: |
       Bio coming soon.
-    image: ''
     socials: []
   - name: Morgan
     role: Horticulturalist
-    bio: >
+    bio: |
       Bio coming soon.
-    image: ''
-    socials: []
-  - name: Daria
-    role: Marketing and Media
-    bio: >
-      Bio coming soon.
-    image: ''
     socials: []
   - name: TBD
     role: Market Associate
-    bio: >
+    bio: |
       This spot is open — we're hiring!
-    image: ''
     socials: []
   - name: TBD
     role: Market Associate
-    bio: >
+    bio: |
       This spot is open — we're hiring!
-    image: ''
     socials: []
