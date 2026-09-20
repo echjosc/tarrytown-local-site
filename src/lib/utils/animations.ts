@@ -12,16 +12,50 @@ const PRESETS: Record<string, Preset> = {
 export const prefersReducedMotion = () =>
 	window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export async function registerScrollAnimations() {
-	if (prefersReducedMotion()) return;
+function revealAll() {
+	document.querySelectorAll<HTMLElement>("[data-animate]").forEach((el) => {
+		el.style.opacity = "1";
+		el.style.transform = "none";
+	});
+}
 
-	const gsap = (await import("gsap")).default;
-	const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-	gsap.registerPlugin(ScrollTrigger);
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+	return Promise.race([
+		promise,
+		new Promise<T>((_, reject) => setTimeout(() => reject(new Error("timed out")), ms)),
+	]);
+}
+
+declare global {
+	interface Window {
+		__scrollAnimBooted?: boolean;
+	}
+}
+
+export async function registerScrollAnimations() {
+	// Marks that this script actually ran, regardless of what happens next —
+	// lets the inline head-script fallback tell "still animating" apart from
+	// "this never executed at all" (e.g. blocked entirely by an extension).
+	window.__scrollAnimBooted = true;
+
+	if (prefersReducedMotion()) return;
 
 	const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-animate]"));
 	if (!elements.length) return;
 
+	try {
+		const gsap = (await withTimeout(import("gsap"), 5000)).default;
+		const { ScrollTrigger } = await withTimeout(import("gsap/ScrollTrigger"), 5000);
+		gsap.registerPlugin(ScrollTrigger);
+
+		runAnimations(gsap, ScrollTrigger, elements);
+	} catch (err) {
+		console.error("registerScrollAnimations failed, revealing content", err);
+		revealAll();
+	}
+}
+
+function runAnimations(gsap: typeof import("gsap").default, ScrollTrigger: typeof import("gsap/ScrollTrigger").ScrollTrigger, elements: HTMLElement[]) {
 	const scaleKeys = new Set(["scale", "scaleX", "scaleY"]);
 	const staggerCounts = new Map<string, number>();
 
