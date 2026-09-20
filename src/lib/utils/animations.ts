@@ -29,6 +29,8 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 declare global {
 	interface Window {
 		__scrollAnimBooted?: boolean;
+		// TEMP DEBUG — remove alongside the diagnostics overlay in Base.astro.
+		__scrollAnimStatus?: { result: string; error?: string };
 	}
 }
 
@@ -38,10 +40,16 @@ export async function registerScrollAnimations() {
 	// "this never executed at all" (e.g. blocked entirely by an extension).
 	window.__scrollAnimBooted = true;
 
-	if (prefersReducedMotion()) return;
+	if (prefersReducedMotion()) {
+		window.__scrollAnimStatus = { result: "reduced-motion" };
+		return;
+	}
 
 	const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-animate]"));
-	if (!elements.length) return;
+	if (!elements.length) {
+		window.__scrollAnimStatus = { result: "no-elements" };
+		return;
+	}
 
 	try {
 		const gsap = (await withTimeout(import("gsap"), 5000)).default;
@@ -49,8 +57,10 @@ export async function registerScrollAnimations() {
 		gsap.registerPlugin(ScrollTrigger);
 
 		runAnimations(gsap, ScrollTrigger, elements);
+		window.__scrollAnimStatus = { result: "ok" };
 	} catch (err) {
 		console.error("registerScrollAnimations failed, revealing content", err);
+		window.__scrollAnimStatus = { result: "gsap-failed", error: String(err) };
 		revealAll();
 	}
 }

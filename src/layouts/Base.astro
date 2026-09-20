@@ -153,6 +153,63 @@ const footerWhatWeDoLinks = [
 			}
 		}, 5000);
 	</script>
+
+	<!-- TEMP DEBUG — Safari blank-page investigation. Remove before merging to main. -->
+	<script is:inline>
+		(function () {
+			var box = document.createElement('div');
+			box.id = '__debug-overlay';
+			box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:2147483647;' +
+				'background:rgba(0,0,0,0.92);color:#7CFC7C;font:11px/1.4 -apple-system,monospace;' +
+				'padding:8px 10px;max-height:45vh;overflow:auto;white-space:pre-wrap;';
+			box.textContent = 'debug: booting…';
+
+			var errors = [];
+			function logError(line) {
+				errors.push(line);
+				render();
+			}
+			window.addEventListener('error', function (e) {
+				logError('ERROR: ' + e.message + ' @ ' + e.filename + ':' + e.lineno + ':' + e.colno);
+			});
+			window.addEventListener('unhandledrejection', function (e) {
+				var reason = e.reason && e.reason.message ? e.reason.message : String(e.reason);
+				logError('REJECTION: ' + reason);
+			});
+
+			function render() {
+				var lines = [
+					'ua: ' + navigator.userAgent,
+					'reduced-motion: ' + window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+					'html.class: ' + document.documentElement.className,
+					'scrollAnimBooted: ' + !!window.__scrollAnimBooted,
+					'scrollAnimStatus: ' + JSON.stringify(window.__scrollAnimStatus || null),
+					't+' + Math.round(performance.now()) + 'ms',
+				];
+				if (errors.length) {
+					lines.push('--- errors ---');
+					lines = lines.concat(errors);
+				}
+				box.textContent = lines.join('\n');
+			}
+
+			function mount() {
+				document.body.appendChild(box);
+				render();
+				var interval = setInterval(render, 500);
+				// Stop polling once things have settled (covers our 5s reveal
+				// fallback + the 5s GSAP import timeout) but leave the last
+				// render on screen so it's still there whenever they screenshot.
+				setTimeout(function () {
+					clearInterval(interval);
+					render();
+				}, 12000);
+			}
+
+			if (document.body) mount();
+			else document.addEventListener('DOMContentLoaded', mount);
+		})();
+	</script>
 	</head>
 	<body>
 		<VegaNav
