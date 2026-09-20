@@ -6,9 +6,11 @@ hero:
   eyebrow: Our Team
   headline: The People Behind {Every Plate}.
   description: >-
-    Tarrytown Local is run by humans who are (maybe) a little too obsessed
-    with food systems, sourcing, and flavor. Here's who you'll meet when you
-    walk through the door.
+    Tarrytown Local is run by humans who are (maybe) a little too obsessed with
+    food systems, sourcing, and flavor. Here's who you'll meet when you walk
+    through the door.
+  style: background
+  image: '@assets/images/our-team/hero/hero/image.jpeg'
 team:
   sectionTitle: Meet the Team
   subtitle: >-
