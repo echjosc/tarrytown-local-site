@@ -36,6 +36,10 @@ const {
 const reader = createReader(process.cwd(), keystaticConfig);
 const businessInfo = await reader.singletons.businessInfo.read();
 
+// TEMP DEBUG — Safari blank-page investigation. Remove alongside the overlay.
+const debugBuildStamp = new Date().toISOString();
+const debugCommitRef = process.env.COMMIT_REF?.slice(0, 7) || 'local';
+
 const logoSrc = resolveImage(businessInfo?.logo);
 const logoAlt = businessInfo?.name || 'Tarrytown Local';
 
@@ -155,7 +159,7 @@ const footerWhatWeDoLinks = [
 	</script>
 
 	<!-- TEMP DEBUG — Safari blank-page investigation. Remove before merging to main. -->
-	<script is:inline>
+	<script is:inline define:vars={{ debugBuildStamp, debugCommitRef }}>
 		(function () {
 			var box = document.createElement('div');
 			box.id = '__debug-overlay';
@@ -177,15 +181,24 @@ const footerWhatWeDoLinks = [
 				logError('REJECTION: ' + reason);
 			});
 
+			var inAppBrowser = /FBAN|FBAV|Instagram|Line\/|MicroMessenger|GSA\/|; ?wv\)/i.test(navigator.userAgent);
+
 			function render() {
+				var animEls = document.querySelectorAll('[data-animate]');
+				var firstStyle = animEls.length ? getComputedStyle(animEls[0]) : null;
+
 				var lines = [
+					'build: ' + debugCommitRef + ' @ ' + debugBuildStamp,
 					'ua: ' + navigator.userAgent,
+					'possible in-app browser: ' + inAppBrowser,
 					'reduced-motion: ' + window.matchMedia('(prefers-reduced-motion: reduce)').matches,
 					'html.class: ' + document.documentElement.className,
 					'scrollAnimBooted: ' + !!window.__scrollAnimBooted,
 					'scrollAnimStatus: ' + JSON.stringify(window.__scrollAnimStatus || null),
+					'[data-animate] count: ' + animEls.length,
+					firstStyle ? 'first [data-animate]: opacity=' + firstStyle.opacity + ' transform=' + firstStyle.transform : null,
 					't+' + Math.round(performance.now()) + 'ms',
-				];
+				].filter(Boolean);
 				if (errors.length) {
 					lines.push('--- errors ---');
 					lines = lines.concat(errors);
