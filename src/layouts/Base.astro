@@ -9,7 +9,7 @@ import { Font } from 'astro:assets';
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import { resolveImage } from '@/utils/resolveImage';
-import { localBusiness } from '@/lib/schemas/schemas';
+import { localBusiness, parseOpeningHours } from '@/lib/schemas/schemas';
 
 interface Props {
 	title: string;
@@ -63,6 +63,8 @@ const businessSchema = localBusiness({
 	logo: new URL('/images/business/logo.png', siteUrl).href,
 	image: new URL('/images/business/logo.png', siteUrl).href,
 	sameAs: businessInfo?.socials?.map((s) => s.url) ?? [],
+	openingHours: parseOpeningHours(businessInfo?.hours ?? []),
+	hasMenu: new URL('/menu', siteUrl).href,
 });
 
 const navLinks = [

@@ -12,6 +12,7 @@
  *   - product()           → Product (ecommerce items)
  *   - event()             → Event (games, fundraisers, etc.)
  *   - person()            → Person (team members, coaches, etc.)
+ *   - menu()              → Menu (restaurant/bakery menus, for AI agents & search)
  */
 
 // ---------------------------------------------------------------------------
@@ -63,6 +64,55 @@ export interface LocalBusinessOptions {
     priceRange?: string // e.g. '$$'
     /** Social profile URLs */
     sameAs?: string[]
+    /** Absolute URL to a menu page — schema.org allows a plain URL here */
+    hasMenu?: string
+}
+
+const DAY_ABBREVIATIONS: Record<string, string> = {
+    sunday: 'Su',
+    monday: 'Mo',
+    tuesday: 'Tu',
+    wednesday: 'We',
+    thursday: 'Th',
+    friday: 'Fr',
+    saturday: 'Sa',
+}
+
+function parseDayRange(days: string): string | undefined {
+    const parts = days.split(/[-–—]/).map((d) => DAY_ABBREVIATIONS[d.trim().toLowerCase()])
+    if (parts.some((d) => !d)) return undefined
+    return parts.join('-')
+}
+
+function parseTimeRange(hours: string): string | undefined {
+    const toIsoTime = (time: string): string | undefined => {
+        const match = time.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i)
+        if (!match) return undefined
+        let [, hour, minute = '00', meridiem] = match
+        let h = parseInt(hour, 10)
+        if (meridiem.toLowerCase() === 'pm' && h !== 12) h += 12
+        if (meridiem.toLowerCase() === 'am' && h === 12) h = 0
+        return `${String(h).padStart(2, '0')}:${minute}`
+    }
+
+    const parts = hours.split(/[-–—]/).map(toIsoTime)
+    if (parts.some((t) => !t)) return undefined
+    return parts.join('-')
+}
+
+/**
+ * Converts human-readable hours (e.g. "Wednesday - Sunday" / "8am - 8pm")
+ * into the schema.org openingHours format (e.g. "We-Su 08:00-20:00").
+ * Rows that don't parse cleanly are skipped rather than emitting bad data.
+ */
+export function parseOpeningHours(hours: readonly { days: string; hours: string }[]): string[] {
+    return hours
+        .map((row) => {
+            const days = parseDayRange(row.days)
+            const time = parseTimeRange(row.hours)
+            return days && time ? `${days} ${time}` : undefined
+        })
+        .filter((row): row is string => Boolean(row))
 }
 
 export function localBusiness(opts: LocalBusinessOptions) {
@@ -83,11 +133,12 @@ export function localBusiness(opts: LocalBusinessOptions) {
     if (opts.description) base.description = opts.description
     if (opts.telephone) base.telephone = opts.telephone
     if (opts.email) base.email = opts.email
-    if (opts.openingHours) base.openingHours = opts.openingHours
+    if (opts.openingHours?.length) base.openingHours = opts.openingHours
     if (opts.logo) base.logo = { '@type': 'ImageObject', url: opts.logo }
     if (opts.image) base.image = opts.image
     if (opts.priceRange) base.priceRange = opts.priceRange
     if (opts.sameAs) base.sameAs = opts.sameAs
+    if (opts.hasMenu) base.hasMenu = opts.hasMenu
 
     if (opts.geo) {
         base.geo = {
@@ -198,7 +249,7 @@ export interface FAQItem {
     answer: string
 }
 
-export function faqPage(items: FAQItem[]) {
+export function faqPage(items: readonly FAQItem[]) {
     return {
         '@type': 'FAQPage',
         mainEntity: items.map((item) => ({
@@ -371,6 +422,62 @@ export function person(opts: PersonOptions) {
     if (opts.jobTitle) base.jobTitle = opts.jobTitle
     if (opts.email) base.email = opts.email
     if (opts.sameAs) base.sameAs = opts.sameAs
+
+    return base
+}
+
+// ---------------------------------------------------------------------------
+// Menu
+// Use for: restaurant/bakery menus — lets AI agents answer "what's on the
+// menu" and "how much is X" without crawling the rendered page
+// ---------------------------------------------------------------------------
+
+export interface MenuItemOptions {
+    name: string
+    description?: string
+    /** e.g. '12' or '12.50' — left as a display string since menus often use '$12' or 'MP' */
+    price?: string
+}
+
+export interface MenuSectionOptions {
+    name: string
+    description?: string
+    items: MenuItemOptions[]
+}
+
+export interface MenuOptions {
+    name: string
+    description?: string
+    sections: MenuSectionOptions[]
+}
+
+export function menu(opts: MenuOptions) {
+    const base: Record<string, unknown> = {
+        '@type': 'Menu',
+        name: opts.name,
+        hasMenuSection: opts.sections.map((section) => ({
+            '@type': 'MenuSection',
+            name: section.name,
+            ...(section.description && { description: section.description }),
+            hasMenuItem: section.items.map((item) => {
+                const menuItem: Record<string, unknown> = {
+                    '@type': 'MenuItem',
+                    name: item.name,
+                }
+                if (item.description) menuItem.description = item.description
+                if (item.price) {
+                    menuItem.offers = {
+                        '@type': 'Offer',
+                        price: item.price.replace(/^\$/, ''),
+                        priceCurrency: 'USD',
+                    }
+                }
+                return menuItem
+            }),
+        })),
+    }
+
+    if (opts.description) base.description = opts.description
 
     return base
 }

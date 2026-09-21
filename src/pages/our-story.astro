@@ -8,10 +8,14 @@ import VegaSourcingStandards from "@/components/sections/VegaSourcingStandards.a
 import VegaFAQ from "@/components/sections/VegaFAQ.astro";
 import VegaNewsletterSignup from "@/components/sections/VegaNewsletterSignup.astro";
 import DiamondRule from "@/components/ui/DiamondRule.astro";
+import Schema from "@/components/seo/Schema.astro";
+import { faqPage } from "@/lib/schemas/schemas";
 import { resolveImage } from '@/utils/resolveImage';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const commitmentsPage = await reader.singletons.commitmentsPage.read();
+
+const faqs = commitmentsPage?.faqs ?? [];
 ---
 
 <Base
@@ -66,11 +70,13 @@ const commitmentsPage = await reader.singletons.commitmentsPage.read();
 	<!-- FAQ -->
 	<VegaFAQ
 		sectionTitle="Frequently Asked Questions"
-		items={(commitmentsPage?.faqs ?? []).map((item) => ({
+		items={faqs.map((item) => ({
 			question: item.question,
 			answer: item.answer,
 		}))}
 	/>
+
+	{faqs.length > 0 && <Schema item={faqPage(faqs)} />}
 
 	<!-- Newsletter -->
 	<VegaNewsletterSignup
