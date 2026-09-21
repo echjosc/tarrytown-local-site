@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/cap-image-dimensions.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -38,6 +38,7 @@
     "@types/leaflet": "^1.9.21",
     "@types/node": "^25.9.1",
     "sass-embedded": "^1.100.0",
+    "sharp": "^0.35.4",
     "typescript": "^6.0.3"
   }
 }

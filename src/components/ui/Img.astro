@@ -15,8 +15,12 @@ type Props = {
     format?: 'avif' | 'jpg' | 'png' | 'webp';
     /** 1-100, or a preset. Defaults to the image service's own default if omitted. */
     quality?: number | 'low' | 'mid' | 'high' | 'max';
-    /** Pixel-density variants for the srcset (e.g. [1, 2, 3] for 1x/2x/3x). The on-screen CSS size is unaffected — this just lets high-DPI screens (basically every phone) load a sharper source instead of an upscaled 1x image. Defaults to [1, 2, 3] whenever `width` is set; pass `false` to opt out. */
+    /** Pixel-density variants for the srcset (e.g. [1, 2, 3] for 1x/2x/3x). The on-screen CSS size is unaffected — this just lets high-DPI screens (basically every phone) load a sharper source instead of an upscaled 1x image. Defaults to [1, 2] whenever `width` is set; pass `false` to opt out. */
     densities?: (number | `${number}x`)[] | false;
+    /** How the source is resized to fit the requested width/height box. Defaults to 'cover' whenever both width and height are set, matching the object-fit: cover this component renders with. */
+    fit?: 'contain' | 'cover' | 'fill' | 'inside' | 'outside' | 'scale-down';
+    /** Generates a width-based srcset (instead of the default density-based 1x/2x) for images whose *displayed* size varies a lot across viewports, e.g. a full-bleed hero. 'full-width': displayed at ~100vw at every breakpoint. 'constrained': scales down below `width` but never exceeds it. Omit for images with a roughly fixed display size (logos, avatars, framed photos), where density-based srcset is enough. */
+    layout?: 'full-width' | 'constrained';
 
 };
 
@@ -32,14 +36,17 @@ const {
     format,
     quality,
     densities: densitiesProp,
+    fit: fitProp,
+    layout,
 } = Astro.props;
 
-const densities = densitiesProp === false ? undefined : densitiesProp ?? (width ? [1, 2, 3] : undefined);
+const densities = layout ? undefined : densitiesProp === false ? undefined : densitiesProp ?? (width ? [1, 2] : undefined);
+const fit = fitProp ?? (width && height ? 'cover' : undefined);
 ---
 
 <div class:list={["ui-image-container", className].filter(Boolean)}>
     {typeof src === 'object' && src !== null ? (
-        <Image src={src} alt={alt} width={width} height={height} format={format} quality={quality} densities={densities} class:list={["ui-image"]} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
+        <Image src={src} alt={alt} width={width} height={height} format={format} quality={quality} densities={densities} fit={fit} layout={layout} class:list={["ui-image"]} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
     ) : (
         <img src={src} alt={alt} width={width} height={height} class={"ui-image"} loading={loading} fetchpriority={fetchpriority} style={`object-position: ${position};`} />
     )}
