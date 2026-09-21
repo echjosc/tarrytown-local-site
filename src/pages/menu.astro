@@ -2,6 +2,8 @@
 import Base from "@/layouts/Base.astro";
 import PageHero from "@/components/ui/PageHero.astro";
 import VegaMenu from "@/components/sections/VegaMenu.astro";
+import Schema from "@/components/seo/Schema.astro";
+import { menu as menuSchema } from "@/lib/schemas/schemas";
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 
@@ -31,6 +33,27 @@ function buildMenuSection(
 	}));
 	return { heading, note, mode: 'list' as const, categories };
 }
+
+const menuSections = [
+	buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu'),
+	buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu'),
+];
+
+// Only list-mode sections have structured items — file-mode sections just
+// link out to a PDF/image and have nothing for a Menu schema to describe.
+const menuSchemaSections = menuSections
+	.filter((section) => section.mode === 'list')
+	.flatMap((section) => section.categories ?? [])
+	.filter((category) => category.items.length > 0)
+	.map((category) => ({
+		name: category.name,
+		items: category.items,
+	}));
+
+const menuJsonLd = menuSchema({
+	name: 'Tarrytown Local Menu',
+	sections: menuSchemaSections,
+});
 ---
 
 <Base
@@ -45,10 +68,7 @@ function buildMenuSection(
 	/>
 
 	<!-- Menu -->
-	<VegaMenu
-		sections={[
-			buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu'),
-			buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu'),
-		]}
-	/>
+	<VegaMenu sections={menuSections} />
+
+	{menuSchemaSections.length > 0 && <Schema item={menuJsonLd} />}
 </Base>

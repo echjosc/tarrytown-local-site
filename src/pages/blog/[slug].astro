@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import VegaInteriorBanner from '@/components/sections/VegaInteriorBanner.astro';
+import Schema from '@/components/seo/Schema.astro';
+import { article } from '@/lib/schemas/schemas';
 import { resolveImage } from '@/utils/resolveImage';
 
 export async function getStaticPaths() {
@@ -25,6 +27,25 @@ function formatDate(dateStr?: string) {
 }
 
 const postDate = post.data.date ? new Date(post.data.date).toISOString() : undefined;
+
+const siteUrl = Astro.site ?? new URL('https://tarrytownlocal.com');
+const resolvedImage = resolveImage(post.data.featuredImage);
+const imageSrc = resolvedImage?.src ?? post.data.featuredImage;
+
+const articleJsonLd = postDate
+	? article({
+			headline: post.data.title,
+			description: post.data.excerpt || post.data.title,
+			url: new URL(`/blog/${post.id}`, siteUrl).href,
+			image: imageSrc
+				? new URL(imageSrc, siteUrl).href
+				: new URL('/images/og-default.jpg', siteUrl).href,
+			datePublished: postDate,
+			authorName: post.data.author || 'Tarrytown Local',
+			publisherName: 'Tarrytown Local',
+			publisherLogo: new URL('/images/business/logo.png', siteUrl).href,
+		})
+	: undefined;
 ---
 
 <Base
@@ -33,6 +54,7 @@ const postDate = post.data.date ? new Date(post.data.date).toISOString() : undef
 	ogType="article"
 	publishedTime={postDate}
 >
+	{articleJsonLd && <Schema item={articleJsonLd} />}
 	<article class="blog-post">
 		<a href="/blog" class="blog-post__back container-inline">&larr; Back to The Good Dirt</a>
 
