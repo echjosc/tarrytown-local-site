@@ -28,7 +28,7 @@ const titleLines = title.split('\n');
 <section class:list={['vega-main-hero', `vega-main-hero--${variant}`, variant === 'background' && `vega-main-hero--${size}`]}>
 	{variant === 'background' && (
 		<div class="hero-bg">
-			<Img src={imageSrc || placeholderImg} alt="" class="hero-bg-img" width={1920} height={1080} loading="eager" fetchpriority="high" />
+			<Img src={imageSrc || placeholderImg} alt="" class="hero-bg-img" width={1600} height={900} format="webp" layout="full-width" loading="eager" fetchpriority="high" />
 			<div class="hero-bg-overlay" />
 		</div>
 	)}
@@ -88,7 +88,7 @@ const titleLines = title.split('\n');
 		{variant === 'split' && (
 			<div class="image-content">
 				<div class="image-frame">
-					<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} loading="eager" fetchpriority="high" />
+					<Img src={imageSrc || placeholderImg} alt="Vega Main Hero Image" class="image-img" width={800} height={900} format="webp" loading="eager" fetchpriority="high" />
 				</div>
 			</div>
 		)}
@@ -273,7 +273,7 @@ const titleLines = title.split('\n');
 		&.vega-main-hero--background {
 			position: relative;
 			width: 100%;
-			min-height: 80vh;
+			min-height: 60vh;
 			padding: 0;
 			border-bottom: none;
 			display: flex;
@@ -357,7 +357,7 @@ const titleLines = title.split('\n');
 			}
 
 			@media (max-width: 640px) {
-				min-height: 70vh;
+				min-height: 55vh;
 
 				.container {
 					padding-block: 3rem 2.5rem;

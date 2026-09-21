@@ -8,9 +8,10 @@ type Props = {
 	logoAlt?: string;
 	size?: 'compact' | 'large';
 	showDivider?: boolean;
+	loading?: 'lazy' | 'eager';
 };
 
-const { logoSrc, logoAlt = 'Tarrytown Local', size = 'compact', showDivider = false } = Astro.props;
+const { logoSrc, logoAlt = 'Tarrytown Local', size = 'compact', showDivider = false, loading = 'lazy' } = Astro.props;
 
 const leafIcon = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21c-4-1-7-5-7-10 3 0 6 1 8 3 1 2 1 5-1 7Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 21c1-5 4-9 9-11-1 5-4 9-9 11Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 21V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
 
@@ -20,7 +21,7 @@ const targetHeight = Math.round(targetWidth / aspectRatio);
 ---
 
 {logoSrc ? (
-	<Img src={logoSrc} alt={logoAlt} width={targetWidth} height={targetHeight} format="png" quality="max" class={`brandmark-image brandmark-image--${size}`} loading="eager" />
+	<Img src={logoSrc} alt={logoAlt} width={targetWidth} height={targetHeight} format="png" quality="high" class={`brandmark-image brandmark-image--${size}`} loading={loading} />
 ) : (
 	<div class:list={['brandmark', `brandmark--${size}`]}>
 		<span class="brandmark__leaf" set:html={leafIcon} />
