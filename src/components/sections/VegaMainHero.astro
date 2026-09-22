@@ -271,6 +271,12 @@ const titleLines = title.split('\n');
 
 		// ── Background variant: full-bleed image, text overlaid ──
 		&.vega-main-hero--background {
+			// Brick/maroon (--color-accent) reads too dark against photos —
+			// brighten it here only, so split-variant heroes on cream
+			// backgrounds keep the original brand brick color.
+			--hero-amber: #EF8B84;
+			--hero-olive: #1C8A87;
+
 			position: relative;
 			width: 100%;
 			min-height: 60vh;
