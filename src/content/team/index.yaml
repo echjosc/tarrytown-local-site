@@ -41,25 +41,30 @@ members:
       flour production.
     image: '@assets/images/team/members/2/image.jpg'
     socials: []
-  - name: Nikole
-    role: Floor Manager
+  - name: Nikole Rupple
+    role: Front of House Manager
     bio: |
       Bio coming soon.
     socials: []
-  - name: Rick
-    role: Chef de Partie
+  - name: Rick Krebs
+    role: Sous Chef
     bio: |
       Bio coming soon.
     socials: []
-  - name: Morgan
+  - name: Stephanie Wright
+    role: Front of House Associate
+    bio: >-
+      Ayurvedic health counselor, and culinary educator who believes that food
+      is one of the most meaningful ways we care for ourselves and each other.
+      She loves cooking with seasonal, local ingredients and building
+      connections with the farmers, makers, and neighbors who make our food
+      community so special. She’s excited to be part of the Tarrytown Local
+      family and to share her love of good food with the community.
+    socials: []
+  - name: Morgan Larkin
     role: Design & Media
     bio: |
       Bio coming soon.
-    socials: []
-  - name: TBD
-    role: Market Associate
-    bio: |
-      This spot is open — we're hiring!
     socials: []
   - name: TBD
     role: Market Associate
