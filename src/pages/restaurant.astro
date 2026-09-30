@@ -10,7 +10,10 @@ import CalloutBox from "@/components/ui/CalloutBox.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 
 const reader = createReader(process.cwd(), keystaticConfig);
-const restaurantPage = await reader.singletons.restaurantPage.read();
+const [restaurantPage, businessInfo] = await Promise.all([
+	reader.singletons.restaurantPage.read(),
+	reader.singletons.businessInfo.read(),
+]);
 
 const introParagraphs = (restaurantPage?.intro || '').split('\n\n').filter(Boolean);
 ---
@@ -43,8 +46,8 @@ const introParagraphs = (restaurantPage?.intro || '').split('\n\n').filter(Boole
 						))}
 					</div>
 				) : null}
-				<a href={restaurantPage?.reservationUrl || '#'} class="btn btn--primary">
-					{restaurantPage?.reservationText || 'Make a Reservation'}
+				<a href={businessInfo?.reservationUrl || '#'} class="btn btn--primary">
+					{businessInfo?.reservationText || 'Make a Reservation'}
 				</a>
 				<p class="walk-in-note">Or just walk in — we'll find you a table.</p>
 			</div>

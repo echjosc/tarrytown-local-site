@@ -1,15 +1,15 @@
 ---
-import VegaFooter from '@/components/sections/VegaFooter.astro';
-import VegaNav from '@/components/sections/VegaNav.astro';
-import Seo from '@/components/seo/Seo.astro';
-import Schema from '@/components/seo/Schema.astro';
-import FormSuccessModal from '@/components/ui/FormSuccessModal.astro';
-import '@/styles/global.css';
-import { Font } from 'astro:assets';
-import { createReader } from '@keystatic/core/reader';
-import keystaticConfig from '../../keystatic.config';
-import { resolveImage } from '@/utils/resolveImage';
-import { localBusiness, parseOpeningHours } from '@/lib/schemas/schemas';
+import VegaFooter from "@/components/sections/VegaFooter.astro";
+import VegaNav from "@/components/sections/VegaNav.astro";
+import Seo from "@/components/seo/Seo.astro";
+import Schema from "@/components/seo/Schema.astro";
+import FormSuccessModal from "@/components/ui/FormSuccessModal.astro";
+import "@/styles/global.css";
+import { Font } from "astro:assets";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+import { resolveImage } from "@/utils/resolveImage";
+import { localBusiness, parseOpeningHours } from "@/lib/schemas/schemas";
 
 interface Props {
 	title: string;
@@ -17,7 +17,7 @@ interface Props {
 	ogImage?: string;
 	canonical?: string;
 	noIndex?: boolean;
-	ogType?: 'website' | 'article';
+	ogType?: "website" | "article";
 	publishedTime?: string;
 	modifiedTime?: string;
 }
@@ -38,78 +38,87 @@ const businessInfo = await reader.singletons.businessInfo.read();
 
 // TEMP DEBUG — Safari blank-page investigation. Remove alongside the overlay.
 const debugBuildStamp = new Date().toISOString();
-const debugCommitRef = process.env.COMMIT_REF?.slice(0, 7) || 'local';
+const debugCommitRef = process.env.COMMIT_REF?.slice(0, 7) || "local";
 
 const logoSrc = resolveImage(businessInfo?.logo);
-const logoAlt = businessInfo?.name || 'Tarrytown Local';
+const logoAlt = businessInfo?.name || "Tarrytown Local";
 
-const siteUrl = Astro.site ?? new URL('https://tarrytownlocal.com');
+const siteUrl = Astro.site ?? new URL("https://tarrytownlocal.com");
 const [addressStreet, addressCityStateZip] = businessInfo?.addressLines ?? [];
-const cityStateZipMatch = addressCityStateZip?.match(/^(.+),\s*([A-Z]{2})\s+(\d{5})$/);
+const cityStateZipMatch = addressCityStateZip?.match(
+	/^(.+),\s*([A-Z]{2})\s+(\d{5})$/,
+);
 const latMatch = businessInfo?.mapEmbedUrl?.match(/!3d(-?\d+\.\d+)/);
 const lngMatch = businessInfo?.mapEmbedUrl?.match(/!2d(-?\d+\.\d+)/);
 
 const businessSchema = localBusiness({
-	type: 'Restaurant',
-	name: businessInfo?.name || 'Tarrytown Local',
+	type: "Restaurant",
+	name: businessInfo?.name || "Tarrytown Local",
 	description:
-		'Neighborhood restaurant and small grocery store in Tarrytown, NY, focused on local, healthful food.',
+		"Neighborhood restaurant and small grocery store in Tarrytown, NY, focused on local, healthful food.",
 	url: siteUrl.href,
 	telephone: businessInfo?.phone || undefined,
 	email: businessInfo?.email || undefined,
 	address: {
-		street: addressStreet || '57 N Broadway',
-		city: cityStateZipMatch?.[1] || 'Tarrytown',
-		state: cityStateZipMatch?.[2] || 'NY',
-		zip: cityStateZipMatch?.[3] || '10591',
+		street: addressStreet || "57 N Broadway",
+		city: cityStateZipMatch?.[1] || "Tarrytown",
+		state: cityStateZipMatch?.[2] || "NY",
+		zip: cityStateZipMatch?.[3] || "10591",
 	},
-	geo: latMatch && lngMatch ? { lat: parseFloat(latMatch[1]), lng: parseFloat(lngMatch[1]) } : undefined,
-	logo: new URL('/images/business/logo.png', siteUrl).href,
-	image: new URL('/images/business/logo.png', siteUrl).href,
+	geo:
+		latMatch && lngMatch
+			? { lat: parseFloat(latMatch[1]), lng: parseFloat(lngMatch[1]) }
+			: undefined,
+	logo: new URL("/images/business/logo.png", siteUrl).href,
+	image: new URL("/images/business/logo.png", siteUrl).href,
 	sameAs: businessInfo?.socials?.map((s) => s.url) ?? [],
 	openingHours: parseOpeningHours(businessInfo?.hours ?? []),
-	hasMenu: new URL('/menu', siteUrl).href,
+	hasMenu: new URL("/menu", siteUrl).href,
 });
 
 const navLinks = [
-	{ label: 'Home', url: '/' },
+	{ label: "Home", url: "/" },
 	{
-		label: 'About',
+		label: "About",
 		children: [
-			{ label: 'Our Team', url: '/our-team' },
-			{ label: 'Our Story', url: '/our-story' },
-			{ label: 'Where We Get Our Food', url: '/farmers' },
-			{ label: 'FAQs', url: '/our-story#faq' },
+			{ label: "Our Team", url: "/our-team" },
+			{ label: "Our Story", url: "/our-story" },
+			{ label: "Where We Get Our Food", url: "/farmers" },
+			{ label: "FAQs", url: "/our-story#faq" },
 		],
 	},
 	{
-		label: 'What We Do',
+		label: "What We Do",
 		children: [
-			{ label: 'Restaurant', url: '/restaurant' },
-			{ label: 'Bakery', url: '/bakery' },
-			{ label: 'Grocery', url: '/grocery' },
-			{ label: 'Events & Catering', url: '/events' },
+			{ label: "Restaurant", url: "/restaurant" },
+			{ label: "Bakery", url: "/bakery" },
+			{ label: "Grocery", url: "/grocery" },
+			{ label: "Events & Catering", url: "/events" },
 		],
 	},
-	{ label: 'Contact', url: '/contact' },
-	{ label: 'The Blog', url: '/blog' },
+	{ label: "Contact", url: "/contact" },
+	{ label: "The Blog", url: "/blog" },
 ];
 
 const footerExploreLinks = [
-	{ label: 'Home', url: '/' },
-	{ label: 'Our Team', url: '/our-team' },
-	{ label: 'Our Story', url: '/our-story' },
-	{ label: 'Where We Get Our Food', url: '/farmers' },
-	{ label: 'Contact', url: '/contact' },
-	{ label: 'The Blog', url: '/blog' },
+	{ label: "Home", url: "/" },
+	{ label: "Our Team", url: "/our-team" },
+	{ label: "Our Story", url: "/our-story" },
+	{ label: "Where We Get Our Food", url: "/farmers" },
+	{ label: "Contact", url: "/contact" },
+	{ label: "The Blog", url: "/blog" },
 ];
 
 const footerWhatWeDoLinks = [
-	{ label: 'Menu', url: '/menu' },
-	{ label: 'Restaurant', url: '/restaurant' },
-	{ label: 'Bakery', url: '/bakery' },
-	{ label: 'Grocery', url: '/grocery' },
-	{ label: 'Events & Catering', url: '/events' },
+	{ label: "Menu", url: "/menu" },
+	{ label: "Restaurant", url: "/restaurant" },
+	{ label: "Bakery", url: "/bakery" },
+	{ label: "Grocery", url: "/grocery" },
+	{ label: "Events & Catering", url: "/events" },
+	{
+		label: businessInfo?.reservationText || "Make a Reservation",
+		url: businessInfo?.reservationUrl || "#",
+	},
 ];
 ---
 
@@ -120,8 +129,8 @@ const footerWhatWeDoLinks = [
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<Font cssVariable='--font-libre-franklin' />
-		<Font cssVariable='--font-roboto' />
+		<Font cssVariable="--font-libre-franklin" />
+		<Font cssVariable="--font-roboto" />
 		<Seo
 			title={title}
 			description={description}
@@ -133,95 +142,35 @@ const footerWhatWeDoLinks = [
 			modifiedTime={modifiedTime}
 		/>
 		<Schema item={businessSchema} />
-	<script is:inline>
-		document.documentElement.classList.replace('no-js', 'js');
-		// Safety net for TOTAL script failure only (blocked/never loaded) —
-		// not for animations still waiting on scroll. registerScrollAnimations()
-		// sets window.__scrollAnimBooted the moment it runs, whether or not GSAP
-		// itself succeeds (that failure path already reveals content on its own).
-		// So this only fires if the module script never started at all.
-		setTimeout(() => {
-			if (!window.__scrollAnimBooted) {
-				document.querySelectorAll('[data-animate]').forEach((el) => {
-					el.style.opacity = '1';
-					el.style.transform = 'none';
-				});
-			}
-		}, 5000);
-	</script>
-
-	<!-- TEMP DEBUG — Safari blank-page investigation. Remove before merging to main. -->
-	<script is:inline define:vars={{ debugBuildStamp, debugCommitRef }}>
-		(function () {
-			var box = document.createElement('div');
-			box.id = '__debug-overlay';
-			box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:2147483647;' +
-				'background:rgba(0,0,0,0.92);color:#7CFC7C;font:11px/1.4 -apple-system,monospace;' +
-				'padding:8px 10px;max-height:45vh;overflow:auto;white-space:pre-wrap;';
-			box.textContent = 'debug: booting…';
-
-			var errors = [];
-			function logError(line) {
-				errors.push(line);
-				render();
-			}
-			window.addEventListener('error', function (e) {
-				logError('ERROR: ' + e.message + ' @ ' + e.filename + ':' + e.lineno + ':' + e.colno);
-			});
-			window.addEventListener('unhandledrejection', function (e) {
-				var reason = e.reason && e.reason.message ? e.reason.message : String(e.reason);
-				logError('REJECTION: ' + reason);
-			});
-
-			var inAppBrowser = /FBAN|FBAV|Instagram|Line\/|MicroMessenger|GSA\/|; ?wv\)/i.test(navigator.userAgent);
-
-			function render() {
-				var animEls = document.querySelectorAll('[data-animate]');
-				var firstStyle = animEls.length ? getComputedStyle(animEls[0]) : null;
-
-				var lines = [
-					'build: ' + debugCommitRef + ' @ ' + debugBuildStamp,
-					'ua: ' + navigator.userAgent,
-					'possible in-app browser: ' + inAppBrowser,
-					'reduced-motion: ' + window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-					'html.class: ' + document.documentElement.className,
-					'scrollAnimBooted: ' + !!window.__scrollAnimBooted,
-					'scrollAnimStatus: ' + JSON.stringify(window.__scrollAnimStatus || null),
-					'[data-animate] count: ' + animEls.length,
-					firstStyle ? 'first [data-animate]: opacity=' + firstStyle.opacity + ' transform=' + firstStyle.transform : null,
-					't+' + Math.round(performance.now()) + 'ms',
-				].filter(Boolean);
-				if (errors.length) {
-					lines.push('--- errors ---');
-					lines = lines.concat(errors);
+		<script is:inline>
+			document.documentElement.classList.replace("no-js", "js");
+			// Safety net for TOTAL script failure only (blocked/never loaded) —
+			// not for animations still waiting on scroll. registerScrollAnimations()
+			// sets window.__scrollAnimBooted the moment it runs, whether or not GSAP
+			// itself succeeds (that failure path already reveals content on its own).
+			// So this only fires if the module script never started at all.
+			setTimeout(() => {
+				if (!window.__scrollAnimBooted) {
+					document
+						.querySelectorAll("[data-animate]")
+						.forEach((el) => {
+							el.style.opacity = "1";
+							el.style.transform = "none";
+						});
 				}
-				box.textContent = lines.join('\n');
-			}
-
-			function mount() {
-				document.body.appendChild(box);
-				render();
-				var interval = setInterval(render, 500);
-				// Stop polling once things have settled (covers our 5s reveal
-				// fallback + the 5s GSAP import timeout) but leave the last
-				// render on screen so it's still there whenever they screenshot.
-				setTimeout(function () {
-					clearInterval(interval);
-					render();
-				}, 12000);
-			}
-
-			if (document.body) mount();
-			else document.addEventListener('DOMContentLoaded', mount);
-		})();
-	</script>
+			}, 5000);
+		</script>
 	</head>
 	<body>
 		<VegaNav
 			logoSrc={logoSrc}
 			logoAlt={logoAlt}
 			links={navLinks}
-			cta={{ label: 'Menu', url: '/menu' }}
+			cta={{ label: "View Today's Menu", url: "/menu" }}
+			secondaryCta={{
+				label: businessInfo?.reservationText || "Make a Reservation",
+				url: businessInfo?.reservationUrl || "#",
+			}}
 		/>
 
 		<main class="main-content">
@@ -236,45 +185,51 @@ const footerWhatWeDoLinks = [
 			tagline="Your guide to the best of Tarrytown, NY."
 			phone={businessInfo?.phone || undefined}
 			socials={businessInfo?.socials?.map((s) => ({
-				platform: s.platform as 'instagram' | 'pinterest' | 'facebook' | 'tiktok' | 'twitter',
+				platform: s.platform as
+					| "instagram"
+					| "pinterest"
+					| "facebook"
+					| "tiktok"
+					| "twitter",
 				url: s.url,
 			})) ?? []}
 			columns={[
 				{
-					heading: 'Explore',
+					heading: "Explore",
 					links: footerExploreLinks,
 				},
 				{
-					heading: 'What We Do',
+					heading: "What We Do",
 					links: footerWhatWeDoLinks,
 				},
 				{
-					heading: 'Resources',
+					heading: "Resources",
 					links: [
-						{ label: 'FAQs', url: '/our-story#faq' },
-						{ label: 'Privacy Policy', url: '/privacy' },
-						{ label: 'Terms of Service', url: '/terms' },
+						{ label: "FAQs", url: "/our-story#faq" },
+						{ label: "Privacy Policy", url: "/privacy" },
+						{ label: "Terms of Service", url: "/terms" },
 					],
 				},
 			]}
-			/>
+		/>
 	</body>
 </html>
 
 <script>
-	import { registerScrollAnimations } from '@/lib/utils/animations';
-	import { deferIframeLoad } from '@/lib/utils/deferredIframes';
-	import { loadAnalytics } from '@/lib/utils/analytics';
+	import { registerScrollAnimations } from "@/lib/utils/animations";
+	import { deferIframeLoad } from "@/lib/utils/deferredIframes";
+	import { loadAnalytics } from "@/lib/utils/analytics";
 	registerScrollAnimations();
 	deferIframeLoad();
-	loadAnalytics('G-7MB493QBVR');
+	loadAnalytics("G-7MB493QBVR");
 
 	try {
-		const [{ default: Lenis }, { default: gsap }, { ScrollTrigger }] = await Promise.all([
-			import('lenis'),
-			import('gsap'),
-			import('gsap/ScrollTrigger'),
-		]);
+		const [{ default: Lenis }, { default: gsap }, { ScrollTrigger }] =
+			await Promise.all([
+				import("lenis"),
+				import("gsap"),
+				import("gsap/ScrollTrigger"),
+			]);
 
 		gsap.registerPlugin(ScrollTrigger);
 
@@ -286,16 +241,16 @@ const footerWhatWeDoLinks = [
 			lenis.raf(time * 1000);
 		});
 
-		lenis.on('scroll', () => ScrollTrigger.update());
+		lenis.on("scroll", () => ScrollTrigger.update());
 
 		gsap.ticker.lagSmoothing(0);
 	} catch (err) {
-		console.error('Smooth scroll setup failed', err);
+		console.error("Smooth scroll setup failed", err);
 	}
 </script>
 
 <style>
-.main-content {
-	flex: 1;
-}
+	.main-content {
+		flex: 1;
+	}
 </style>
