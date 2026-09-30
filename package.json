@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/cap-image-dimensions.mjs && astro build",
+    "prebuild": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs",
+    "build": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
