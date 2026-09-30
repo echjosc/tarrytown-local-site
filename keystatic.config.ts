@@ -187,6 +187,12 @@ export default config({
                     }
                 ),
                 mapEmbedUrl: fields.text({ label: 'Google Maps Embed URL', description: 'Paste the full embed URL from Google Maps → Share → Embed a map' }),
+                reservationUrl: fields.text({
+                    label: 'Reservation URL',
+                    description: 'Link to your reservation system (e.g. OpenTable, Resy). Used for the Reserve button in the site header.',
+                    defaultValue: '#',
+                }),
+                reservationText: fields.text({ label: 'Reservation Button Text', defaultValue: 'Make a Reservation' }),
                 socials: fields.array(
                     fields.object({
                         platform: fields.select({
@@ -315,8 +321,6 @@ export default config({
                         itemLabel: (props) => props.fields.days.value || 'New Hours Row',
                     }
                 ),
-                reservationUrl: fields.text({ label: 'Reservation URL', defaultValue: '#' }),
-                reservationText: fields.text({ label: 'Reservation Link Text', defaultValue: 'Make a Reservation' }),
                 dinnerNote: fields.text({ label: 'Dinner Note', multiline: true }),
                 sampleMenu: fields.object({
                     heading: fields.text({ label: 'Heading' }),
