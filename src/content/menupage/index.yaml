@@ -10,8 +10,8 @@ restaurantMenu:
     Our menu changes daily depending on what's fresh from the farm — check back
     each morning to see what the chef is cooking.
   display:
-    discriminant: list
-    value: []
+    discriminant: file
+    value: /menus/restaurant/restaurantMenu/display/value.png
 bakeryMenu:
   heading: Bakery Menu
   note: Baked fresh every morning with house-milled grains.

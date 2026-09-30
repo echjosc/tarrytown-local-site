@@ -49,6 +49,7 @@ test-results/
 .vercel/
 .netlify/
 .turbo/
+deno.lock
 
 # IDE specific files
 .vscode/

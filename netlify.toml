@@ -1,0 +1,13 @@
+# Astro's build output is content-hashed (e.g. Base.8yNj3ipH.css) — a filename
+# never gets reused for different content, so these are safe to cache forever.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Netlify's on-the-fly image transforms (/.netlify/images?url=...) are keyed by
+# their query params, so a given URL always resolves to the same bytes.
+[[headers]]
+  for = "/.netlify/images"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

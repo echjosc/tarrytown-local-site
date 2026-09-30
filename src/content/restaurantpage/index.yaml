@@ -36,31 +36,7 @@ sampleMenu:
   heading: >-
     Our menu changes often, but this should give you a sense of what we like to
     cook.
-  categories:
-    - name: Breakfast
-      items:
-        - name: Fresh-Milled Porridge
-          description: Whole grains, seasonal fruit, honey
-        - name: Farm Egg Sandwich
-          description: House bread, greens, pasture butter
-    - name: Sandwiches
-      items:
-        - name: Roast Vegetable
-          description: Whatever's in season, whipped ricotta, herb oil
-        - name: Pasture Chicken Salad
-          description: Celery, grapes, sourdough
-    - name: Soups & Salads
-      items:
-        - name: Soup of the Day
-          description: Ask what's on the stove
-        - name: Greenmarket Salad
-          description: Local greens, seeds, sherry vinaigrette
-    - name: Small Plates
-      items:
-        - name: Milled Grain Bowl
-          description: Roots, greens, soft egg
-        - name: Bread & Butter
-          description: Daily loaf, cultured butter
+  categories: []
 suggestion:
   heading: Tell Us What You Want To Eat
   body: >-

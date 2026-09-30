@@ -9,7 +9,7 @@ import { Font } from 'astro:assets';
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 import { resolveImage } from '@/utils/resolveImage';
-import { localBusiness } from '@/lib/schemas/schemas';
+import { localBusiness, parseOpeningHours } from '@/lib/schemas/schemas';
 
 interface Props {
 	title: string;
@@ -67,6 +67,8 @@ const businessSchema = localBusiness({
 	logo: new URL('/images/business/logo.png', siteUrl).href,
 	image: new URL('/images/business/logo.png', siteUrl).href,
 	sameAs: businessInfo?.socials?.map((s) => s.url) ?? [],
+	openingHours: parseOpeningHours(businessInfo?.hours ?? []),
+	hasMenu: new URL('/menu', siteUrl).href,
 });
 
 const navLinks = [
@@ -114,22 +116,12 @@ const footerWhatWeDoLinks = [
 <!doctype html>
 <html lang="en" class="no-js">
 	<head>
-		<!-- Google tag (gtag.js) -->
-		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-7MB493QBVR"></script>
-		<script is:inline>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-
-			gtag('config', 'G-7MB493QBVR');
-		</script>
-
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<Font cssVariable='--font-libre-franklin' preload />
-		<Font cssVariable='--font-roboto' preload />
+		<Font cssVariable='--font-libre-franklin' />
+		<Font cssVariable='--font-roboto' />
 		<Seo
 			title={title}
 			description={description}
@@ -271,7 +263,11 @@ const footerWhatWeDoLinks = [
 
 <script>
 	import { registerScrollAnimations } from '@/lib/utils/animations';
+	import { deferIframeLoad } from '@/lib/utils/deferredIframes';
+	import { loadAnalytics } from '@/lib/utils/analytics';
 	registerScrollAnimations();
+	deferIframeLoad();
+	loadAnalytics('G-7MB493QBVR');
 
 	try {
 		const [{ default: Lenis }, { default: gsap }, { ScrollTrigger }] = await Promise.all([

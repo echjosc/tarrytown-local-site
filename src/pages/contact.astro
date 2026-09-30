@@ -145,9 +145,8 @@ const restaurantHours = restaurantPage?.hours?.length ? restaurantPage.hours : [
 						<div class="location-map-wrap">
 							<iframe
 								class="location-map"
-								src={businessInfo.mapEmbedUrl}
+								data-src={businessInfo.mapEmbedUrl}
 								title="Tarrytown Local on Google Maps"
-								loading="lazy"
 								referrerpolicy="no-referrer-when-downgrade"
 							></iframe>
 						</div>
