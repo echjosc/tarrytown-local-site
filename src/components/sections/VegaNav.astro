@@ -1,6 +1,6 @@
 ---
-import type { ImageMetadata } from 'astro';
-import Brandmark from '@/components/ui/Brandmark.astro';
+import type { ImageMetadata } from "astro";
+import Brandmark from "@/components/ui/Brandmark.astro";
 
 type NavLink = { label: string; url: string };
 type NavGroup = { label: string; children: NavLink[] };
@@ -15,6 +15,7 @@ type Props = {
 	logoAlt?: string;
 	links?: NavItem[];
 	cta?: { label: string; url: string };
+	secondaryCta?: { label: string; url: string };
 	currentPath?: string;
 };
 
@@ -23,154 +24,251 @@ const {
 	logoAlt = "Tarrytown Local",
 	links = [],
 	cta,
+	secondaryCta,
 	currentPath = Astro.url.pathname,
 } = Astro.props;
+
+const isCurrent = (url: string) =>
+	currentPath === url || currentPath.startsWith(url + "/");
 ---
 
 <header class="vega-nav">
 	<div class="container">
 		<!-- Wordmark / Logo -->
 		<a href="/" class="nav-brand">
-			<Brandmark logoSrc={logoSrc} logoAlt={logoAlt} size="compact" loading="eager" />
+			<Brandmark
+				logoSrc={logoSrc}
+				logoAlt={logoAlt}
+				size="compact"
+				loading="eager"
+			/>
 		</a>
 
 		<!-- Hamburger toggle (mobile) -->
-		<button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+		<button
+			type="button"
+			class="nav-toggle"
+			aria-label="Toggle menu"
+			aria-expanded="false"
+			aria-controls="nav-menu"
+		>
 			<span></span>
 			<span></span>
 			<span></span>
 		</button>
 
 		<!-- Links + CTA -->
-		<nav id="nav-menu" class="nav-menu" role="navigation">
-			<ul class="nav-links">
-				{links.map((item) => {
-					if (isGroup(item)) {
-						const isActive = item.children.some(
-							(child) => currentPath === child.url || currentPath.startsWith(child.url + "/")
-						);
-						return (
-							<li class="nav-group">
-								<span
-									role="button"
-									tabindex="0"
-									aria-haspopup="true"
-									class:list={["nav-link", "nav-link--group", { "nav-link--active": isActive }]}
-									aria-expanded="false"
-								>
-									{item.label}
-									<svg class="nav-caret" width="8" height="5" viewBox="0 0 8 5" aria-hidden="true">
-										<path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-									</svg>
-								</span>
-								<ul class="nav-dropdown">
-									{item.children.map((child) => {
-										const childActive = currentPath === child.url || currentPath.startsWith(child.url + "/");
-										return (
-											<li>
-												<a
-													href={child.url}
-													class:list={["nav-dropdown-link", { "nav-dropdown-link--active": childActive }]}
-												>
-													{child.label}
-												</a>
-											</li>
-										);
-									})}
-								</ul>
-							</li>
-						);
+		<nav id="nav-menu" class="nav-menu" aria-label="Main">
+			<div class="nav-menu__inner">
+				<ul class="nav-links">
+					{
+						links.map((item) => {
+							if (isGroup(item)) {
+								const isActive = item.children.some((child) =>
+									isCurrent(child.url),
+								);
+								return (
+									<li class="nav-group">
+										<button
+											type="button"
+											class:list={[
+												"nav-link",
+												"nav-link--group",
+												{ "nav-link--active": isActive },
+											]}
+											aria-expanded="false"
+										>
+											{item.label}
+											<svg
+												class="nav-caret"
+												width="8"
+												height="5"
+												viewBox="0 0 8 5"
+												aria-hidden="true"
+											>
+												<path
+													d="M1 1L4 4L7 1"
+													stroke="currentColor"
+													stroke-width="1.4"
+													fill="none"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+											</svg>
+										</button>
+										<ul class="nav-dropdown">
+											{item.children.map((child) => {
+												const childActive = isCurrent(child.url);
+												return (
+													<li>
+														<a
+															href={child.url}
+															class:list={[
+																"nav-dropdown-link",
+																{
+																	"nav-dropdown-link--active":
+																		childActive,
+																},
+															]}
+															aria-current={
+																childActive ? "page" : undefined
+															}
+														>
+															{child.label}
+														</a>
+													</li>
+												);
+											})}
+										</ul>
+									</li>
+								);
+							}
+
+							const isActive = isCurrent(item.url);
+							return (
+								<li>
+									<a
+										href={item.url}
+										class:list={[
+											"nav-link",
+											{ "nav-link--active": isActive },
+										]}
+										aria-current={isActive ? "page" : undefined}
+									>
+										{item.label}
+									</a>
+								</li>
+							);
+						})
 					}
+				</ul>
 
-					const isActive = currentPath === item.url || currentPath.startsWith(item.url + "/");
-					return (
-						<li>
-							<a
-								href={item.url}
-								class:list={["nav-link", { "nav-link--active": isActive }]}
-							>
-								{item.label}
-							</a>
-						</li>
-					);
-				})}
-			</ul>
+				{
+					cta && (
+						<a href={cta.url} class="nav-cta">
+							{cta.label}
+						</a>
+					)
+				}
 
-			{cta && (
-				<a href={cta.url} class="nav-cta">{cta.label}</a>
-			)}
+				{
+					secondaryCta && (
+						<a href={secondaryCta.url} class="nav-cta nav-cta--solid">
+							{secondaryCta.label}
+						</a>
+					)
+				}
+			</div>
 		</nav>
 	</div>
 </header>
 
 <script>
-	const toggle = document.querySelector(".nav-toggle") as HTMLButtonElement;
-	const menu = document.querySelector(".nav-menu") as HTMLElement;
-
-	toggle?.addEventListener("click", () => {
-		const open = toggle.getAttribute("aria-expanded") === "true";
-		toggle.setAttribute("aria-expanded", String(!open));
-		menu.classList.toggle("nav-menu--open", !open);
-	});
-
+	const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+	const menu = document.querySelector<HTMLElement>(".nav-menu");
 	const groups = document.querySelectorAll<HTMLLIElement>(".nav-group");
-	const isMobile = () => window.matchMedia("(max-width: 680px)").matches;
+	const mobileQuery = window.matchMedia("(max-width: 1180px)");
+	const isMobile = () => mobileQuery.matches;
+
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+	function setMenuOpen(open: boolean) {
+		toggle?.setAttribute("aria-expanded", String(open));
+		menu?.classList.toggle("nav-menu--open", open);
+		// Scrolling stays off while animating so no scrollbar flickers in.
+		// With reduced motion there's no transition (and no transitionend), so settle now.
+		menu?.classList.toggle("nav-menu--settled", open && reducedMotion.matches);
+		if (!open) closeAllGroups();
+	}
+
+	menu?.addEventListener("transitionend", (event) => {
+		if (
+			event.target === menu &&
+			event.propertyName === "grid-template-rows" &&
+			menu.classList.contains("nav-menu--open")
+		) {
+			menu.classList.add("nav-menu--settled");
+		}
+	});
 
 	function closeAllGroups(except?: HTMLLIElement) {
 		groups.forEach((group) => {
 			if (group === except) return;
 			group.classList.remove("nav-group--open");
-			group.querySelector('[role="button"]')?.setAttribute("aria-expanded", "false");
+			group
+				.querySelector(".nav-link--group")
+				?.setAttribute("aria-expanded", "false");
 		});
 	}
 
-	// Desktop opens on hover (CSS); click/keyboard toggle is only wired up
-	// for mobile, where there's no hover state and the dropdown expands inline.
+	toggle?.addEventListener("click", () => {
+		setMenuOpen(toggle.getAttribute("aria-expanded") !== "true");
+	});
+
+	// Desktop opens on hover/focus (CSS). The click toggle is only for mobile,
+	// where there's no hover and the dropdown expands inline.
+	// A <button> fires "click" for Enter and Space too, so no keydown handler is needed.
 	groups.forEach((group) => {
-		const trigger = group.querySelector<HTMLElement>('[role="button"]');
-		const toggleGroup = (event: Event) => {
-			if (!isMobile() || !trigger) return;
-			event.stopPropagation();
-			const open = group.classList.contains("nav-group--open");
-			closeAllGroups(group);
-			group.classList.toggle("nav-group--open", !open);
-			trigger.setAttribute("aria-expanded", String(!open));
-		};
+		const trigger = group.querySelector<HTMLButtonElement>(".nav-link--group");
 		trigger?.addEventListener("click", (event) => {
 			if (isMobile()) {
-				toggleGroup(event);
+				event.stopPropagation();
+				const open = group.classList.contains("nav-group--open");
+				closeAllGroups(group);
+				group.classList.toggle("nav-group--open", !open);
+				trigger.setAttribute("aria-expanded", String(!open));
 				return;
 			}
-			// On desktop the dropdown is purely hover-driven. A click still focuses
-			// this element though, and :focus-within would then keep the dropdown
-			// open even after the mouse moves away. Blur it so hover is back in
-			// sole control — this is what was causing dropdowns to stick open.
-			trigger.blur();
-		});
-		trigger?.addEventListener("keydown", (event) => {
-			if (event.key === "Enter" || event.key === " ") {
-				event.preventDefault();
-				toggleGroup(event);
-			}
+			// Desktop mouse click: blur so :focus-within doesn't keep the dropdown
+			// stuck open after the pointer leaves. event.detail is 0 for keyboard-
+			// triggered clicks, so keyboard users keep focus (and the open dropdown).
+			if (event.detail > 0) trigger.blur();
 		});
 	});
 
 	document.addEventListener("click", () => {
 		if (isMobile()) closeAllGroups();
 	});
+
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape") closeAllGroups();
+		if (event.key !== "Escape") return;
+		if (isMobile() && menu?.classList.contains("nav-menu--open")) {
+			setMenuOpen(false);
+			toggle?.focus();
+		} else {
+			closeAllGroups();
+		}
+	});
+
+	// Crossing the breakpoint changes animated properties, which would otherwise
+	// play the open/close transitions. Disable transitions for that switch, then
+	// re-enable them two frames later, once the new styles have been applied.
+	const header = document.querySelector<HTMLElement>(".vega-nav");
+	let resizeFrame = 0;
+
+	mobileQuery.addEventListener("change", (e) => {
+		header?.classList.add("vega-nav--no-transition");
+		if (!e.matches) setMenuOpen(false); // don't leave mobile state half-open
+
+		cancelAnimationFrame(resizeFrame);
+		resizeFrame = requestAnimationFrame(() => {
+			resizeFrame = requestAnimationFrame(() => {
+				header?.classList.remove("vega-nav--no-transition");
+			});
+		});
 	});
 </script>
 
 <style lang="scss">
 	.vega-nav {
-		--nav-charcoal: var(--color-charcoal, #221E1A);
-		--nav-muted:    var(--color-text-muted, #6B6560);
-		--nav-bg:       var(--color-bg, #FAF6EE);
-		--nav-border:   var(--color-border, #E4DCCB);
-		--nav-olive:    var(--color-primary, #2E4A3B);
-		--nav-height:   84px;
+		--nav-charcoal: var(--color-charcoal, #221e1a);
+		--nav-muted: var(--color-text-muted, #6b6560);
+		--nav-bg: var(--color-bg, #faf6ee);
+		--nav-border: var(--color-border, #e4dccb);
+		--nav-olive: var(--color-primary, #2e4a3b);
+		--nav-height: 84px;
+		--nav-ease-out: cubic-bezier(0.22, 1, 0.36, 1); // fast start, soft landing
+		--nav-ease-in: cubic-bezier(0.4, 0, 1, 1);
 
 		background: var(--nav-bg);
 		position: sticky;
@@ -228,7 +326,7 @@ const {
 				left: 0.9em;
 				right: 0.9em;
 				height: 1px;
-				background: var(--color-accent, #7C2E28);
+				background: var(--color-accent, #7c2e28);
 				transform: scaleX(0);
 				transition: transform 0.25s ease;
 				transform-origin: left;
@@ -247,11 +345,16 @@ const {
 			}
 		}
 
+		// Group toggle is a <button>; reset its native styles
 		.nav-link--group {
 			display: inline-flex;
 			align-items: center;
 			gap: 0.35em;
 			cursor: pointer;
+			background: none;
+			border: 0;
+			font-family: inherit;
+			line-height: inherit;
 		}
 
 		.nav-caret {
@@ -277,7 +380,10 @@ const {
 				opacity: 0;
 				visibility: hidden;
 				transform: translateY(4px);
-				transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+				transition:
+					opacity 0.18s ease,
+					transform 0.18s ease,
+					visibility 0.18s;
 			}
 
 			&.nav-group--open {
@@ -293,9 +399,13 @@ const {
 			}
 		}
 
-		@media (min-width: 681px) {
-			// Desktop: hover (or keyboard focus) reveals the dropdown directly —
-			// no click needed, and no lingering open state to manage.
+		@media (min-width: 1181px) {
+			// Wrapper disappears from layout on desktop; children join .nav-menu's flex row
+			.nav-menu__inner {
+				display: contents;
+			}
+
+			// Hover (or keyboard focus) reveals the dropdown directly
 			.nav-group:hover,
 			.nav-group:focus-within {
 				.nav-dropdown {
@@ -321,7 +431,10 @@ const {
 			color: var(--nav-muted);
 			text-decoration: none;
 			white-space: nowrap;
-			transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+			transition:
+				color 0.2s ease,
+				background 0.2s ease,
+				border-color 0.2s ease;
 
 			&:hover {
 				color: var(--nav-charcoal);
@@ -332,7 +445,7 @@ const {
 				color: var(--nav-charcoal);
 				font-weight: 700;
 				background: var(--nav-border);
-				border-left-color: var(--color-accent, #7C2E28);
+				border-left-color: var(--color-accent, #7c2e28);
 			}
 		}
 
@@ -351,11 +464,25 @@ const {
 			border-radius: 0;
 			box-shadow: var(--shadow-hard);
 			text-decoration: none;
-			transition: background 0.2s ease, color 0.2s ease;
+			transition:
+				background 0.2s ease,
+				color 0.2s ease;
 
 			&:hover {
 				background: var(--nav-charcoal);
 				color: var(--nav-bg);
+			}
+
+			&.nav-cta--solid {
+				background: var(--nav-olive);
+				color: var(--nav-bg);
+				border-color: var(--nav-olive);
+
+				&:hover {
+					background: var(--nav-charcoal);
+					border-color: var(--nav-charcoal);
+					color: var(--nav-bg);
+				}
 			}
 		}
 
@@ -377,26 +504,38 @@ const {
 				display: block;
 				width: 100%;
 				height: 2px;
-				background: #0A4546;
+				background: #0a4546;
 				transform-origin: center;
-				transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.2s ease, background 0.2s ease;
+				transition:
+					transform 0.15s cubic-bezier(0.65, 0, 0.35, 1),
+					opacity 0.2s ease,
+					background 0.2s ease;
 
 				&:nth-child(2) {
-					transition: transform 0.2s ease, opacity 0.2s ease;
+					filter: blur(0);
+					transition:
+						transform 0.2s ease,
+						opacity 0.2s ease,
+						filter 0.2s ease;
 				}
 			}
 
 			&[aria-expanded="true"] span {
+				background: #7b2e29;
 
-				background: #7B2E29;
 				&:nth-child(1) {
 					transform: translateY(7px) rotate(45deg);
 					transition-delay: 0.1s;
 				}
 
 				&:nth-child(2) {
-					transform: scaleX(0);
 					opacity: 0;
+					transform: translateY(-10px);
+					filter: blur(2px);
+					transition:
+						transform 0.2s ease,
+						opacity 0.2s ease,
+						filter 0s ease;
 				}
 
 				&:nth-child(3) {
@@ -407,27 +546,72 @@ const {
 		}
 
 		// Mobile
-		@media (max-width: 680px) {
+		@media (max-width: 1180px) {
 			.nav-toggle {
 				display: flex;
 			}
 
+			// Grid row animates 0fr -> 1fr, i.e. to the content's real height
 			.nav-menu {
-				display: none;
 				position: absolute;
 				top: var(--nav-height);
 				left: 0;
 				right: 0;
+				margin-left: 0;
 				background: var(--nav-bg);
-				flex-direction: column;
-				align-items: flex-start;
-				gap: 0;
-				padding: 1rem 1.5rem 1.5rem;
-				border-bottom: 1px solid var(--nav-border);
+				display: grid;
+				grid-template-rows: 0fr;
+				overflow: hidden; // clips the inner padding/border so it can't peek out at 0fr
+				visibility: hidden;
+				// Closing: quicker, then hide once collapsed
+				transition:
+					grid-template-rows 0.3s var(--nav-ease-in),
+					visibility 0s linear 0.3s;
 
 				&.nav-menu--open {
-					display: flex;
+					grid-template-rows: 1fr;
+					visibility: visible;
+					// Opening: longer, decelerating
+					transition:
+						grid-template-rows 0.45s var(--nav-ease-out),
+						visibility 0s linear 0s;
 				}
+			}
+
+			.nav-menu__inner {
+				min-height: 0; // lets the 0fr row actually shrink to zero
+				max-height: calc(100dvh - var(--nav-height));
+				overflow: hidden; // no scrollbar during the animation
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				padding: 1rem 1.5rem 1.5rem;
+				border-bottom: 1px solid var(--nav-border);
+				box-sizing: border-box;
+
+				// Keep this on its own layer permanently; otherwise the layer is dropped
+				// when the animation ends and the text re-renders a pixel off.
+				will-change: opacity, transform;
+
+				// Content fades and settles in, rather than just being uncovered
+				opacity: 0;
+				transform: translateY(-0.5rem);
+				transition:
+					opacity 0.2s var(--nav-ease-in),
+					transform 0.3s var(--nav-ease-in);
+			}
+
+			.nav-menu--open .nav-menu__inner {
+				opacity: 1;
+				transform: none;
+				transition:
+					opacity 0.3s var(--nav-ease-out) 0.05s,
+					transform 0.45s var(--nav-ease-out);
+			}
+
+			// Only allow scrolling once fully open (class added by the script)
+			.nav-menu--open.nav-menu--settled .nav-menu__inner {
+				overflow-y: auto;
 			}
 
 			.nav-links {
@@ -454,26 +638,43 @@ const {
 				justify-content: space-between;
 			}
 
+			// Same grid trick for each dropdown: row 1 is the button, row 2 the list
 			.nav-group {
 				width: 100%;
+				display: grid;
+				grid-template-rows: auto 0fr;
+				transition: grid-template-rows 0.25s var(--nav-ease-in);
+
+				&.nav-group--open {
+					grid-template-rows: auto 1fr;
+					transition: grid-template-rows 0.35s var(--nav-ease-out);
+				}
 
 				.nav-dropdown {
 					position: static;
+					min-height: 0;
+					min-width: 0;
 					width: 100%;
+					overflow: hidden;
 					border: none;
 					box-shadow: none;
 					padding: 0 0 0 1rem;
 					background: transparent;
-					opacity: 1;
-					visibility: visible;
+					will-change: opacity;
+					opacity: 0;
 					transform: none;
-					max-height: 0;
-					overflow: hidden;
-					transition: max-height 0.2s ease;
+					visibility: hidden;
+					transition:
+						opacity 0.15s var(--nav-ease-in),
+						visibility 0s linear 0.25s;
 				}
 
 				&.nav-group--open .nav-dropdown {
-					max-height: 400px;
+					opacity: 1;
+					visibility: visible;
+					transition:
+						opacity 0.3s var(--nav-ease-out) 0.05s,
+						visibility 0s linear 0s;
 				}
 			}
 
@@ -492,6 +693,29 @@ const {
 
 			.nav-cta {
 				margin-top: 1rem;
+
+				& + .nav-cta {
+					margin-top: 0.75rem;
+				}
+			}
+		}
+
+		// Set briefly by the script while crossing the mobile breakpoint
+		&.vega-nav--no-transition {
+			&,
+			*,
+			*::before,
+			*::after {
+				transition: none !important;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*,
+			*::before,
+			*::after {
+				transition-duration: 0s !important;
+				transition-delay: 0s !important;
 			}
 		}
 	}
