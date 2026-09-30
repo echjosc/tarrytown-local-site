@@ -1,5 +1,7 @@
 # build output
 dist/
+# generated at build time by scripts/sync-reservation-redirect.mjs
+public/_redirects
 # generated types
 .astro/
 

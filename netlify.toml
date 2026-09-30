@@ -14,19 +14,18 @@
 
 
 
-# ---------- Shortcuts to external pages (302 = temporary, easy to change) ----------
-[[redirects]]
-from = "/reservations"
-to   = "https://www.sevenrooms.com/explore/tarrytownlocalvenue/reservations/create/search/"
-code = 302
+# ---------- Shortcuts to external pages ----------
+# /reservations is generated at build time (scripts/sync-reservation-redirect.mjs)
+# into public/_redirects, sourced from Business Info > Reservation URL in
+# Keystatic — not defined here, so editors never need a code change for it.
 
 # ---------- Old indexed pages (301 = permanent, passes SEO value) ----------
 [[redirects]]
 from = "/contact-us"
 to   = "/contact"
-code = 301
+status = 301
 
 [[redirects]]
 from = "/landing"
 to   = "/"
-code = 301
+status = 301
