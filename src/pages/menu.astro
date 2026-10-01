@@ -5,7 +5,11 @@ import VegaMenu from "@/components/sections/VegaMenu.astro";
 import Schema from "@/components/seo/Schema.astro";
 import { menu as menuSchema } from "@/lib/schemas/schemas";
 import { createReader } from '@keystatic/core/reader';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import keystaticConfig from '../../keystatic.config';
+
+const SCREENSHOT_DIR = join(process.cwd(), 'public/menus/generated');
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const menuPage = await reader.singletons.menuPage.read();
@@ -28,10 +32,21 @@ const generatedMenus = import.meta.glob('/src/data/generated/menu/*.json', {
 	import: 'default',
 }) as Record<string, GeneratedMenu>;
 
+// Pages are generated as `${screenshotBase}-1.png`, `-2.png`, etc. — walk
+// until one's missing rather than assuming a fixed page count.
+function findScreenshotPages(screenshotBase: string): string[] {
+	const urls: string[] = [];
+	for (let pageNumber = 1; existsSync(join(SCREENSHOT_DIR, `${screenshotBase}-${pageNumber}.png`)); pageNumber++) {
+		urls.push(`/menus/generated/${screenshotBase}-${pageNumber}.png`);
+	}
+	return urls;
+}
+
 function buildMenuSection(
 	section: MenuSectionData | undefined,
 	fallbackHeading: string,
-	generatedFile: string
+	generatedFile: string,
+	screenshotBase: string
 ) {
 	const note = section?.note || undefined;
 	const heading = section?.heading || fallbackHeading;
@@ -39,12 +54,23 @@ function buildMenuSection(
 	if (section?.display?.discriminant === 'file') {
 		const fileUrl = section.display.value?.file || undefined;
 		const skipPdfParse = section.display.value?.skipPdfParse ?? false;
-		const generated = !skipPdfParse && fileUrl?.toLowerCase().endsWith('.pdf')
-			? generatedMenus[`/src/data/generated/menu/${generatedFile}`]
-			: undefined;
+		const isPdf = fileUrl?.toLowerCase().endsWith('.pdf') ?? false;
 
-		if (generated && generated.categories.length > 0) {
-			return { heading, note: note || generated.note, mode: 'list' as const, categories: generated.categories };
+		if (isPdf && !skipPdfParse) {
+			const generated = generatedMenus[`/src/data/generated/menu/${generatedFile}`];
+			if (generated && generated.categories.length > 0) {
+				return { heading, note: note || generated.note, mode: 'list' as const, categories: generated.categories };
+			}
+		}
+
+		// A PDF that wasn't parsed into a list still gets rendered page images
+		// (scripts/parse-menu-pdfs.mjs) so it shows as plain images instead of
+		// an embedded PDF viewer. Only true last resort: the raw PDF itself.
+		if (isPdf) {
+			const images = findScreenshotPages(screenshotBase);
+			if (images.length > 0) {
+				return { heading, note, mode: 'file' as const, fileUrl, images };
+			}
 		}
 
 		return { heading, note, mode: 'file' as const, fileUrl };
@@ -62,8 +88,8 @@ function buildMenuSection(
 }
 
 const menuSections = [
-	buildMenuSection(restaurantMenu ?? undefined, 'Restaurant Menu', 'restaurant-menu.json'),
-	buildMenuSection(bakeryMenu ?? undefined, 'Bakery Menu', 'bakery-menu.json'),
+	buildMenuSection(restaurantMenu ?? undefined, 'Restaurant Menu', 'restaurant-menu.json', 'restaurant-menu'),
+	buildMenuSection(bakeryMenu ?? undefined, 'Bakery Menu', 'bakery-menu.json', 'bakery-menu'),
 ];
 
 // Only list-mode sections have structured items — file-mode sections just
