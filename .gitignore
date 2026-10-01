@@ -2,6 +2,9 @@
 dist/
 # generated at build time by scripts/sync-reservation-redirect.mjs
 public/_redirects
+
+# generated at build time by scripts/parse-menu-pdfs.mjs
+src/data/generated/
 # generated types
 .astro/
 

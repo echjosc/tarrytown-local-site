@@ -11,7 +11,9 @@ restaurantMenu:
     each morning to see what the chef is cooking.
   display:
     discriminant: file
-    value: /menus/restaurant/restaurantMenu/display/value.png
+    value:
+      file: /menus/restaurant/restaurantMenu/display/value.png
+      skipPdfParse: false
 bakeryMenu:
   heading: Bakery Menu
   note: Baked fresh every morning with house-milled grains.
