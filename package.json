@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs",
-    "build": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs && astro build",
+    "prebuild": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs && node scripts/parse-menu-pdfs.mjs",
+    "build": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs && node scripts/parse-menu-pdfs.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node --test scripts/**/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/markdoc": "2.0.9",
@@ -30,6 +31,7 @@
     "gsap": "^3.15.0",
     "leaflet": "^1.9.4",
     "lenis": "^1.3.23",
+    "pdf-parse": "^2.4.5",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-leaflet": "5.0.0"

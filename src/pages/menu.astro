@@ -12,15 +12,40 @@ const menuPage = await reader.singletons.menuPage.read();
 
 type MenuPageData = NonNullable<typeof menuPage>;
 
+type GeneratedMenu = {
+	note?: string;
+	categories: { name: string; items: { name: string; description?: string; price?: string }[] }[];
+};
+
+// scripts/parse-menu-pdfs.mjs runs before every build: if a menu section is an
+// uploaded PDF, it extracts the text and writes the structured result here, so
+// it can render as real HTML instead of an embedded PDF. Missing files (not a
+// PDF, or nothing parseable) just mean the glob below has no entry for them.
+const generatedMenus = import.meta.glob('/src/data/generated/menu/*.json', {
+	eager: true,
+	import: 'default',
+}) as Record<string, GeneratedMenu>;
+
 function buildMenuSection(
 	section: MenuPageData['restaurantMenu'] | undefined,
-	fallbackHeading: string
+	fallbackHeading: string,
+	generatedFile: string
 ) {
 	const note = section?.note || undefined;
 	const heading = section?.heading || fallbackHeading;
 
 	if (section?.display?.discriminant === 'file') {
-		return { heading, note, mode: 'file' as const, fileUrl: section.display.value || undefined };
+		const fileUrl = section.display.value?.file || undefined;
+		const skipPdfParse = section.display.value?.skipPdfParse ?? false;
+		const generated = !skipPdfParse && fileUrl?.toLowerCase().endsWith('.pdf')
+			? generatedMenus[`/src/data/generated/menu/${generatedFile}`]
+			: undefined;
+
+		if (generated && generated.categories.length > 0) {
+			return { heading, note: note || generated.note, mode: 'list' as const, categories: generated.categories };
+		}
+
+		return { heading, note, mode: 'file' as const, fileUrl };
 	}
 
 	const categories = (section?.display?.value ?? []).map((cat) => ({
@@ -35,8 +60,8 @@ function buildMenuSection(
 }
 
 const menuSections = [
-	buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu'),
-	buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu'),
+	buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu', 'restaurant-menu.json'),
+	buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu', 'bakery-menu.json'),
 ];
 
 // Only list-mode sections have structured items — file-mode sections just

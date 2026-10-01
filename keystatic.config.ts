@@ -77,12 +77,25 @@ const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.cond
     }),
     {
         list: menuCategoriesField(itemNameLabel),
-        file: fields.file({
-            label: 'Menu File',
-            description: 'Upload a PNG, JPG, or PDF of the menu.',
-            directory: `public/menus/${dirSlug}`,
-            publicPath: `/menus/${dirSlug}/`,
-        }),
+        file: fields.object({
+            file: fields.file({
+                label: 'Menu File',
+                description: 'Upload a PNG, JPG, or PDF of the menu.',
+                directory: `public/menus/${dirSlug}`,
+                publicPath: `/menus/${dirSlug}/`,
+            }),
+            // New (experimental): PDFs uploaded above are now auto-parsed into a
+            // formatted menu page at build time instead of just being embedded.
+            // It can occasionally misread a PDF, so double-check the menu after
+            // updating — if it looks wrong, check this box to go back to just
+            // showing the PDF as-is.
+            skipPdfParse: fields.checkbox({
+                label: 'Skip auto-parsing of PDF menus (experimental, new)',
+                description:
+                    "New: PDFs are now automatically parsed into a formatted menu page instead of just being embedded. This is experimental — please double-check the menu after updating. If it looks wrong, check this box to always show the PDF as-is instead.",
+                defaultValue: false,
+            }),
+        }, { label: 'Menu File' }),
     }
 );
 
@@ -100,6 +113,7 @@ export default config({
             'Global': ['businessInfo', 'team'],
             'Blog': ['blogPage', 'posts'],
             'Legal': ['privacyPage', 'termsPage'],
+            'Support': ['siteSupport'],
         },
     },
     collections: {
@@ -603,6 +617,20 @@ export default config({
                     label: 'Content',
                     multiline: true,
                     description: 'Separate paragraphs with a blank line.',
+                }),
+            },
+        }),
+        siteSupport: singleton({
+            label: 'Help & Support',
+            path: 'src/content/site-support/',
+            schema: {
+                // Left empty on purpose — the message lives in the label/description
+                // below, not the value, so there's nothing here that looks like it
+                // needs to be filled in or that could be accidentally overwritten.
+                note: fields.text({
+                    label: 'This website is managed by Joe Echeverria',
+                    multiline: true,
+                    description: "To report any bugs or issues, please email help@madebyjoe.dev. It's fine to leave this box empty — it's just here for reference.",
                 }),
             },
         }),
