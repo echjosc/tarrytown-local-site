@@ -5,5 +5,5 @@ note: >-
 display:
   discriminant: file
   value:
-    file: /menus/restaurant/display/value.png
+    file: /menus/restaurant/display/value/file.pdf
     skipPdfParse: false
