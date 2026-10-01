@@ -19,13 +19,12 @@ const MENU_SECTIONS = [
 ];
 
 const reader = createReader(process.cwd(), keystaticConfig);
-const menuPage = await reader.singletons.menuPage.read();
 
 await mkdir(OUTPUT_DIR, { recursive: true });
 
 for (const { key, outputFile } of MENU_SECTIONS) {
 	const outputUrl = new URL(outputFile, OUTPUT_DIR);
-	const section = menuPage?.[key];
+	const section = await reader.singletons[key].read();
 	const display = section?.display;
 	const fileUrl = display?.value?.file;
 

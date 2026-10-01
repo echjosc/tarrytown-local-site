@@ -65,7 +65,7 @@ const menuCategoriesField = (itemNameLabel: string) => fields.array(
 );
 
 // Lets editors toggle a menu section between a fill-in list and an uploaded file (image or PDF).
-const menuDisplayField = (dirSlug: string, itemNameLabel: string, sectionLabel: string) => fields.conditional(
+const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.conditional(
     fields.select({
         label: 'Display Mode',
         description: 'Fill in the menu items below, or upload a file (PNG, JPG, or PDF) to show instead.',
@@ -95,7 +95,7 @@ const menuDisplayField = (dirSlug: string, itemNameLabel: string, sectionLabel: 
                     "New: PDFs are now automatically parsed into a formatted menu page instead of just being embedded. This is experimental — please double-check the menu after updating. If it looks wrong, check this box to always show the PDF as-is instead.",
                 defaultValue: false,
             }),
-        }, { label: `${sectionLabel} Menu File` }),
+        }),
     }
 );
 
@@ -109,7 +109,8 @@ export default config({
     },
     ui: {
         navigation: {
-            'Pages': ['homepage', 'menuPage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
+            'Pages': ['homepage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
+            'Menus': ['menuPage', 'restaurantMenu', 'bakeryMenu'],
             'Global': ['businessInfo', 'team'],
             'Blog': ['blogPage', 'posts'],
             'Legal': ['privacyPage', 'termsPage'],
@@ -282,24 +283,32 @@ export default config({
                     multiline: true,
                     description: 'A short line under the title — good for the date or a quick note.',
                 }),
-                restaurantMenu: fields.object({
-                    heading: fields.text({ label: 'Section Heading', defaultValue: 'Restaurant Menu' }),
-                    note: fields.text({
-                        label: 'Note',
-                        multiline: true,
-                        description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
-                    }),
-                    display: menuDisplayField('restaurant', 'Dish Name', 'Restaurant'),
-                }, { label: 'Restaurant Menu' }),
-                bakeryMenu: fields.object({
-                    heading: fields.text({ label: 'Section Heading', defaultValue: 'Bakery Menu' }),
-                    note: fields.text({
-                        label: 'Note',
-                        multiline: true,
-                        description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
-                    }),
-                    display: menuDisplayField('bakery', 'Item Name', 'Bakery'),
-                }, { label: 'Bakery Menu' }),
+            },
+        }),
+        restaurantMenu: singleton({
+            label: 'Restaurant Menu',
+            path: 'src/content/restaurantmenu/',
+            schema: {
+                heading: fields.text({ label: 'Section Heading', defaultValue: 'Restaurant Menu' }),
+                note: fields.text({
+                    label: 'Note',
+                    multiline: true,
+                    description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
+                }),
+                display: menuDisplayField('restaurant', 'Dish Name'),
+            },
+        }),
+        bakeryMenu: singleton({
+            label: 'Bakery Menu',
+            path: 'src/content/bakerymenu/',
+            schema: {
+                heading: fields.text({ label: 'Section Heading', defaultValue: 'Bakery Menu' }),
+                note: fields.text({
+                    label: 'Note',
+                    multiline: true,
+                    description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
+                }),
+                display: menuDisplayField('bakery', 'Item Name'),
             },
         }),
         restaurantPage: singleton({

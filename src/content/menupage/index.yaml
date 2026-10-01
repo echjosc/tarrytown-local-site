@@ -4,19 +4,3 @@ seoDescription: >-
   change daily based on what's fresh from the farm and market.
 heroTitle: Today's Menu
 heroSubtitle: Updated fresh every morning based on what's in season.
-restaurantMenu:
-  heading: Restaurant Menu
-  note: >-
-    Our menu changes daily depending on what's fresh from the farm — check back
-    each morning to see what the chef is cooking.
-  display:
-    discriminant: file
-    value:
-      file: /menus/restaurant/restaurantMenu/display/value.png
-      skipPdfParse: false
-bakeryMenu:
-  heading: Bakery Menu
-  note: Baked fresh every morning with house-milled grains.
-  display:
-    discriminant: list
-    value: []

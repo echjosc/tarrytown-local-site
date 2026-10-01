@@ -1,0 +1,9 @@
+heading: Restaurant Menu
+note: >-
+  Our menu changes daily depending on what's fresh from the farm — check back
+  each morning to see what the chef is cooking.
+display:
+  discriminant: file
+  value:
+    file: /menus/restaurant/display/value.png
+    skipPdfParse: false
