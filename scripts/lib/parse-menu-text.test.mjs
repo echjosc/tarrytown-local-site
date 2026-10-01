@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseMenuText } from './parse-menu-text.mjs';
+import { parseMenuText, mergeMenuPages } from './parse-menu-text.mjs';
 
 // Text as pdf-parse actually extracts it from a real PDF built from the
 // client's template (verified against a generated fixture) — blank lines are
@@ -123,4 +123,47 @@ A warm start
 
 	assert.equal(result.categories[0].items[0].name, 'Soup');
 	assert.equal(result.note, undefined);
+});
+
+// A multi-page PDF is parsed one page at a time, then merged — parsing the
+// whole document as one concatenated string would mean a page-1 footer line
+// (a folio, a page number) flips parseMenuText into "note" mode and silently
+// swallows every item from page 2 onward.
+test('mergeMenuPages keeps page 2 even when page 1 ends with unrecognized trailing text', () => {
+	const page1 = parseMenuText(`lunch
+Soup | $9
+Kale, quinoa, and a lemon vinaigrette
+Printed fresh daily on recycled paper`);
+	const page2 = parseMenuText(`dessert
+Pie | $7
+Apples, cinnamon, and a flaky crust`);
+
+	const result = mergeMenuPages([page1, page2]);
+
+	assert.deepEqual(result.categories, [
+		{ name: 'Lunch', items: [{ name: 'Soup', price: '$9', description: 'Kale, quinoa, and a lemon vinaigrette' }] },
+		{ name: 'Dessert', items: [{ name: 'Pie', price: '$7', description: 'Apples, cinnamon, and a flaky crust' }] },
+	]);
+	assert.match(result.note, /Printed fresh daily/);
+});
+
+test('mergeMenuPages combines a category split across a page break', () => {
+	const page1 = parseMenuText(`lunch
+Soup | $9
+Kale, quinoa, and a lemon vinaigrette`);
+	const page2 = parseMenuText(`lunch
+Salad | $10
+Apples, cinnamon, and a flaky crust`);
+
+	const result = mergeMenuPages([page1, page2]);
+
+	assert.deepEqual(result.categories, [
+		{
+			name: 'Lunch',
+			items: [
+				{ name: 'Soup', price: '$9', description: 'Kale, quinoa, and a lemon vinaigrette' },
+				{ name: 'Salad', price: '$10', description: 'Apples, cinnamon, and a flaky crust' },
+			],
+		},
+	]);
 });
