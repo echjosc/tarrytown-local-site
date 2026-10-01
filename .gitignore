@@ -5,6 +5,7 @@ public/_redirects
 
 # generated at build time by scripts/parse-menu-pdfs.mjs
 src/data/generated/
+public/menus/generated/
 # generated types
 .astro/
 
