@@ -38,7 +38,7 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 <section class="vega-menu section">
 	<div class="container menu-container">
 		{sections.map((section) => (
-			<div class="menu-section" data-animate="fade-up">
+			<div class="menu-section" data-animate="fade-up" data-menu-mode={section.mode}>
 				<h2 class="menu-section__heading">{section.heading}</h2>
 				<DiamondRule width={30} class="menu-section__rule" />
 
@@ -109,7 +109,8 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 	}
 
 	.menu-section {
-		background: var(--color-bg-muted, #F1EADD);
+		// background: var(--color-bg-muted, #F1EADD);
+		background: #fff; 
 		border: 2px dashed var(--color-border-dashed, #6B9C86);
 		border-radius: var(--radius-dashed, 20px);
 		padding: clamp(2rem, 5vw, 3.5rem);
@@ -262,5 +263,12 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 		color: var(--color-text-muted, #6B6560);
 		line-height: 1.6;
 		margin: 0.35rem 0 0;
+	}
+
+
+
+	.menu-section[data-menu-mode="file"] {
+		display: block;
+		padding: 2rem 0;
 	}
 </style>
