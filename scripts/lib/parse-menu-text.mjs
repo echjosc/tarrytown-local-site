@@ -4,7 +4,11 @@
 // ("lunch", "dessert"), "Name | $Price" item lines each followed by an italic
 // description line, and a closing sourcing blurb after the last item.
 const HEADER_LINE_RE = /[[\]]|\d{1,2}\.\d{1,2}\.\d{2,4}/;
-const ITEM_LINE_RE = /^(.+?)\s*\|\s*\$?\s*(\d+(?:\.\d{1,2})?)\s*$/;
+// pdf-parse inserts a "-- N of M --" marker between pages — not real content.
+const PAGE_MARKER_RE = /^--\s*\d+\s*of\s*\d+\s*--$/;
+// Some PDF fonts remap the "|" separator glyph so it extracts as a standalone
+// capital "I" instead (e.g. "Dish Name I $13") — accept either.
+const ITEM_LINE_RE = /^(.+?)\s*(?:\||\bI\b)\s*\$?\s*(\d+(?:\.\d{1,2})?)\s*$/;
 const SENTENCE_END_RE = /[.!?]$/;
 
 function isHeadingCandidate(line) {
@@ -24,7 +28,7 @@ export function parseMenuText(rawText) {
 	const lines = rawText
 		.split('\n')
 		.map((line) => line.trim())
-		.filter((line) => line.length > 0 && !HEADER_LINE_RE.test(line));
+		.filter((line) => line.length > 0 && !HEADER_LINE_RE.test(line) && !PAGE_MARKER_RE.test(line));
 
 	const categories = [];
 	const footerLines = [];

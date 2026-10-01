@@ -89,3 +89,38 @@ test('returns no categories and no note for text with nothing parseable', () => 
 	assert.deepEqual(result.categories, []);
 	assert.equal(result.note, undefined);
 });
+
+// Some PDF fonts remap the "|" separator glyph so pdf-parse extracts it as a
+// standalone capital "I" instead — seen on a real client upload.
+test('parses items whose "|" separator extracted as a standalone "I"', () => {
+	const text = `lunch
+Adirondack Blue Vichyssoise I $13
+Cold Potato Leek Soup with Deep Roots Farm Blue Potatoes`;
+
+	const result = parseMenuText(text);
+
+	assert.deepEqual(result.categories, [
+		{
+			name: 'Lunch',
+			items: [
+				{
+					name: 'Adirondack Blue Vichyssoise',
+					price: '$13',
+					description: 'Cold Potato Leek Soup with Deep Roots Farm Blue Potatoes',
+				},
+			],
+		},
+	]);
+});
+
+test('strips the "-- N of M --" page marker pdf-parse inserts between pages', () => {
+	const text = `lunch
+Soup | $9
+A warm start
+-- 1 of 1 --`;
+
+	const result = parseMenuText(text);
+
+	assert.equal(result.categories[0].items[0].name, 'Soup');
+	assert.equal(result.note, undefined);
+});
