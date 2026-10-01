@@ -41,15 +41,42 @@ members:
       flour production.
     image: '@assets/images/team/members/2/image.jpg'
     socials: []
+  - name: Rick Krebs
+    role: Sous Chef
+    bio: >-
+      Passionate about elevating flavor, Chef Rick blends culinary artistry with
+      fresh local, ingredients to create unforgettable dining experiences. With
+      a background in the arts and decades of experience, he celebrates the
+      essence of local cooking.
+    socials: []
+  - name: Palmer Howie
+    role: Chef de Partie
+    bio: >-
+      Palmer grew up on a farm in Mississippi, where his connection to food
+      began.
+
+
+      He followed his passion for food to the kitchens in Memphis, first as a
+      cheesemonger’s apprentice before joining ACRE, a James Beard semifinalist.
+      Palmer went on to attend the Culinary Institute of America. As a student,
+      he worked in kitchens, including NARO and Blue Hill at Stone Barns, while
+      staging at more than 20 Michelin-starred restaurants throughout the US and
+      Scandinavia. Palmer has since settled down and is now the Chef de Partie
+      at Tarrytown Local.
+    socials: []
   - name: Nikole Rupple
     role: Front of House Manager
     bio: |
       Bio coming soon.
     socials: []
-  - name: Rick Krebs
-    role: Sous Chef
-    bio: |
-      Bio coming soon.
+  - name: Edelis Gomez
+    role: Front of House Associate
+    socials: []
+  - name: Jill Santopietro
+    role: Front of House Associate
+    socials: []
+  - name: Maddy Gentile
+    role: Front of House Associate
     socials: []
   - name: Stephanie Wright
     role: Front of House Associate
@@ -65,9 +92,4 @@ members:
     role: Design & Media
     bio: |
       Bio coming soon.
-    socials: []
-  - name: TBD
-    role: Market Associate
-    bio: |
-      This spot is open — we're hiring!
     socials: []
