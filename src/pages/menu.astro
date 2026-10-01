@@ -9,8 +9,10 @@ import keystaticConfig from '../../keystatic.config';
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const menuPage = await reader.singletons.menuPage.read();
+const restaurantMenu = await reader.singletons.restaurantMenu.read();
+const bakeryMenu = await reader.singletons.bakeryMenu.read();
 
-type MenuPageData = NonNullable<typeof menuPage>;
+type MenuSectionData = NonNullable<typeof restaurantMenu>;
 
 type GeneratedMenu = {
 	note?: string;
@@ -27,7 +29,7 @@ const generatedMenus = import.meta.glob('/src/data/generated/menu/*.json', {
 }) as Record<string, GeneratedMenu>;
 
 function buildMenuSection(
-	section: MenuPageData['restaurantMenu'] | undefined,
+	section: MenuSectionData | undefined,
 	fallbackHeading: string,
 	generatedFile: string
 ) {
@@ -60,8 +62,8 @@ function buildMenuSection(
 }
 
 const menuSections = [
-	buildMenuSection(menuPage?.restaurantMenu, 'Restaurant Menu', 'restaurant-menu.json'),
-	buildMenuSection(menuPage?.bakeryMenu, 'Bakery Menu', 'bakery-menu.json'),
+	buildMenuSection(restaurantMenu ?? undefined, 'Restaurant Menu', 'restaurant-menu.json'),
+	buildMenuSection(bakeryMenu ?? undefined, 'Bakery Menu', 'bakery-menu.json'),
 ];
 
 // Only list-mode sections have structured items — file-mode sections just
