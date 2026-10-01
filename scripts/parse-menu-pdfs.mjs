@@ -29,7 +29,15 @@ for (const { key, outputFile } of MENU_SECTIONS) {
 	const display = section?.display;
 	const fileUrl = display?.value?.file;
 
-	if (display?.discriminant !== 'file' || !fileUrl?.toLowerCase().endsWith('.pdf')) {
+	if (display?.discriminant !== 'file') {
+		await rm(outputUrl, { force: true });
+		continue;
+	}
+
+	if (!fileUrl?.toLowerCase().endsWith('.pdf')) {
+		if (fileUrl) {
+			console.log(`[parse-menu-pdfs] ${key}: ${fileUrl} isn't a PDF — auto-parsing only applies to PDFs, showing it as-is.`);
+		}
 		await rm(outputUrl, { force: true });
 		continue;
 	}

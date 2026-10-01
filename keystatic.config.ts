@@ -65,7 +65,7 @@ const menuCategoriesField = (itemNameLabel: string) => fields.array(
 );
 
 // Lets editors toggle a menu section between a fill-in list and an uploaded file (image or PDF).
-const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.conditional(
+const menuDisplayField = (dirSlug: string, itemNameLabel: string, sectionLabel: string) => fields.conditional(
     fields.select({
         label: 'Display Mode',
         description: 'Fill in the menu items below, or upload a file (PNG, JPG, or PDF) to show instead.',
@@ -79,8 +79,8 @@ const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.cond
         list: menuCategoriesField(itemNameLabel),
         file: fields.object({
             file: fields.file({
-                label: 'Menu File',
-                description: 'Upload a PNG, JPG, or PDF of the menu.',
+                label: 'Menu File (PDF, PNG, or JPG)',
+                description: 'PDF format is highly recommended — only PDFs can be auto-parsed into a formatted menu page. A PNG or JPG will just be shown as an image, as-is.',
                 directory: `public/menus/${dirSlug}`,
                 publicPath: `/menus/${dirSlug}/`,
             }),
@@ -95,7 +95,7 @@ const menuDisplayField = (dirSlug: string, itemNameLabel: string) => fields.cond
                     "New: PDFs are now automatically parsed into a formatted menu page instead of just being embedded. This is experimental — please double-check the menu after updating. If it looks wrong, check this box to always show the PDF as-is instead.",
                 defaultValue: false,
             }),
-        }, { label: 'Menu File' }),
+        }, { label: `${sectionLabel} Menu File` }),
     }
 );
 
@@ -289,7 +289,7 @@ export default config({
                         multiline: true,
                         description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
                     }),
-                    display: menuDisplayField('restaurant', 'Dish Name'),
+                    display: menuDisplayField('restaurant', 'Dish Name', 'Restaurant'),
                 }, { label: 'Restaurant Menu' }),
                 bakeryMenu: fields.object({
                     heading: fields.text({ label: 'Section Heading', defaultValue: 'Bakery Menu' }),
@@ -298,7 +298,7 @@ export default config({
                         multiline: true,
                         description: 'Optional note shown above this menu, e.g. today\'s specials or a sold-out item.',
                     }),
-                    display: menuDisplayField('bakery', 'Item Name'),
+                    display: menuDisplayField('bakery', 'Item Name', 'Bakery'),
                 }, { label: 'Bakery Menu' }),
             },
         }),
