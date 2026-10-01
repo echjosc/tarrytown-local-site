@@ -12,11 +12,12 @@
     "build": "node scripts/cap-image-dimensions.mjs && node scripts/sync-reservation-redirect.mjs && node scripts/parse-menu-pdfs.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node --test scripts/**/*.test.mjs"
+    "test": "node --test scripts/**/*.test.mjs",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.3",
     "@astrojs/markdoc": "2.0.9",
-    "@astrojs/netlify": "^8.2.6",
     "@astrojs/react": "6.0.6",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/cormorant-garamond": "^5.2.6",
@@ -42,6 +43,7 @@
     "@types/node": "^25.9.1",
     "sass-embedded": "^1.100.0",
     "sharp": "^0.35.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.145.0"
   }
 }

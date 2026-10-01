@@ -64,3 +64,9 @@ deno.lock
 
 # AI specific files
 .claude/
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
