@@ -24,6 +24,7 @@ type MenuSection =
 		note?: string;
 		mode: 'file';
 		fileUrl?: string;
+		images?: string[];
 	};
 
 type Props = {
@@ -47,7 +48,13 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 				)}
 
 				{section.mode === 'file' ? (
-					section.fileUrl ? (
+					section.images && section.images.length > 0 ? (
+						<div class="menu-file menu-file--image menu-file--pages">
+							{section.images.map((imageUrl) => (
+								<img src={imageUrl} alt={`${section.heading} menu page`} loading="lazy" />
+							))}
+						</div>
+					) : section.fileUrl ? (
 						isPdf(section.fileUrl) ? (
 							<div class="menu-file menu-file--pdf">
 								<object data={section.fileUrl} type="application/pdf" class="menu-file__embed">
@@ -157,6 +164,12 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 		max-width: 100%;
 		height: auto;
 		border-radius: 12px;
+	}
+
+	.menu-file--pages {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
 	}
 
 	.menu-file--pdf {

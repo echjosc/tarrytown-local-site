@@ -83,3 +83,31 @@ export function parseMenuText(rawText) {
 		categories: categories.filter((category) => category.items.length > 0),
 	};
 }
+
+// For a multi-page PDF, each page is parsed on its own (see parse-menu-pdfs.mjs)
+// rather than as one concatenated string — a stray non-matching line (a page
+// footer, a folio number) would otherwise flip "inFooter" above and swallow
+// every item on every later page into the note. This merges those per-page
+// results back into one menu, joining a category split across a page break.
+export function mergeMenuPages(pageResults) {
+	const categories = [];
+	const noteParts = [];
+
+	for (const { note, categories: pageCategories } of pageResults) {
+		if (note) noteParts.push(note);
+
+		for (const category of pageCategories) {
+			const last = categories[categories.length - 1];
+			if (last && last.name === category.name) {
+				last.items.push(...category.items);
+			} else {
+				categories.push({ name: category.name, items: [...category.items] });
+			}
+		}
+	}
+
+	return {
+		note: noteParts.join(' ').replace(/\s+/g, ' ').trim() || undefined,
+		categories,
+	};
+}
