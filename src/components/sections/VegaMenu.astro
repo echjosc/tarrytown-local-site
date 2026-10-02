@@ -16,12 +16,14 @@ type MenuSection =
 	| {
 		heading: string;
 		note?: string;
+		date?: string;
 		mode: 'list';
 		categories: MenuCategory[];
 	}
 	| {
 		heading: string;
 		note?: string;
+		date?: string;
 		mode: 'file';
 		fileUrl?: string;
 		images?: string[];
@@ -34,6 +36,29 @@ type Props = {
 const { sections } = Astro.props;
 
 const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
+
+// The parser extracts the date exactly as it's printed on the menu PDF —
+// either "MM.DD.YYYY" (or an older "M.D.YY") or, with no day, "MM.YYYY".
+function formatMenuDate(date?: string): string | undefined {
+	if (!date) return undefined;
+
+	const parts = date.split('.').map(Number);
+	if (parts.some((part) => Number.isNaN(part))) return undefined;
+
+	const hasDay = parts.length === 3;
+	const [month, day, rawYear] = hasDay ? parts : [parts[0], undefined, parts[1]];
+	const year = rawYear < 100 ? rawYear + 2000 : rawYear;
+
+	const parsed = new Date(year, month - 1, day ?? 1);
+	if (Number.isNaN(parsed.getTime())) return undefined;
+
+	const formatted = parsed.toLocaleDateString(
+		'en-US',
+		hasDay ? { month: 'long', day: 'numeric', year: 'numeric' } : { month: 'long', year: 'numeric' }
+	);
+
+	return `Menu for ${formatted}`;
+}
 ---
 
 <section class="vega-menu section">
@@ -42,6 +67,10 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 			<div class="menu-section" data-animate="fade-up" data-menu-mode={section.mode}>
 				<h2 class="menu-section__heading">{section.heading}</h2>
 				<DiamondRule width={30} class="menu-section__rule" />
+
+				{formatMenuDate(section.date) && (
+					<p class="menu-date">{formatMenuDate(section.date)}</p>
+				)}
 
 				{section.note && (
 					<p class="menu-note">{section.note}</p>
@@ -137,6 +166,17 @@ const isPdf = (url: string) => url.toLowerCase().endsWith('.pdf');
 	:global(.menu-section__rule) {
 		justify-content: center;
 		margin-bottom: 1.5rem;
+	}
+
+	.menu-date {
+		font-family: var(--font-secondary), sans-serif;
+		font-size: 0.85rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-accent, #7C2E28);
+		text-align: center;
+		margin: 0 0 1rem;
 	}
 
 	.menu-note {

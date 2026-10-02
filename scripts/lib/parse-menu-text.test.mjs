@@ -113,6 +113,82 @@ Cold Potato Leek Soup with Deep Roots Farm Blue Potatoes`;
 	]);
 });
 
+test('strips a "MM.YYYY" dated header line, not just the older "M.D.YY" format', () => {
+	const result = parseMenuText('[restaurant]\n10.2026 | Tarrytown Local');
+
+	assert.deepEqual(result.categories, []);
+	assert.equal(result.note, undefined);
+});
+
+test('captures the menu date out of the header line instead of just discarding it', () => {
+	const result = parseMenuText(REAL_EXTRACTED_TEXT);
+
+	assert.equal(result.date, '9.15.26');
+});
+
+test('captures a "MM.YYYY" date (no day) as well as "MM.DD.YYYY"', () => {
+	assert.equal(parseMenuText('[restaurant]\n10.2026 | Tarrytown Local').date, '10.2026');
+	assert.equal(parseMenuText('[restaurant]\n10.15.2026 | Tarrytown Local').date, '10.15.2026');
+});
+
+test('date is undefined when the header has no date-shaped text', () => {
+	const result = parseMenuText('lunch\nSoup | $9');
+
+	assert.equal(result.date, undefined);
+});
+
+test('mergeMenuPages carries the date through from whichever page has it', () => {
+	const page1 = parseMenuText('[restaurant]\n10.2026 | Tarrytown Local\nlunch\nSoup | $9');
+	const page2 = parseMenuText('dessert\nPie | $7');
+
+	const result = mergeMenuPages([page1, page2]);
+
+	assert.equal(result.date, '10.2026');
+});
+
+// Seen on a real client upload: most items use "-" instead of "|" before the
+// price, and a hyphenated word in a description line must not be mistaken for
+// the separator.
+test('parses items whose separator is a plain dash instead of "|"', () => {
+	const text = `lunch
+Thousand Leaf Garden Tomato Salad - $17
+Ardith Mae Chevre, Apple Balsamic, Roasted Peppers
+Lil' Fishies From The Garden | $17
+Bi-Color Beans, Stick With Grandma Beer Batter, Pumpkin Seed Vinaigrette`;
+
+	const result = parseMenuText(text);
+
+	assert.deepEqual(result.categories, [
+		{
+			name: 'Lunch',
+			items: [
+				{
+					name: 'Thousand Leaf Garden Tomato Salad',
+					price: '$17',
+					description: 'Ardith Mae Chevre, Apple Balsamic, Roasted Peppers',
+				},
+				{
+					name: "Lil' Fishies From The Garden",
+					price: '$17',
+					description: 'Bi-Color Beans, Stick With Grandma Beer Batter, Pumpkin Seed Vinaigrette',
+				},
+			],
+		},
+	]);
+});
+
+test('a hyphenated word on its own, with no price, is not mistaken for a dash-separated item', () => {
+	const text = `lunch
+Golden Beet Soup - $15
+Bi-Color Beans and Grains`;
+
+	const result = parseMenuText(text);
+
+	assert.deepEqual(result.categories[0].items, [
+		{ name: 'Golden Beet Soup', price: '$15', description: 'Bi-Color Beans and Grains' },
+	]);
+});
+
 test('strips the "-- N of M --" page marker pdf-parse inserts between pages', () => {
 	const text = `lunch
 Soup | $9

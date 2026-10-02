@@ -19,6 +19,7 @@ const bakeryMenu = await reader.singletons.bakeryMenu.read();
 type MenuSectionData = NonNullable<typeof restaurantMenu>;
 
 type GeneratedMenu = {
+	date?: string;
 	note?: string;
 	categories: { name: string; items: { name: string; description?: string; price?: string }[] }[];
 };
@@ -59,7 +60,13 @@ function buildMenuSection(
 		if (isPdf && !skipPdfParse) {
 			const generated = generatedMenus[`/src/data/generated/menu/${generatedFile}`];
 			if (generated && generated.categories.length > 0) {
-				return { heading, note: note || generated.note, mode: 'list' as const, categories: generated.categories };
+				return {
+					heading,
+					note: note || generated.note,
+					date: generated.date,
+					mode: 'list' as const,
+					categories: generated.categories,
+				};
 			}
 		}
 
