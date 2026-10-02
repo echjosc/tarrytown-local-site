@@ -139,8 +139,9 @@ test('date is undefined when the header has no date-shaped text', () => {
 
 // Seen on a real client upload: the page's "lunch" label extracts after the
 // closing blurb instead of before the items (a layout quirk in how the PDF
-// was built), and shouldn't be tacked onto the end of the note's prose.
-test('a stray category label that extracts after the note is dropped, not appended to it', () => {
+// was built). When the category already has a real name, the repeated
+// trailing label is just noise — dropped, not appended to the note's prose.
+test('a stray trailing category label is dropped when the category is already named', () => {
 	const text = `lunch
 Soup | $9
 A warm start
@@ -149,6 +150,29 @@ lunch`;
 
 	const result = parseMenuText(text);
 
+	assert.equal(result.categories[0].name, 'Lunch');
+	assert.equal(result.note, "We're proud to source our ingredients directly from local farms.");
+});
+
+// The real-world case: no heading precedes the first batch of items at all
+// (the "lunch" label got pushed to the very end of the page's extracted
+// text), so they land in the "Menu" placeholder category — the trailing
+// label should rename that placeholder instead of being discarded.
+test('a trailing category label renames the placeholder "Menu" category instead of being dropped', () => {
+	const text = `Soup | $9
+A warm start
+dessert
+Pie | $7
+Apples and cinnamon
+We're proud to source our ingredients directly from local farms.
+lunch`;
+
+	const result = parseMenuText(text);
+
+	assert.deepEqual(
+		result.categories.map((c) => c.name),
+		['Lunch', 'Dessert']
+	);
 	assert.equal(result.note, "We're proud to source our ingredients directly from local farms.");
 });
 
