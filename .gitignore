@@ -63,4 +63,6 @@ deno.lock
 
 
 # AI specific files
-.claude/.wrangler/
+.claude/
+
+.wrangler/
