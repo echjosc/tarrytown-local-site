@@ -137,6 +137,21 @@ test('date is undefined when the header has no date-shaped text', () => {
 	assert.equal(result.date, undefined);
 });
 
+// Seen on a real client upload: the page's "lunch" label extracts after the
+// closing blurb instead of before the items (a layout quirk in how the PDF
+// was built), and shouldn't be tacked onto the end of the note's prose.
+test('a stray category label that extracts after the note is dropped, not appended to it', () => {
+	const text = `lunch
+Soup | $9
+A warm start
+We're proud to source our ingredients directly from local farms.
+lunch`;
+
+	const result = parseMenuText(text);
+
+	assert.equal(result.note, "We're proud to source our ingredients directly from local farms.");
+});
+
 test('mergeMenuPages carries the date through from whichever page has it', () => {
 	const page1 = parseMenuText('[restaurant]\n10.2026 | Tarrytown Local\nlunch\nSoup | $9');
 	const page2 = parseMenuText('dessert\nPie | $7');
