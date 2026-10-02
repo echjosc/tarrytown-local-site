@@ -47,14 +47,21 @@ export function parseMenuText(rawText) {
 	let lastItem = null;
 	let expectingDescription = false;
 	let inFooter = false;
+	// Items that show up before any recognized heading land in this placeholder
+	// category. A page layout can put the real label (e.g. "lunch") out of
+	// reading order, so it extracts after the closing blurb instead of before
+	// the items it names — if that happens, use it to rename the placeholder
+	// instead of just losing it.
+	let unlabeledCategory = null;
 
 	for (const line of lines) {
 		if (inFooter) {
-			// A page layout can place a category label (e.g. "lunch") out of
-			// reading order so it extracts after the closing blurb instead of
-			// before the items it belongs to — don't let that stray word tack
-			// itself onto the end of the note's prose.
-			if (!isHeadingCandidate(line)) {
+			if (isHeadingCandidate(line)) {
+				if (unlabeledCategory) {
+					unlabeledCategory.name = titleCase(line);
+					unlabeledCategory = null;
+				}
+			} else {
 				footerLines.push(line);
 			}
 			continue;
@@ -66,6 +73,7 @@ export function parseMenuText(rawText) {
 			lastItem = { name: name.trim(), price: `$${price}` };
 			if (!currentCategory) {
 				currentCategory = { name: 'Menu', items: [] };
+				unlabeledCategory = currentCategory;
 				categories.push(currentCategory);
 			}
 			currentCategory.items.push(lastItem);
