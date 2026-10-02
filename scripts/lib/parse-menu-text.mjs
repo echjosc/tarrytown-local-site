@@ -50,7 +50,13 @@ export function parseMenuText(rawText) {
 
 	for (const line of lines) {
 		if (inFooter) {
-			footerLines.push(line);
+			// A page layout can place a category label (e.g. "lunch") out of
+			// reading order so it extracts after the closing blurb instead of
+			// before the items it belongs to — don't let that stray word tack
+			// itself onto the end of the note's prose.
+			if (!isHeadingCandidate(line)) {
+				footerLines.push(line);
+			}
 			continue;
 		}
 

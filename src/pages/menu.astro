@@ -62,7 +62,8 @@ function buildMenuSection(
 			if (generated && generated.categories.length > 0) {
 				return {
 					heading,
-					note: note || generated.note,
+					note,
+					footer: generated.note,
 					date: generated.date,
 					mode: 'list' as const,
 					categories: generated.categories,
