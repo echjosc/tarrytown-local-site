@@ -3,12 +3,19 @@
 // client's template: "[header row]" to ignore, short lowercase category labels
 // ("lunch", "dessert"), "Name | $Price" item lines each followed by an italic
 // description line, and a closing sourcing blurb after the last item.
-const HEADER_LINE_RE = /[[\]]|\d{1,2}\.\d{1,2}\.\d{2,4}/;
+// Dates show up as either "MM.DD.YYYY" (or the older 2-digit-year "M.D.YY")
+// or, on newer menus with no day, "MM.YYYY". Captured separately below so the
+// value can be kept instead of just discarded along with the rest of the line.
+const DATE_RE = /\b\d{1,2}\.(?:\d{1,2}\.)?\d{2,4}\b/;
+const HEADER_LINE_RE = new RegExp(`[[\\]]|${DATE_RE.source}`);
 // pdf-parse inserts a "-- N of M --" marker between pages — not real content.
 const PAGE_MARKER_RE = /^--\s*\d+\s*of\s*\d+\s*--$/;
 // Some PDF fonts remap the "|" separator glyph so it extracts as a standalone
-// capital "I" instead (e.g. "Dish Name I $13") — accept either.
-const ITEM_LINE_RE = /^(.+?)\s*(?:\||\bI\b)\s*\$?\s*(\d+(?:\.\d{1,2})?)\s*$/;
+// capital "I" instead (e.g. "Dish Name I $13") — accept either. Some menus use
+// a plain dash instead (e.g. "Dish Name - $13"); that's only accepted with a
+// space on both sides, so a hyphenated word in the name (e.g. "Bi-Color
+// Beans") can't be misread as the separator.
+const ITEM_LINE_RE = /^(.+?)(?:\s*\||\s*\bI\b|\s[-‒–—]\s)\s*\$?\s*(\d+(?:\.\d{1,2})?)\s*$/;
 const SENTENCE_END_RE = /[.!?]$/;
 
 function isHeadingCandidate(line) {
@@ -25,10 +32,14 @@ function titleCase(line) {
 }
 
 export function parseMenuText(rawText) {
-	const lines = rawText
+	const trimmedLines = rawText
 		.split('\n')
 		.map((line) => line.trim())
-		.filter((line) => line.length > 0 && !HEADER_LINE_RE.test(line) && !PAGE_MARKER_RE.test(line));
+		.filter((line) => line.length > 0);
+
+	const date = trimmedLines.map((line) => line.match(DATE_RE)?.[0]).find(Boolean);
+
+	const lines = trimmedLines.filter((line) => !HEADER_LINE_RE.test(line) && !PAGE_MARKER_RE.test(line));
 
 	const categories = [];
 	const footerLines = [];
@@ -79,6 +90,7 @@ export function parseMenuText(rawText) {
 	const note = footerLines.join(' ').replace(/\s+/g, ' ').trim();
 
 	return {
+		date,
 		note: note || undefined,
 		categories: categories.filter((category) => category.items.length > 0),
 	};
@@ -92,8 +104,10 @@ export function parseMenuText(rawText) {
 export function mergeMenuPages(pageResults) {
 	const categories = [];
 	const noteParts = [];
+	let date;
 
-	for (const { note, categories: pageCategories } of pageResults) {
+	for (const { date: pageDate, note, categories: pageCategories } of pageResults) {
+		if (!date && pageDate) date = pageDate;
 		if (note) noteParts.push(note);
 
 		for (const category of pageCategories) {
@@ -107,6 +121,7 @@ export function mergeMenuPages(pageResults) {
 	}
 
 	return {
+		date,
 		note: noteParts.join(' ').replace(/\s+/g, ' ').trim() || undefined,
 		categories,
 	};
