@@ -3,6 +3,7 @@ logo: '@assets/images/business/logo.png'
 addressLines:
   - 57 N Broadway
   - Tarrytown, NY 10591
+phone: (818) 723-2401
 email: info@tarrytownlocal.com
 hours:
   - days: Wednesday - Sunday
