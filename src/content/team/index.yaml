@@ -41,6 +41,12 @@ members:
       flour production.
     image: '@assets/images/team/members/2/image.jpg'
     socials: []
+  - name: Maddy Gentile
+    role: General Manager
+    socials: []
+  - name: Jill Santopietro
+    role: Grocery Manager
+    socials: []
   - name: Rick Krebs
     role: Sous Chef
     bio: >-
@@ -49,13 +55,7 @@ members:
       a background in the arts and decades of experience, he celebrates the
       essence of local cooking.
     socials: []
-  - name: Maddy Gentile
-    role: Front of House Associate
-    socials: []
   - name: Edelis Gomez
-    role: Front of House Associate
-    socials: []
-  - name: Jill Santopietro
     role: Front of House Associate
     socials: []
   - name: Stephanie Wright
