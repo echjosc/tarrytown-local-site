@@ -11,6 +11,7 @@ import { createReader } from '@keystatic/core/reader';
 import { PDFParse } from 'pdf-parse';
 import keystaticConfig from '../keystatic.config.ts';
 import { parseMenuText, mergeMenuPages } from './lib/parse-menu-text.mjs';
+import { linesFromTextItems } from './lib/pdf-lines.mjs';
 
 const PUBLIC_DIR = new URL('../public', import.meta.url);
 const OUTPUT_DIR = new URL('../src/data/generated/menu/', import.meta.url);
@@ -89,8 +90,16 @@ for (const { key, outputFile, screenshotBase } of MENU_SECTIONS) {
 
 		// Parsed per-page (not the whole-document concatenated text) so a stray
 		// unrecognized line on one page can't swallow every later page's items.
-		const { pages: textPages } = await parser.getText();
-		const parsed = mergeMenuPages(textPages.map(({ text }) => parseMenuText(text)));
+		// Lines are rebuilt from where each piece of text sits on the page, because
+		// the order a PDF stores its text in isn't always the order you read it.
+		const pdf = await parser.load();
+		const pageTexts = [];
+		for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+			const page = await pdf.getPage(pageNumber);
+			const { items } = await page.getTextContent();
+			pageTexts.push(linesFromTextItems(items).join('\n'));
+		}
+		const parsed = mergeMenuPages(pageTexts.map((text) => parseMenuText(text)));
 		if (parsed.categories.length === 0) {
 			console.warn(`[parse-menu-pdfs] ${key}: found nothing parseable in ${fileUrl} — falling back to the rendered image(s).`);
 			await rm(outputUrl, { force: true });
