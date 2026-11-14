@@ -110,6 +110,7 @@ export default config({
     ui: {
         navigation: {
             'Pages': ['homepage', 'restaurantPage', 'bakeryPage', 'groceryPage', 'eventsPage', 'staffPage', 'commitmentsPage', 'contactPage', 'farmersPage'],
+            'Calendar': ['events'],
             'Menus': ['menuPage', 'restaurantMenu', 'bakeryMenu'],
             'Global': ['businessInfo', 'team'],
             'Blog': ['blogPage', 'posts'],
@@ -118,6 +119,81 @@ export default config({
         },
     },
     collections: {
+        events: collection({
+            label: 'Calendar Events',
+            slugField: 'title',
+            path: 'src/content/events/*',
+            format: { data: 'yaml' },
+            schema: {
+                title: fields.slug({ name: { label: 'Title' } }),
+                date: fields.date({
+                    label: 'Date',
+                    validation: { isRequired: true },
+                }),
+                time: fields.text({
+                    label: 'Time',
+                    description: 'Shown as typed, e.g. "6:30 PM" or "8 AM – 1 PM"',
+                }),
+                repeat: fields.conditional(
+                    fields.select({
+                        label: 'Repeats',
+                        description: 'Weekly events repeat on the same weekday as the Date above.',
+                        options: [
+                            { label: 'Does not repeat', value: 'none' },
+                            { label: 'Every week', value: 'weekly' },
+                        ],
+                        defaultValue: 'none',
+                    }),
+                    {
+                        none: fields.empty(),
+                        weekly: fields.object({
+                            until: fields.date({
+                                label: 'Repeat Until',
+                                description: 'Optional. Leave blank to keep repeating for the next 12 months.',
+                            }),
+                            skipDates: fields.array(
+                                fields.date({ label: 'Date', validation: { isRequired: true } }),
+                                {
+                                    label: 'Skip These Dates',
+                                    description: 'Hides the event on these days only, e.g. a holiday or a week off. All other weeks stay.',
+                                    itemLabel: (props) => props.value || 'Pick a date',
+                                }
+                            ),
+                        }),
+                    }
+                ),
+                category: fields.select({
+                    label: 'Category',
+                    description: 'Sets the label and color shown on the calendar.',
+                    options: [
+                        { label: 'Event', value: 'event' },
+                        { label: 'Class', value: 'class' },
+                        { label: 'Live Music', value: 'live-music' },
+                        { label: 'Ordering', value: 'ordering' },
+                    ],
+                    defaultValue: 'event',
+                }),
+                location: fields.text({
+                    label: 'Where',
+                    description: 'e.g. "Dining room" or "Front lot"',
+                }),
+                description: fields.text({
+                    label: 'Short Description',
+                    description: 'Shown on the calendar and in the upcoming list',
+                    multiline: true,
+                }),
+                link: fields.url({
+                    label: 'Button Link',
+                    description: 'Optional. Adds a "Reserve" button, e.g. a reservation or ticket page.',
+                }),
+                image: fields.image({
+                    label: 'Poster Image',
+                    description: 'Optional. Shown with the event details, e.g. the flyer.',
+                    directory: 'src/assets/images/events/posters',
+                    publicPath: '@assets/images/events/posters/',
+                }),
+            },
+        }),
         posts: collection({
             label: 'Posts',
             slugField: 'title',
