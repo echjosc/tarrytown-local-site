@@ -1,0 +1,14 @@
+title: Tarrytown Social
+date: 2026-11-18
+time: 6 PM – 8 PM or 'til late
+category: live-music
+description: >-
+  Meats, cheeses, jams, pickled veggies! Accompanied by a band that includes a
+  mandolin player! All happening in a grocery store! If you're not sold yet,
+  there's also beer & wine! And good company, too!
+repeat:
+  discriminant: weekly
+  value:
+    until: null
+    skipDates:
+      - 2026-12-02
