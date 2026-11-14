@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type TouchEvent } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import styles from './EventCalendar.module.scss';
@@ -68,6 +68,9 @@ const expandWeeklyEvents = (events: CalendarEvent[], todayIso: string): Calendar
     });
 };
 const categoryStyle = (category: EventCategory) => ({ '--cat': CATEGORIES[category].color }) as CSSProperties;
+// How far (and how mostly-horizontal) a finger must move on the week bar to count as a swipe.
+const SWIPE_MIN_DISTANCE_PX = 50;
+const SWIPE_HORIZONTAL_RATIO = 1.5;
 const eventKey = (event: CalendarEvent) => `${event.slug}-${event.date}`;
 
 function useIsPhone() {
@@ -340,6 +343,8 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
 function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate, sharedEvent }: ViewProps) {
     const [weekStart, setWeekStart] = useState(() => startOfWeek(fromIso(selectedIso)));
     const [monthStart, setMonthStart] = useState<Date | null>(null);
+    const [slide, setSlide] = useState<'next' | 'prev' | null>(null);
+    const swipeStart = useRef<{ x: number; y: number } | null>(null);
     const [openEvent, setOpenEvent] = useState<CalendarEvent | null>(sharedEvent ?? null);
 
     useEffect(() => {
@@ -350,12 +355,14 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
     }, [openEvent]);
 
     const showWeek = (iso: string) => {
+        setSlide(null);
         setWeekStart(startOfWeek(fromIso(iso)));
         setMonthStart(null);
         onSelectDate(iso);
     };
     // In month view the grid stays open so several days can be checked in a row.
     const showDayInMonth = (iso: string) => {
+        setSlide(null);
         const date = fromIso(iso);
         setMonthStart(new Date(date.getFullYear(), date.getMonth(), 1));
         setWeekStart(startOfWeek(date));
@@ -374,6 +381,7 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
     const shiftMonth = (delta: number) => {
         if (!monthStart) return;
         const nextMonth = new Date(monthStart.getFullYear(), monthStart.getMonth() + delta, 1);
+        setSlide(delta > 0 ? 'next' : 'prev');
         setMonthStart(nextMonth);
         onSelectDate(toIso(nextMonth));
     };
@@ -381,6 +389,24 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
         const nextStart = addDays(weekStart, delta * 7);
         const todayIsInWeek = toIso(startOfWeek(fromIso(todayIso))) === toIso(nextStart);
         showWeek(todayIsInWeek ? todayIso : toIso(nextStart));
+        setSlide(delta > 0 ? 'next' : 'prev');
+    };
+
+    const handleTouchStart = (touchEvent: TouchEvent<HTMLDivElement>) => {
+        const touch = touchEvent.touches[0];
+        swipeStart.current = { x: touch.clientX, y: touch.clientY };
+    };
+    const handleTouchEnd = (touchEvent: TouchEvent<HTMLDivElement>) => {
+        const start = swipeStart.current;
+        swipeStart.current = null;
+        if (!start) return;
+        const touch = touchEvent.changedTouches[0];
+        const deltaX = touch.clientX - start.x;
+        const deltaY = touch.clientY - start.y;
+        if (Math.abs(deltaX) < SWIPE_MIN_DISTANCE_PX || Math.abs(deltaX) < Math.abs(deltaY) * SWIPE_HORIZONTAL_RATIO) return;
+        const delta = deltaX < 0 ? 1 : -1;
+        if (monthStart) shiftMonth(delta);
+        else shiftWeek(delta);
     };
 
     const weekDays = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index));
@@ -427,7 +453,7 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
 
     return (
         <div className={styles.phone}>
-            <div className={styles.phoneTop}>
+            <div className={styles.phoneTop} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                 <div className={styles.weekNav}>
                     <button type="button" className={styles.weekNavButton} onClick={() => (monthStart ? shiftMonth(-1) : shiftWeek(-1))} aria-label={monthStart ? 'Previous month' : 'Previous week'}>‹</button>
                     <span className={styles.weekRange}>
@@ -444,14 +470,14 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
                     </div>
                 </div>
                 {monthStart ? (
-                    <div className={styles.monthStrip}>
+                    <div key={toIso(monthStart)} className={clsx(styles.monthStrip, slide === 'next' && styles.slideNext, slide === 'prev' && styles.slidePrev)}>
                         {WEEKDAYS.map((weekday) => (
                             <span key={weekday} className={styles.monthWeekday}>{weekday.slice(0, 1)}</span>
                         ))}
                         {monthCells.map((date) => renderDayButton(date, styles.stripDay))}
                     </div>
                 ) : (
-                    <div className={styles.strip}>{weekDays.map((date) => renderDayButton(date, styles.stripDay))}</div>
+                    <div key={toIso(weekStart)} className={clsx(styles.strip, slide === 'next' && styles.slideNext, slide === 'prev' && styles.slidePrev)}>{weekDays.map((date) => renderDayButton(date, styles.stripDay))}</div>
                 )}
             </div>
 
