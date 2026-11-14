@@ -71,6 +71,15 @@ const categoryStyle = (category: EventCategory) => ({ '--cat': CATEGORIES[catego
 // How far (and how mostly-horizontal) a finger must move on the week bar to count as a swipe.
 const SWIPE_MIN_DISTANCE_PX = 50;
 const SWIPE_HORIZONTAL_RATIO = 1.5;
+// Each event once, on its first date on or after fromIso, so a weekly event doesn't fill the whole list.
+const firstOccurrencesFrom = (events: CalendarEvent[], fromIso: string): CalendarEvent[] => {
+    const seenSlugs = new Set<string>();
+    return events.filter((event) => {
+        if (event.date < fromIso || seenSlugs.has(event.slug)) return false;
+        seenSlugs.add(event.slug);
+        return true;
+    });
+};
 const eventKey = (event: CalendarEvent) => `${event.slug}-${event.date}`;
 
 function useIsPhone() {
@@ -188,6 +197,8 @@ function EventDetails({ event }: { event: CalendarEvent }) {
 interface ViewProps {
     eventsByDate: Map<string, CalendarEvent[]>;
     upcoming: CalendarEvent[];
+    /** Every occurrence of every event, sorted by date */
+    allEvents: CalendarEvent[];
     todayIso: string;
     selectedIso: string;
     onSelectDate: (iso: string) => void;
@@ -340,7 +351,7 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
     );
 }
 
-function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate, sharedEvent }: ViewProps) {
+function PhoneView({ eventsByDate, allEvents, todayIso, selectedIso, onSelectDate, sharedEvent }: ViewProps) {
     const [weekStart, setWeekStart] = useState(() => startOfWeek(fromIso(selectedIso)));
     const [monthStart, setMonthStart] = useState<Date | null>(null);
     const [slide, setSlide] = useState<'next' | 'prev' | null>(null);
@@ -416,7 +427,7 @@ function PhoneView({ eventsByDate, upcoming, todayIso, selectedIso, onSelectDate
         : [];
 
     const selectedEvents = eventsByDate.get(selectedIso) ?? [];
-    const laterEvents = upcoming.filter((event) => event.date > selectedIso).slice(0, 3);
+    const laterEvents = firstOccurrencesFrom(allEvents, toIso(addDays(fromIso(selectedIso), 1))).slice(0, 3);
 
     const renderDayButton = (date: Date, className: string) => {
         const iso = toIso(date);
@@ -517,21 +528,14 @@ export default function EventCalendar({ events }: EventCalendarProps) {
         expandedEvents.forEach((event) => grouped.set(event.date, [...(grouped.get(event.date) ?? []), event]));
         return grouped;
     }, [expandedEvents]);
-    // Weekly events appear once here (their next date) so they don't fill the whole list.
-    const upcoming = useMemo(
-        () => expandedEvents.filter(
-            (event, index) => event.date >= todayIso
-                && !expandedEvents.slice(0, index).some((earlier) => earlier.slug === event.slug && earlier.date >= todayIso),
-        ),
-        [expandedEvents, todayIso],
-    );
+    const upcoming = useMemo(() => firstOccurrencesFrom(expandedEvents, todayIso), [expandedEvents, todayIso]);
 
     const sharedEvent = useMemo(
         () => (sharedLink?.slug ? expandedEvents.find((event) => event.slug === sharedLink.slug && event.date === sharedLink.date) : undefined),
         [sharedLink, expandedEvents],
     );
 
-    const viewProps: ViewProps = { eventsByDate, upcoming, todayIso, selectedIso, onSelectDate: selectDate, sharedEvent };
+    const viewProps: ViewProps = { eventsByDate, upcoming, allEvents: expandedEvents, todayIso, selectedIso, onSelectDate: selectDate, sharedEvent };
 
     return (
         <div className={styles.wrapper}>
